@@ -81,6 +81,11 @@
     .work-meta{position:absolute;inset:auto 10px 10px 10px;padding:10px 12px;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.18);border-radius:12px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:8px}
     .work-item button{all:unset;cursor:pointer;display:block}
 
+    /* Case, process */
+    .case{padding:18px}
+    .step{display:flex;gap:14px;padding:16px;border:1px dashed var(--border);border-radius:16px;background:var(--elev)}
+    .num{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font-weight:700}
+    
     /* Pricing */
     .price{padding:20px;display:flex;flex-direction:column;gap:10px}
     .price h3{font-size:1.12rem}
@@ -110,17 +115,18 @@
     .form-row{display:grid;gap:12px;grid-template-columns:1fr 1fr}
     @media (max-width:720px){.form-row{grid-template-columns:1fr}}
     .help{font-size:.86rem;color:var(--muted)}
+    
     #contact form {
-  display: flex;
-  flex-direction: column;
-}
+      display: flex;
+      flex-direction: column;
+    }
 
-#contact textarea {
-  box-sizing: border-box;   /* 確保不會超出父層 */
-  width: 100%;              /* 撐滿格子 */
-  max-width: 100%;          /* 限制最大寬度 */
-  border-radius: 12px;      /* 保持和 input 一致 */
-}
+    #contact textarea {
+      box-sizing: border-box;   /* 確保不會超出父層 */
+      width: 100%;              /* 撐滿格子 */
+      max-width: 100%;          /* 限制最大寬度 */
+      border-radius: 12px;      /* 保持和 input 一致 */
+    }
 
 
     /* Footer */
