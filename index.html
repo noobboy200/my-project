@@ -74,14 +74,12 @@
     .service .ic{width:26px;height:26px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:var(--elev);border:1px solid var(--border);margin-bottom:8px}
 
     /* Work grid */
-    .filter{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
-    .chip{padding:.4rem .8rem;border:1px solid var(--border);border-radius:999px;background:var(--elev);color:var(--muted);cursor:pointer}
-    .chip.active{background:var(--accent);color:#fff;border-color:#2e62e6}
-    .work-item{position:relative;overflow:hidden;border-radius:18px;border:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.02),transparent)}
-    .work-thumb{aspect-ratio:16/10;display:block;background:linear-gradient(135deg,#202635,#0d1017);position:relative}
-    .work-thumb::after{content:"";position:absolute;inset:0;background:radial-gradient(1200px 300px at -10% -20%, rgba(94,161,255,.35), transparent), radial-gradient(800px 200px at 120% 120%, rgba(140,242,198,.35), transparent)}
-    .work-meta{position:absolute;inset:auto 10px 10px 10px;padding:10px 12px;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.18);border-radius:12px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:8px}
-    .work-item button{all:unset;cursor:pointer;display:block}
+    /* Work — 3 卡片樣式 */
+    .work-card{overflow:hidden;border-radius:18px;transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;display:block; /* 讓整張卡可點 */}
+    .work-card:hover{transform:translateY(-6px);                /* 微微凸起 */box-shadow:0 18px 40px rgba(0,0,0,.28);    /* hover 陰影 */}
+    .work-figure{ margin:0; background:linear-gradient(135deg,#202635,#0d1017); }
+    .work-figure img{display:block;width:100%;height:100%;aspect-ratio:16/10;   /* 固定比例，縮圖不會拉長 */object-fit:cover;     /* 以裁切方式填滿 */border-bottom:1px solid var(--border);}
+    .work-info{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-top:1px solid var(--border);}
 
     /* Case, process */
     .case{padding:18px}
@@ -253,52 +251,40 @@
     <!-- Work -->
     <section id="work">
       <div class="container">
-        <h2>精選作品</h2>
-        <div class="filter" role="tablist" aria-label="作品篩選">
-          <button class="chip active" data-cat="all" role="tab" aria-selected="true">全部</button>
-          <button class="chip" data-cat="web" role="tab">網站</button>
-          <button class="chip" data-cat="ui" role="tab">UI</button>
-          <button class="chip" data-cat="brand" role="tab">品牌</button>
-          <button class="chip" data-cat="app" role="tab">App</button>
-        </div>
-        <div class="grid grid-3" id="work-grid">
-          <!-- items -->
-          <article class="work-item reveal" data-cat="web">
-            <button data-src="placeholder" data-title="SaaS 登陸頁">
-              <div class="work-thumb"></div>
-              <div class="work-meta"><span>SaaS 登陸頁</span><span class="tag">網站</span></div>
-            </button>
-          </article>
-          <article class="work-item reveal" data-cat="ui">
-            <button data-src="placeholder" data-title="財務儀表板 UI">
-              <div class="work-thumb"></div>
-              <div class="work-meta"><span>財務儀表板 UI</span><span class="tag">UI</span></div>
-            </button>
-          </article>
-          <article class="work-item reveal" data-cat="brand">
-            <button data-src="placeholder" data-title="品牌識別＋Mini 官網">
-              <div class="work-thumb"></div>
-              <div class="work-meta"><span>品牌識別＋Mini 官網</span><span class="tag">品牌</span></div>
-            </button>
-          </article>
-          <article class="work-item reveal" data-cat="app">
-            <button data-src="placeholder" data-title="美食記帳 App">
-              <div class="work-thumb"></div>
-              <div class="work-meta"><span>美食記帳 App</span><span class="tag">App</span></div>
-            </button>
-          </article>
-          <article class="work-item reveal" data-cat="web">
-            <button data-src="placeholder" data-title="跨境電商前端">
-              <div class="work-thumb"></div>
-              <div class="work-meta"><span>跨境電商前端</span><span class="tag">網站</span></div>
-            </button>
-          </article>
-          <article class="work-item reveal" data-cat="ui">
-            <button data-src="placeholder" data-title="旅遊訂票 UI Kit">
-              <div class="work-thumb"></div>
-              <div class="work-meta"><span>旅遊訂票 UI Kit</span><span class="tag">UI</span></div>
-            </button>
-          </article>
+        <h2>作品</h2>
+        <div class="grid grid-3" id="portfolio">
+          <!-- 卡片 1 -->
+          <a class="work-card card reveal" href="https://example.com/project-a" target="_blank" rel="noopener" aria-label="前往 專案 A 網站（新分頁開啟）">
+            <figure class="work-figure">
+              <img src="images/work1.jpg" alt="專案 A — 登陸頁設計（RWD）">
+            </figure>
+            <div class="work-info">
+              <strong>專案 A</strong>
+              <span class="muted">登陸頁 / RWD</span>
+            </div>
+          </a>
+
+          <!-- 卡片 2 -->
+          <a class="work-card card reveal" href="https://example.com/project-b" target="_blank" rel="noopener" aria-label="前往 專案 B 網站（新分頁開啟）">
+            <figure class="work-figure">
+              <img src="images/work2.jpg" alt="專案 B — 商業官網改版">
+            </figure>
+            <div class="work-info">
+              <strong>專案 B</strong>
+              <span class="muted">官網 / 品牌升級</span>
+            </div>
+          </a>
+
+          <!-- 卡片 3 -->
+          <a class="work-card card reveal" href="https://example.com/project-c" target="_blank" rel="noopener" aria-label="前往 專案 C 網站（新分頁開啟）">
+            <figure class="work-figure">
+              <img src="images/work3.jpg" alt="專案 C — 電商前端">
+            </figure>
+            <div class="work-info">
+              <strong>專案 C</strong>
+              <span class="muted">電商前端</span>
+            </div>
+          </a>
         </div>
       </div>
     </section>
@@ -488,23 +474,7 @@
       <div style="display:flex;gap:8px"><a class="tag" href="#work">作品</a><a class="tag" href="#pricing">方案</a><a class="tag" href="#contact">聯絡</a></div>
     </div>
   </footer>
-
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" aria-modal="true" role="dialog" aria-label="作品預覽">
-    <div class="inner">
-      <header class="container" style="padding:10px 14px;display:flex;align-items:center;justify-content:space-between">
-        <strong id="lb-title">作品標題</strong>
-        <div style="display:flex;gap:8px">
-          <button class="btn" id="prev">上一張</button>
-          <button class="btn" id="next">下一張</button>
-          <button class="btn ghost" id="close">關閉</button>
-        </div>
-      </header>
-      <div class="media"><img id="lb-img" alt="作品預覽" /></div>
-      <div class="lb-ctrl container"><span class="muted">點擊「關閉」或按 ESC 返回</span></div>
-    </div>
-  </div>
-
+  
   <button class="top" id="backTop" aria-label="回到頂部">↑</button>
 
   <script>
