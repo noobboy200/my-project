@@ -1,227 +1,618 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>潘皇書｜網站設計 Portfolio & 服務</title>
-  <meta name="description" content="專注高效能、好維護的網站設計與前端工程。作品集、服務項目、案例研究與聯絡方式。" />
-  <meta name="color-scheme" content="light dark" />
+  <title>你的名字｜網站設計師 Portfolio</title>
+  <meta name="description" content="專業網站設計／前端開發作品集、服務介紹、價格方案、流程、案例與聯絡方式。" />
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:title" content="你的名字｜網站設計師 Portfolio" />
+  <meta property="og:description" content="專業網站設計／前端開發作品集、服務介紹、價格方案、流程、案例與聯絡方式。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'><rect width='100%25' height='100%25' fill='%230a0a0a'/><text x='50%25' y='50%25' fill='%23ffffff' font-family='Arial' font-size='48' text-anchor='middle' dominant-baseline='middle'>Web Designer Portfolio</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230066ff'/%3E%3Cpath d='M12 20h40M12 32h28M12 44h20' stroke='%23fff' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
   <style>
     :root{
-      --bg:#0b0c10;--surface:#111317;--text:#e8e9ee;--muted:#b9bcc7;
-      --primary:#60a5fa;--accent:#34d399;--line:#22252b;
-      --r:16px;--space-4:1rem;--space-5:1.5rem;--space-6:2rem;--space-8:4rem;
-      --font:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans,Arial,sans-serif;
-      --fs-1:clamp(2rem,4vw,3rem);--fs-2:clamp(1.5rem,3vw,2rem);
+      --bg:#0b0c10;--card:#111317;--elev:#161922;--muted:#8b94a7;--text:#e9edf6;--accent:#5ea1ff;--accent-2:#8cf2c6;--accent-3:#ffd166;--danger:#ff6b6b;--ok:#39d98a;--border:#242837;--shadow:0 10px 30px rgba(0,0,0,.25);
     }
-    body{margin:0;font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;padding-top:70px}
-    a{text-decoration:none;color:inherit}
-    img{max-width:100%;display:block}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
+    img{max-width:100%;height:auto;display:block}
+    a{color:inherit;text-decoration:none}
+    .container{width:min(1160px,92vw);margin-inline:auto}
+    .btn{display:inline-flex;align-items:center;gap:.6rem;padding:.8rem 1.1rem;border:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.04),transparent);border-radius:12px;color:var(--text);box-shadow:var(--shadow);transition:.25s ease;cursor:pointer}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(0,0,0,.28)}
+    .btn.primary{background:linear-gradient(180deg,var(--accent),#3b78ff);color:#fff;border-color:#2e62e6}
+    .btn.ghost{background:transparent;border-color:var(--border)}
+    .tag{display:inline-flex;align-items:center;gap:.4rem;padding:.28rem .6rem;border:1px solid var(--border);border-radius:999px;font-size:.82rem;color:var(--muted);background:linear-gradient(180deg,rgba(255,255,255,.04),transparent)}
+    section{padding:84px 0}
+    h1{font-size:clamp(2rem,6vw,3.6rem);line-height:1.1;margin:0 0 .6rem}
+    h2{font-size:clamp(1.6rem,4vw,2.2rem);line-height:1.2;margin:0 0 .8rem}
+    h3{font-size:1.12rem;margin:.2rem 0 .4rem}
+    p{margin:.3rem 0 .8rem}
+    .muted{color:var(--muted)}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow)}
+    .grid{display:grid;gap:20px}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+    @media (max-width:980px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(2,1fr)}.grid-2{grid-template-columns:1fr}}
+    @media (max-width:640px){.grid-4,.grid-3{grid-template-columns:1fr}}
 
-    /* Header 固定在頂端 */
-    .site-header{
-      position:fixed;top:0;left:0;right:0;z-index:1000;
-      background:color-mix(in oklab,var(--bg) 96%, transparent);
-      border-bottom:1px solid var(--line);
-      backdrop-filter:saturate(180%) blur(8px);
+    /* Header */
+    .skip{position:absolute;left:-9999px;top:auto} .skip:focus{left:12px;top:12px;z-index:9999;background:#000;color:#fff;padding:.5rem;border-radius:8px}
+    header{position:fixed;top:0;left:0;right:0;z-index:999;background:color-mix(in oklab,var(--bg) 84%, transparent);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border);transition:.3s ease}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
+    header.scrolled .header-inner{padding:8px 0}
+    .logo{display:flex;align-items:center;gap:.6rem;font-weight:700}
+    .logo svg{width:28px;height:28px}
+    nav{display:flex;align-items:center;gap:10px}
+    .nav a{padding:.6rem .8rem;border-radius:10px;color:var(--muted)}
+    .nav a:hover,.nav a.active{background:var(--elev);color:var(--text)}
+    .menu{display:none}
+    @media (max-width:880px){
+      .nav{position:fixed;inset:64px 12px auto 12px;display:none;flex-direction:column;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px}
+      .nav.open{display:flex}
+      .menu{display:inline-flex}
     }
-    .site-header .container{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:0.75rem 5%;max-width:1200px;margin:auto;
-    }
-    .brand{font-weight:700;display:flex;align-items:center;gap:.5rem}
-    .site-nav ul{list-style:none;display:flex;gap:1rem;margin:0;padding:0}
-    .btn{padding:.6rem 1rem;border-radius:.5rem;border:1px solid var(--line)}
-    .btn--primary{background:var(--primary);color:#000;border:none}
-
-    /* 區塊共用 */
-    .section{padding:var(--space-8) 5%;max-width:1200px;margin:auto}
-    .section__title{font-size:var(--fs-2);margin-bottom:1.5rem}
 
     /* Hero */
-    .hero{padding:var(--space-8) 5%;max-width:1200px;margin:auto}
-    .hero__title{font-size:var(--fs-1);margin:0 0 1rem}
-    .hero__desc{color:var(--muted);margin-bottom:1.5rem}
-    .hero__cta{display:flex;gap:1rem;margin-bottom:1.5rem}
+    .hero{padding-top:120px}
+    .hero-wrap{display:grid;gap:28px;grid-template-columns:1.1fr .9fr;align-items:center}
+    @media (max-width:980px){.hero-wrap{grid-template-columns:1fr}}
+    .hero-art{aspect-ratio:4/3;border-radius:22px;background:conic-gradient(from 0deg at 30% 30%, #2b88ff, #8cf2c6, #ffd166, #2b88ff);mask:radial-gradient(circle at 45% 55%, transparent 0 22%, rgba(0,0,0,.4) 22.5% 28%, transparent 28.5% 100%), linear-gradient(#000 0 0);mask-composite:exclude;opacity:.9}
+    .stats{display:flex;gap:20px;flex-wrap:wrap}
+    .stat{padding:10px 14px;border:1px dashed var(--border);border-radius:14px;min-width:140px}
 
-    /* 作品集 */
-    .filters{display:flex;gap:.5rem;margin-bottom:1.5rem}
-    .filter{padding:.4rem .8rem;border:1px solid var(--line);border-radius:.4rem;cursor:pointer}
-    .filter.is-active{background:color-mix(in oklab,var(--primary) 30%, var(--surface))}
-    .work-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
-    .work-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;cursor:pointer}
-    .work-card img{width:100%;height:180px;object-fit:cover}
-    .work-card__meta{padding:.75rem}
-    .work-card__title{margin:0;font-size:1rem}
-    .work-card__tags{color:var(--muted);font-size:.85rem}
+    /* Logos */
+    .logos{opacity:.9;filter:grayscale(100%)}
+    .logos svg{height:28px;width:auto}
 
-    /* 聯絡表單 */
-    form{display:grid;gap:.75rem;max-width:600px}
-    input,textarea{padding:.6rem;border:1px solid var(--line);border-radius:.4rem;background:transparent;color:var(--text)}
-    textarea{resize:vertical}
-    .form-status{color:var(--muted);margin-top:.5rem}
+    /* Services */
+    .service{padding:18px}
+    .service .ic{width:26px;height:26px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:var(--elev);border:1px solid var(--border);margin-bottom:8px}
+
+    /* Work grid */
+    .filter{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+    .chip{padding:.4rem .8rem;border:1px solid var(--border);border-radius:999px;background:var(--elev);color:var(--muted);cursor:pointer}
+    .chip.active{background:var(--accent);color:#fff;border-color:#2e62e6}
+    .work-item{position:relative;overflow:hidden;border-radius:18px;border:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.02),transparent)}
+    .work-thumb{aspect-ratio:16/10;display:block;background:linear-gradient(135deg,#202635,#0d1017);position:relative}
+    .work-thumb::after{content:"";position:absolute;inset:0;background:radial-gradient(1200px 300px at -10% -20%, rgba(94,161,255,.35), transparent), radial-gradient(800px 200px at 120% 120%, rgba(140,242,198,.35), transparent)}
+    .work-meta{position:absolute;inset:auto 10px 10px 10px;padding:10px 12px;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.18);border-radius:12px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .work-item button{all:unset;cursor:pointer;display:block}
+
+    /* Case, process */
+    .case{padding:18px}
+    .step{display:flex;gap:14px;padding:16px;border:1px dashed var(--border);border-radius:16px;background:var(--elev)}
+    .num{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font-weight:700}
+
+    /* Pricing */
+    .price{padding:20px;display:flex;flex-direction:column;gap:10px}
+    .price h3{font-size:1.12rem}
+    .price .big{font-size:2.1rem;font-weight:800}
+    .price ul{padding-left:1.1rem;margin:0}
+
+    /* Testimonials */
+    .slider{position:relative;overflow:hidden}
+    .slides{display:flex;transition:transform .5s ease}
+    .slide{min-width:100%;padding:18px}
+    .slider .nav{position:absolute;inset:auto 0 10px 0;display:flex;justify-content:center;gap:10px}
+    .dot{width:9px;height:9px;border-radius:50%;background:var(--border);border:none}
+    .dot.active{background:var(--accent)}
+
+    /* FAQ */
+    .faq{border:1px solid var(--border);border-radius:14px;overflow:hidden}
+    .faq details{border-bottom:1px solid var(--border);background:var(--card)}
+    .faq summary{list-style:none;padding:14px 16px;cursor:pointer}
+    .faq summary::-webkit-details-marker{display:none}
+    .faq .ans{padding:0 16px 16px}
+
+    /* Contact */
+    form{display:grid;gap:12px}
+    label{font-size:.92rem;color:var(--muted)}
+    input,textarea,select{width:100%;padding:.8rem .9rem;border:1px solid var(--border);border-radius:12px;background:var(--card);color:var(--text)}
+    textarea{min-height:140px;resize:vertical}
+    .form-row{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+    @media (max-width:720px){.form-row{grid-template-columns:1fr}}
+    .help{font-size:.86rem;color:var(--muted)}
 
     /* Footer */
-    .site-footer{border-top:1px solid var(--line);padding:1.5rem 5%;text-align:center}
-    .social{display:flex;gap:.8rem;justify-content:center;margin-top:.5rem;list-style:none;padding:0}
+    footer{padding:24px 0;border-top:1px solid var(--border)}
 
     /* Lightbox */
-    .lightbox[hidden]{display:none}
-    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.8);display:grid;place-items:center;z-index:2000}
-    .lightbox__figure{max-width:90%;max-height:90%;display:grid;gap:.5rem}
-    .lightbox__img{max-height:80vh;object-fit:contain;border-radius:.5rem;background:#000}
-    .lightbox__close{position:absolute;top:1rem;right:1rem;font-size:1.5rem;background:#000;color:#fff;border:none;border-radius:50%;width:2rem;height:2rem;cursor:pointer}
-    .lightbox__caption{text-align:center;color:#ccc}
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;place-items:center;z-index:1000}
+    .lightbox.open{display:grid}
+    .lightbox .inner{width:min(1000px,92vw);background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+    .lightbox header{position:unset;background:unset;border-bottom:1px solid var(--border)}
+    .lightbox .media{max-height:70vh;display:grid;place-items:center;background:#000}
+    .lightbox img{width:100%;height:auto}
+    .lb-ctrl{display:flex;justify-content:space-between;padding:8px 12px;border-top:1px solid var(--border)}
+
+    /* Back to top */
+    .top{position:fixed;right:16px;bottom:16px;padding:.6rem .8rem;border-radius:12px;border:1px solid var(--border);background:var(--card);display:none;z-index:999}
+    .top.show{display:inline-flex}
+
+    /* reveal */
+    .reveal{opacity:0;transform:translateY(12px);transition:.6s ease}
+    .reveal.show{opacity:1;transform:none}
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
-      <a class="brand" href="#"><span>▦</span> PAN HS</a>
-      <nav class="site-nav">
-        <ul>
-          <li><a href="#services">服務</a></li>
-          <li><a href="#work">作品</a></li>
-          <li><a href="#cases">案例研究</a></li>
-          <li><a href="#about">關於我</a></li>
-          <li><a href="#contact" class="btn btn--primary">聯絡</a></li>
-        </ul>
+  <a class="skip" href="#main">跳到主內容</a>
+  <header id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="#home" aria-label="Home">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><rect x="6" y="10" width="52" height="44" rx="10" stroke="currentColor" stroke-width="4"/><path d="M16 22h32M16 32h24M16 42h16" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>
+        <span>你的名字 · Web Designer</span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="#services">服務</a>
+        <a href="#work">作品</a>
+        <a href="#cases">案例</a>
+        <a href="#process">流程</a>
+        <a href="#pricing">方案</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact" class="btn">取得報價</a>
       </nav>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="btn menu" id="menu" aria-expanded="false" aria-controls="nav">目錄</button>
+      </div>
     </div>
   </header>
 
-  <main>
+  <main id="main">
     <!-- Hero -->
-    <section class="hero">
-      <h1 class="hero__title">把你的點子，做成<br><span style="color:var(--accent)">高效能的網站</span></h1>
-      <p class="hero__desc">我把 UI/UX 與工程結構一次打包：快、好維護、易擴充，並且對 SEO 友善。</p>
-      <div class="hero__cta">
-        <a href="#work" class="btn btn--primary">看作品</a>
-        <a href="#services" class="btn">看服務</a>
+    <section class="hero" id="home">
+      <div class="container hero-wrap">
+        <div>
+          <span class="tag">可客製化 · RWD 響應式 · SEO 友善</span>
+          <h1>為你的品牌，打造<strong>高轉換</strong>與<strong>高品質</strong>的網站體驗。</h1>
+          <p class="muted">我專注於商業官網、登陸頁、電商前端與設計系統，結合設計美感與工程品質，幫助你更快成交、降低維護成本。</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 6px">
+            <a class="btn primary" href="#contact">立即洽談</a>
+            <a class="btn" href="#work">查看作品</a>
+          </div>
+          <div class="stats" aria-label="成果數據">
+            <div class="stat"><strong style="font-size:1.4rem">120+ </strong><span class="muted">完成專案</span></div>
+            <div class="stat"><strong style="font-size:1.4rem">98% </strong><span class="muted">客戶滿意度</span></div>
+            <div class="stat"><strong style="font-size:1.4rem">2~4 週</strong><span class="muted">一般交付</span></div>
+          </div>
+        </div>
+        <div class="hero-art card reveal" aria-hidden="true"></div>
+      </div>
+      <div class="container logos" style="margin-top:24px">
+        <div class="grid grid-4">
+          <svg viewBox="0 0 200 40" class="card" role="img" aria-label="Client A"><text x="50%" y="55%" text-anchor="middle" font-size="18" fill="currentColor">Client A</text></svg>
+          <svg viewBox="0 0 200 40" class="card" role="img" aria-label="Client B"><text x="50%" y="55%" text-anchor="middle" font-size="18" fill="currentColor">Client B</text></svg>
+          <svg viewBox="0 0 200 40" class="card" role="img" aria-label="Client C"><text x="50%" y="55%" text-anchor="middle" font-size="18" fill="currentColor">Client C</text></svg>
+          <svg viewBox="0 0 200 40" class="card" role="img" aria-label="Client D"><text x="50%" y="55%" text-anchor="middle" font-size="18" fill="currentColor">Client D</text></svg>
+        </div>
       </div>
     </section>
 
     <!-- Services -->
-    <section id="services" class="section">
-      <h2 class="section__title">服務項目</h2>
-      <p>這裡放你的服務介紹…</p>
+    <section id="services">
+      <div class="container">
+        <h2>服務項目</h2>
+        <p class="muted">從策略、設計到前端開發與上線顧問，提供一條龍服務。</p>
+        <div class="grid grid-3" style="margin-top:12px">
+          <article class="service card reveal">
+            <div class="ic" aria-hidden="true">🎯</div>
+            <h3>網站策略與 IA</h3>
+            <p class="muted">目標受眾、競品、網站地圖、轉換路徑規劃，確保方向正確。</p>
+          </article>
+          <article class="service card reveal">
+            <div class="ic" aria-hidden="true">🎨</div>
+            <h3>UI/UX 設計</h3>
+            <p class="muted">設計系統、元件庫、互動動效，像素級品質與一致性。</p>
+          </article>
+          <article class="service card reveal">
+            <div class="ic" aria-hidden="true">⚙️</div>
+            <h3>前端開發</h3>
+            <p class="muted">語意化 HTML、可維護 CSS、無框架/React/Vue 皆可，SEO 友善。</p>
+          </article>
+          <article class="service card reveal">
+            <div class="ic" aria-hidden="true">🚀</div>
+            <h3>效能最佳化</h3>
+            <p class="muted">Lighthouse、Core Web Vitals、圖片/資源優化與快取策略。</p>
+          </article>
+          <article class="service card reveal">
+            <div class="ic" aria-hidden="true">🛒</div>
+            <h3>電商與後台整合</h3>
+            <p class="muted">串接 CMS/訂單/金流、GA4、Search Console、像素追蹤。</p>
+          </article>
+          <article class="service card reveal">
+            <div class="ic" aria-hidden="true">🔒</div>
+            <h3>無障礙與安全</h3>
+            <p class="muted">WCAG AA、鍵盤可用、表單驗證、基本安全與隱私聲明。</p>
+          </article>
+        </div>
+      </div>
     </section>
 
     <!-- Work -->
-    <section id="work" class="section">
-      <h2 class="section__title">精選作品</h2>
-      <div class="filters">
-        <button class="filter is-active" data-filter="*">全部</button>
-        <button class="filter" data-filter="branding">品牌</button>
-        <button class="filter" data-filter="ecommerce">電商</button>
-        <button class="filter" data-filter="portfolio">作品集</button>
-      </div>
-      <div class="work-grid" data-js="work-grid">
-        <div class="work-card" data-tags="portfolio branding" data-caption="作品 A">
-          <img src="https://via.placeholder.com/400x300?text=Work+A" alt="作品 A">
-          <div class="work-card__meta">
-            <h3 class="work-card__title">作品 A</h3>
-            <span class="work-card__tags">#portfolio #branding</span>
-          </div>
+    <section id="work">
+      <div class="container">
+        <h2>精選作品</h2>
+        <div class="filter" role="tablist" aria-label="作品篩選">
+          <button class="chip active" data-cat="all" role="tab" aria-selected="true">全部</button>
+          <button class="chip" data-cat="web" role="tab">網站</button>
+          <button class="chip" data-cat="ui" role="tab">UI</button>
+          <button class="chip" data-cat="brand" role="tab">品牌</button>
+          <button class="chip" data-cat="app" role="tab">App</button>
         </div>
-        <div class="work-card" data-tags="ecommerce" data-caption="作品 B">
-          <img src="https://via.placeholder.com/400x300?text=Work+B" alt="作品 B">
-          <div class="work-card__meta">
-            <h3 class="work-card__title">作品 B</h3>
-            <span class="work-card__tags">#ecommerce</span>
-          </div>
+        <div class="grid grid-3" id="work-grid">
+          <!-- items -->
+          <article class="work-item reveal" data-cat="web">
+            <button data-src="placeholder" data-title="SaaS 登陸頁">
+              <div class="work-thumb"></div>
+              <div class="work-meta"><span>SaaS 登陸頁</span><span class="tag">網站</span></div>
+            </button>
+          </article>
+          <article class="work-item reveal" data-cat="ui">
+            <button data-src="placeholder" data-title="財務儀表板 UI">
+              <div class="work-thumb"></div>
+              <div class="work-meta"><span>財務儀表板 UI</span><span class="tag">UI</span></div>
+            </button>
+          </article>
+          <article class="work-item reveal" data-cat="brand">
+            <button data-src="placeholder" data-title="品牌識別＋Mini 官網">
+              <div class="work-thumb"></div>
+              <div class="work-meta"><span>品牌識別＋Mini 官網</span><span class="tag">品牌</span></div>
+            </button>
+          </article>
+          <article class="work-item reveal" data-cat="app">
+            <button data-src="placeholder" data-title="美食記帳 App">
+              <div class="work-thumb"></div>
+              <div class="work-meta"><span>美食記帳 App</span><span class="tag">App</span></div>
+            </button>
+          </article>
+          <article class="work-item reveal" data-cat="web">
+            <button data-src="placeholder" data-title="跨境電商前端">
+              <div class="work-thumb"></div>
+              <div class="work-meta"><span>跨境電商前端</span><span class="tag">網站</span></div>
+            </button>
+          </article>
+          <article class="work-item reveal" data-cat="ui">
+            <button data-src="placeholder" data-title="旅遊訂票 UI Kit">
+              <div class="work-thumb"></div>
+              <div class="work-meta"><span>旅遊訂票 UI Kit</span><span class="tag">UI</span></div>
+            </button>
+          </article>
         </div>
       </div>
     </section>
 
     <!-- Cases -->
-    <section id="cases" class="section">
-      <h2 class="section__title">案例研究</h2>
-      <p>這裡放案例研究樣板…</p>
+    <section id="cases">
+      <div class="container">
+        <h2>案例研究（Case Study）</h2>
+        <div class="grid grid-2">
+          <article class="case card reveal">
+            <h3>教育品牌官網改版：提升 42% 轉換</h3>
+            <p class="muted">從內容資訊架構與CTA 位置調整，導入效能優化與A/B 測試。</p>
+            <a class="btn" href="#" aria-disabled="true">閱讀摘要（稍後提供）</a>
+          </article>
+          <article class="case card reveal">
+            <h3>B2B SaaS：縮短 30% 銷售週期</h3>
+            <p class="muted">建立設計系統、整合行銷頁、技術文件與 Demo 流程。</p>
+            <a class="btn" href="#" aria-disabled="true">閱讀摘要（稍後提供）</a>
+          </article>
+        </div>
+      </div>
     </section>
 
-    <!-- About -->
-    <section id="about" class="section">
-      <h2 class="section__title">關於我</h2>
-      <p>嗨，我是 <strong>潘皇書</strong>。這裡放你的自我介紹。</p>
+    <!-- Process -->
+    <section id="process">
+      <div class="container">
+        <h2>合作流程</h2>
+        <div class="grid">
+          <div class="step reveal"><div class="num">1</div><div><strong>諮詢與需求彙整</strong><p class="muted">了解目標、受眾、頁數與功能，估算時程與預算。</p></div></div>
+          <div class="step reveal"><div class="num">2</div><div><strong>策略與線框</strong><p class="muted">資訊架構、Wireframe、內容清單與 SEO Keyword 初稿。</p></div></div>
+          <div class="step reveal"><div class="num">3</div><div><strong>視覺設計</strong><p class="muted">設計系統、頁面樣式、動效定義與設計驗收。</p></div></div>
+          <div class="step reveal"><div class="num">4</div><div><strong>前端開發</strong><p class="muted">語意化標記、RWD、可維護 CSS、效能與無障礙。</p></div></div>
+          <div class="step reveal"><div class="num">5</div><div><strong>上線與驗收</strong><p class="muted">SEO 基礎、GA4 與像素、CMS/表單/網域設定。</p></div></div>
+          <div class="step reveal"><div class="num">6</div><div><strong>維護與成長</strong><p class="muted">月更內容、AB 測試、轉換優化與成效報告。</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing">
+      <div class="container">
+        <h2>價格方案（可依需求客製）</h2>
+        <div class="grid grid-3">
+          <div class="price card reveal">
+            <h3>Starter</h3>
+            <div class="big">NT$ 28,000 起</div>
+            <p class="muted">單頁登陸頁或 1~3 頁迷你官網</p>
+            <ul>
+              <li>RWD 響應式</li>
+              <li>基本 SEO／速度優化</li>
+              <li>表單收件設定</li>
+            </ul>
+            <a class="btn primary" href="#contact">諮詢此方案</a>
+          </div>
+          <div class="price card reveal">
+            <h3>Pro（最常見）</h3>
+            <div class="big">NT$ 68,000 起</div>
+            <p class="muted">5~10 頁商業官網／品牌升級</p>
+            <ul>
+              <li>自訂元件／動畫</li>
+              <li>GA4／Search Console</li>
+              <li>內容上稿指引</li>
+            </ul>
+            <a class="btn primary" href="#contact">諮詢此方案</a>
+          </div>
+          <div class="price card reveal">
+            <h3>Enterprise</h3>
+            <div class="big">客製報價</div>
+            <p class="muted">設計系統／多語系／電商前端</p>
+            <ul>
+              <li>設計與前端協作流程</li>
+              <li>效能／無障礙審核</li>
+              <li>長期顧問／維運</li>
+            </ul>
+            <a class="btn primary" href="#contact">諮詢此方案</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials">
+      <div class="container">
+        <h2>客戶推薦</h2>
+        <div class="slider card reveal" aria-roledescription="carousel">
+          <div class="slides" id="slides">
+            <div class="slide">
+              <p>「合作非常順暢，從策略、設計到上線都很專業，轉換率顯著提升。」</p>
+              <p class="muted">— 某培訓公司行銷主管</p>
+            </div>
+            <div class="slide">
+              <p>「設計系統讓我們新品頁很快就能上線，節省了大量開發成本。」</p>
+              <p class="muted">— B2B SaaS PM</p>
+            </div>
+            <div class="slide">
+              <p>「網站速度很快、SEO 也有成效，品牌形象全面升級。」</p>
+              <p class="muted">— DTC 品牌主理人</p>
+            </div>
+          </div>
+          <div class="nav">
+            <button class="dot" aria-label="第 1 則"></button>
+            <button class="dot" aria-label="第 2 則"></button>
+            <button class="dot" aria-label="第 3 則"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech stack -->
+    <section id="stack">
+      <div class="container">
+        <h2>技術與工具</h2>
+        <div class="grid grid-4">
+          <div class="card" style="padding:14px;display:flex;align-items:center;gap:10px"><span>🧱</span><strong>HTML5</strong><span class="muted">語意化／可維護</span></div>
+          <div class="card" style="padding:14px;display:flex;align-items:center;gap:10px"><span>🎛️</span><strong>CSS3</strong><span class="muted">RWD／Grid／動畫</span></div>
+          <div class="card" style="padding:14px;display:flex;align-items:center;gap:10px"><span>⚡</span><strong>JavaScript</strong><span class="muted">無框架 & SPA</span></div>
+          <div class="card" style="padding:14px;display:flex;align-items:center;gap:10px"><span>🧩</span><strong>React/Vue</strong><span class="muted">元件化</span></div>
+          <div class="card" style="padding:14px;display:flex;align-items:center;gap:10px"><span>🗂️</span><strong>CMS</strong><span class="muted">Headless／整合</span></div>
+          <div class="card" style="padding:14px;display:flex;align-items:center;gap:10px"><span>🔍</span><strong>SEO/GA4</strong><span class="muted">追蹤與優化</span></div>
+          <div class="card" style="padding:14px;display:flex;align-items:center;gap:10px"><span>🧪</span><strong>Testing</strong><span class="muted">可近用性</span></div>
+          <div class="card" style="padding:14px;display:flex;align-items:center;gap:10px"><span>🌩️</span><strong>Cloud</strong><span class="muted">CDN/CI</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="container">
+        <h2>常見問題</h2>
+        <div class="faq reveal">
+          <details>
+            <summary><strong>時程需要多久？</strong></summary>
+            <div class="ans">依頁數與功能而定，常見為 2~4 週。電商或多語系另議。</div>
+          </details>
+          <details>
+            <summary><strong>是否提供設計到上線的一條龍？</strong></summary>
+            <div class="ans">可以，包含策略、設計、前端、網域、主機、GA/SEO 等設定。</div>
+          </details>
+          <details>
+            <summary><strong>需要準備什麼？</strong></summary>
+            <div class="ans">品牌素材、文案與參考網站。若無，我可協助整理與規劃。</div>
+          </details>
+        </div>
+      </div>
     </section>
 
     <!-- Contact -->
-    <section id="contact" class="section">
-      <h2 class="section__title">聯絡我</h2>
-      <form data-js="contact-form">
-        <input name="name" type="text" placeholder="姓名" required>
-        <input name="email" type="email" placeholder="Email" required>
-        <input name="subject" type="text" placeholder="主旨" required>
-        <textarea name="message" placeholder="訊息" rows="5"></textarea>
-        <button type="submit" class="btn btn--primary">送出</button>
-        <output class="form-status"></output>
-      </form>
+    <section id="contact">
+      <div class="container">
+        <h2>聯絡我／取得報價</h2>
+        <div class="grid grid-2">
+          <form id="form" class="card reveal" novalidate>
+            <div class="form-row">
+              <div>
+                <label for="name">你的稱呼</label>
+                <input id="name" name="name" placeholder="王小明" required />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="you@example.com" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div>
+                <label for="budget">預算區間（可估）</label>
+                <select id="budget" name="budget" required>
+                  <option value="">請選擇</option>
+                  <option>NT$ 20k - 40k</option>
+                  <option>NT$ 40k - 80k</option>
+                  <option>NT$ 80k - 150k</option>
+                  <option>NT$ 150k 以上</option>
+                </select>
+              </div>
+              <div>
+                <label for="timeline">希望時程</label>
+                <select id="timeline" name="timeline">
+                  <option>2 週內</option>
+                  <option>1 個月內</option>
+                  <option>彈性</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label for="msg">專案描述</label>
+              <textarea id="msg" name="message" placeholder="簡述目標、頁數、功能、參考網站等…" required></textarea>
+              <div class="help">送出後我會在 1~2 個工作天內回覆。</div>
+            </div>
+            <button class="btn primary" type="submit">送出需求</button>
+            <p id="form-status" class="muted" role="status"></p>
+          </form>
+
+          <aside class="card reveal" style="padding:16px">
+            <h3>其他聯絡方式</h3>
+            <p class="muted">Email：<a href="mailto:hello@example.com">hello@example.com</a><br>LinkedIn／X／Behance：<a href="#">@yourhandle</a></p>
+            <p class="muted">工作地點：台北／遠端皆可</p>
+            <div class="work-thumb" aria-hidden="true" style="border-radius:12px"></div>
+          </aside>
+        </div>
+      </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    © <span data-js="year"></span> 潘皇書. All rights reserved.
-    <ul class="social">
-      <li><a href="#">GitHub</a></li>
-      <li><a href="#">LinkedIn</a></li>
-    </ul>
+  <footer>
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <p class="muted">© <span id="year"></span> 你的名字 · Web Designer</p>
+      <div style="display:flex;gap:8px"><a class="tag" href="#work">作品</a><a class="tag" href="#pricing">方案</a><a class="tag" href="#contact">聯絡</a></div>
+    </div>
   </footer>
 
   <!-- Lightbox -->
-  <div class="lightbox" data-js="lightbox" hidden>
-    <button class="lightbox__close" data-js="lightbox-close">×</button>
-    <figure class="lightbox__figure">
-      <img class="lightbox__img" alt="">
-      <figcaption class="lightbox__caption"></figcaption>
-    </figure>
+  <div class="lightbox" id="lightbox" aria-modal="true" role="dialog" aria-label="作品預覽">
+    <div class="inner">
+      <header class="container" style="padding:10px 14px;display:flex;align-items:center;justify-content:space-between">
+        <strong id="lb-title">作品標題</strong>
+        <div style="display:flex;gap:8px">
+          <button class="btn" id="prev">上一張</button>
+          <button class="btn" id="next">下一張</button>
+          <button class="btn ghost" id="close">關閉</button>
+        </div>
+      </header>
+      <div class="media"><img id="lb-img" alt="作品預覽" /></div>
+      <div class="lb-ctrl container"><span class="muted">點擊「關閉」或按 ESC 返回</span></div>
+    </div>
   </div>
 
+  <button class="top" id="backTop" aria-label="回到頂部">↑</button>
+
   <script>
-  (function(){
-    // 年份
-    document.querySelectorAll('[data-js="year"]').forEach(el=>el.textContent=new Date().getFullYear());
+  // ===== Util =====
+  const $ = (s, sc=document) => sc.querySelector(s);
+  const $$ = (s, sc=document) => Array.from(sc.querySelectorAll(s));
 
-    // Work 篩選
-    const grid=document.querySelector('[data-js="work-grid"]');
-    const filters=document.querySelectorAll('.filter');
-    if(grid&&filters.length){
-      filters.forEach(btn=>{
-        btn.addEventListener('click',()=>{
-          filters.forEach(b=>b.classList.toggle('is-active',b===btn));
-          const f=btn.dataset.filter;
-          const cards=grid.querySelectorAll('.work-card');
-          cards.forEach(card=>{
-            const tags=(card.dataset.tags||'').split(' ');
-            card.style.display=(f==='*'||tags.includes(f))?'':'none';
-          });
-        });
-      });
+  // ===== Sticky header + active nav =====
+  const header = $('#site-header');
+  const sections = ['services','work','cases','process','pricing','faq','contact'].map(id=>({id, el:$('#'+id)}));
+  const navLinks = $$('#nav a');
+  const onScroll = () => {
+    header.classList.toggle('scrolled', window.scrollY>10);
+    const y = window.scrollY + 120;
+    for(const {id,el} of sections){
+      if(!el) continue;
+      const top = el.offsetTop, bottom = top + el.offsetHeight;
+      const link = $(`#nav a[href="#${id}"]`);
+      if(y>=top && y<bottom){ navLinks.forEach(a=>a.classList.remove('active')); if(link) link.classList.add('active'); }
     }
+    $('#backTop').classList.toggle('show', window.scrollY>600);
+  };
+  window.addEventListener('scroll', onScroll, {passive:true});
 
-    // Lightbox
-    const lb=document.querySelector('[data-js="lightbox"]');
-    const lbImg=lb.querySelector('.lightbox__img');
-    const lbCap=lb.querySelector('.lightbox__caption');
-    const closeBtn=lb.querySelector('[data-js="lightbox-close"]');
-    let items=[];let idx=-1;
-    function open(i){idx=i;const it=items[idx];lbImg.src=it.querySelector('img').src;lbCap.textContent=it.dataset.caption||'';lb.hidden=false;document.body.style.overflow='hidden';}
-    function close(){lb.hidden=true;document.body.style.overflow='';}
-    if(grid){items=[...grid.querySelectorAll('.work-card')];items.forEach((c,i)=>c.addEventListener('click',()=>open(i)));closeBtn.addEventListener('click',close);lb.addEventListener('click',e=>{if(e.target===lb)close();});}
+  // ===== Mobile menu =====
+  const menuBtn = $('#menu');
+  const nav = $('#nav');
+  menuBtn.addEventListener('click', ()=>{
+    const open = !nav.classList.contains('open');
+    nav.classList.toggle('open', open); menuBtn.setAttribute('aria-expanded', String(open));
+  });
+  nav.addEventListener('click', e=>{ if(e.target.tagName==='A'){ nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded','false'); } });
 
-    // 聯絡表單 mailto
-    const form=document.querySelector('[data-js="contact-form"]');
-    const status=form.querySelector('.form-status');
-    form.addEventListener('submit',e=>{
-      e.preventDefault();
-      const d=new FormData(form);
-      const to="yourmail@example.com"; // TODO 換成你的信箱
-      const body=`姓名: ${d.get('name')}\nEmail: ${d.get('email')}\n主旨: ${d.get('subject')}\n\n${d.get('message')}`;
-      window.location.href=`mailto:${to}?subject=${encodeURIComponent('[網站洽談] '+d.get('subject'))}&body=${encodeURIComponent(body)}`;
-      status.textContent="已開啟郵件軟體，若未自動開啟，請直接寄信至 "+to;
-      form.reset();
+  // ===== Reveal on view =====
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('show'); io.unobserve(en.target);} });
+  }, {threshold:.2});
+  $$('.reveal').forEach(el=>io.observe(el));
+
+  // ===== Smooth anchor scroll =====
+  $$('#nav a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', e=>{ e.preventDefault(); const id=a.getAttribute('href').slice(1); const el=$('#'+id); if(el){ window.scrollTo({top:el.offsetTop-70, behavior:'smooth'});} });
+  });
+
+  // ===== Work filter =====
+  const chips = $$('.chip');
+  const items = $$('#work-grid .work-item');
+  chips.forEach(ch=>ch.addEventListener('click', ()=>{
+    chips.forEach(c=>c.classList.remove('active')); ch.classList.add('active');
+    const cat = ch.dataset.cat;
+    items.forEach(it=>{
+      const show = (cat==='all') || it.dataset.cat===cat;
+      it.style.display = show ? '' : 'none';
     });
-  })();
+  }));
+
+  // ===== Lightbox (with placeholder image generator) =====
+  const lb = $('#lightbox'); const lbImg = $('#lb-img'); const lbTitle = $('#lb-title');
+  const workButtons = $$('#work-grid button'); let currentIndex = 0;
+  function placeholderSVG(title){
+    const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='1600' height='1000'>\
+      <defs>\
+        <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>\
+          <stop offset='0%' stop-color='%23202635'/>\
+          <stop offset='100%' stop-color='%230d1017'/>\
+        </linearGradient>\
+      </defs>\
+      <rect width='100%25' height='100%25' fill='url(%23g)'/>\
+      <text x='50%25' y='50%25' fill='%23ffffff' font-family='Arial' font-size='64' text-anchor='middle' dominant-baseline='middle'>${title}</text>\
+    </svg>`;
+    return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
+  }
+  function openLB(i){
+    currentIndex = i;
+    const btn = workButtons[i];
+    lbImg.src = placeholderSVG(btn.dataset.title);
+    lbTitle.textContent = btn.dataset.title;
+    lb.classList.add('open');
+  }
+  workButtons.forEach((b,i)=>b.addEventListener('click', ()=>openLB(i)));
+  $('#close').addEventListener('click', ()=>lb.classList.remove('open'));
+  $('#prev').addEventListener('click', ()=>openLB((currentIndex-1+workButtons.length)%workButtons.length));
+  $('#next').addEventListener('click', ()=>openLB((currentIndex+1)%workButtons.length));
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') lb.classList.remove('open'); });
+
+  // ===== Slider =====
+  const slidesEl = $('#slides'); const dots = $$('.dot'); let idx=0; let timer;
+  function go(i){ idx = (i + dots.length) % dots.length; slidesEl.style.transform = `translateX(${-idx*100}% )`; dots.forEach((d,j)=>d.classList.toggle('active', j===idx)); }
+  function auto(){ clearInterval(timer); timer = setInterval(()=>go(idx+1), 5000); }
+  dots.forEach((d,i)=>d.addEventListener('click', ()=>{ go(i); auto(); }));
+  go(0); auto();
+
+  // ===== Form (fake submit demo) =====
+  const form = $('#form'); const status = $('#form-status');
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    if(!form.reportValidity()){ status.textContent='請完整填寫必填欄位'; return; }
+    status.textContent = '已收到！我會在 1~2 個工作天內回覆你。';
+    form.reset();
+  });
+
+  // ===== Back to top =====
+  $('#backTop').addEventListener('click', ()=>window.scrollTo({top:0, behavior:'smooth'}));
+
+  // ===== Year =====
+  $('#year').textContent = new Date().getFullYear();
+
+  // init
+  onScroll();
   </script>
 </body>
 </html>
