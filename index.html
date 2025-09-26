@@ -98,29 +98,28 @@
     .step{display:flex;gap:14px;padding:16px;border:1px dashed var(--border);border-radius:16px;background:var(--elev)}
     .num{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font-weight:700}
     
-    /* Pricing */
-    .price{padding:20px;display:flex;flex-direction:column;gap:10px}
-    .price h3{font-size:1.12rem}
-    .price .big{font-size:2.1rem;font-weight:800}
-    .price ul{padding-left:1.1rem;margin:0}
-    /* Pricing 卡片佈局與互動 */
-    #pricing .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch;           /* 等高 */}
+    /* ===== Pricing — unified layout & glow hover ===== */
+    #pricing .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch;          /* 讓卡片填滿同一列高度 */grid-auto-rows:1fr;           /* 每列等高 */}
     @media (max-width:980px){
-      #pricing .grid-3{ grid-template-columns:repeat(2,1fr); }}
+    #pricing .grid-3{ grid-template-columns:repeat(2,1fr); }}
     @media (max-width:640px){
-      #pricing .grid-3{ grid-template-columns:1fr; }}
+    #pricing .grid-3{ grid-template-columns:1fr; }}
 
-    /* 卡片本體（沿用 service 的質感） */
-    .card.pricing{display:flex;flex-direction:column; justify-content:flex-start;gap:10px;padding:20px;border-radius:16px;background:var(--card);border:1px solid var(--border);min-height:220px;              /* 視覺一致 */transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;}
-    .card.pricing:hover{transform:translateY(-4px);    /* 微微凸起 */box-shadow:0 14px 34px rgba(0,0,0,.22),           /* 原本陰影 */0 0 12px rgba(100,180,255,.45);        /* 邊框外微光（淡藍） */border-color:rgba(100,180,255,.65);      /* 邊框變亮 */}
+    /* 卡片本體：一致的內距/圓角/排版 */
+    .card.pricing{height:100%;display:flex;flex-direction:column;justify-content:flex-start;gap:12px;padding:20px;border-radius:16px;background:var(--card);border:1px solid var(--border);/* 讓所有卡片的視覺高度接近（避免某張太矮） */min-height:240px;transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;}
 
-    /* 標題、售價、清單的排版微調 */
-    .card.pricing h3{margin:0 0 6px;font-size:1.06rem;line-height:1.35;letter-spacing:.2px;}
-    .card.pricing .price{margin:0 0 10px;font-size:1.15rem;font-weight:700;}
-    .card.pricing ul{margin:6px 0 0;padding-left:1.1rem;display:grid;gap:6px;}
-    #pricing h2 + p { margin-top:6px; }
-    #pricing h2 { scroll-margin-top:70px; } /* 內頁錨點更好停 */
+    /* Hover：微浮起 + 邊框發光（與服務項目一致） */
+    .card.pricing:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(0,0,0,.22),0 0 12px rgba(100,180,255,.45);border-color:rgba(100,180,255,.65);}
 
+    /* 標題、價錢、清單：字級/行距/間距統一 */
+    .card.pricing h3{margin:0;font-size:1.06rem;line-height:1.35;letter-spacing:.2px;}
+    .card.pricing .price{margin:4px 0 8px;font-size:1.12rem;font-weight:700;line-height:1.45;}
+    .card.pricing ul{margin:6px 0 0;padding-left:1.1rem;     /* 統一縮排 */list-style:disc;display:grid;gap:6px;                 /* 每條條目間距一致 */}
+    #pricing h2 + p{ margin-top:6px; } /* 小標題行距微調 */
+
+    /* 提醒文字（6 個月條款）置中與間距 */
+    #pricing .note{margin-top:16px;text-align:center;font-size:.95rem;}
+    
     /* Testimonials */
     .slider{position:relative;overflow:hidden}
     .slides{display:flex;transition:transform .5s ease}
@@ -426,7 +425,7 @@
           </ul>
         </article>
       </div>
-         <p class="muted" style="margin-top:16px; text-align:center; font-size:0.95rem;">
+         <p class="muted note" style="margin-top:16px; text-align:center; font-size:0.95rem;">
            若需維護服務，至少需簽訂 6 個月方案
          </p>
     </div>
