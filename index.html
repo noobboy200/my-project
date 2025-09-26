@@ -108,7 +108,8 @@
 
     /* 提醒文字（6 個月條款） */
     #pricing .note{margin-top:16px;text-align:center;font-size:.95rem;}
-
+    #pricing .note{grid-column:1 / -1;   /* 即使被放進 grid，也佔滿整列 */display:block;text-align:center;font-size:.95rem;color:var(--muted);margin-top:20px;}
+    
     /* Testimonials */
     .slider{position:relative;overflow:hidden}
     .slides{display:flex;transition:transform .5s ease}
@@ -394,7 +395,7 @@
               <li>效能檢測與改善</li>
             </ul>
           </article>
-        </div>
+          </div>
 
         <p class="muted note">若需維護服務，至少需簽訂 6 個月方案</p>
       </div>
