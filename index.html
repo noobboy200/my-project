@@ -109,27 +109,33 @@
     .faq summary::-webkit-details-marker{display:none}
     .faq .ans{padding:0 16px 16px}
 
-    /* Contact */
-    form{display:grid;gap:12px}
-    label{font-size:.92rem;color:var(--muted)}
-    input,textarea,select{width:100%;padding:.8rem .9rem;border:1px solid var(--border);border-radius:12px;background:var(--card);color:var(--text)}
-    textarea{min-height:140px;resize:vertical}
-    .form-row{display:grid;gap:12px;grid-template-columns:1fr 1fr}
-    @media (max-width:720px){.form-row{grid-template-columns:1fr}}
-    .help{font-size:.86rem;color:var(--muted)}
+    /* Contact（refined） */
+    #contact form.card{padding:18px 20px;      /* 內距，避免貼邊 */ display:grid;gap:16px;               /* 欄位間距統一 */}
+    #contact .form-row{display:grid;grid-template-columns:1fr 1fr; /* 左右兩欄 */ gap:14px;}
+    @media (max-width:720px){ #contact .form-row{ grid-template-columns:1fr; } /* 手機改為單欄 */}
+
+    #contact label{ display:block; font-size:.95rem; font-weight:600; color:var(--text);margin:2px 0 6px;       /* 標籤與欄位距離 */}
+
+    /* 欄位外觀統一、不要超出容器 */
+    #contact input,
+    #contact textarea,
+    #contact select{width:100%;padding:.9rem 1rem;border:1px solid color-mix(in oklab, var(--border) 85%, transparent);border-radius:12px;background:var(--elev); /* 與卡片做出層次 */color:var(--text);box-sizing:border-box;box-shadow: inset 0 1px 0 rgba(255,255,255,.03);}
+    #contact input::placeholder,
+    #contact textarea::placeholder{ color:var(--muted); }
+    #contact textarea{min-height:160px;       /* 高度更舒適 */resize:vertical;        /* 可垂直縮放 */max-width:100%;}
+
+    /* 聚焦時的可視化外框 */
+    #contact input:focus,
+    #contact textarea:focus,
+    #contact select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in oklab, var(--accent) 35%, transparent);}
+
+    #contact .help{font-size:.86rem;color:var(--muted);margin-top:-4px;        /* 與 textarea 更貼近 */}
+
+    /* 送出按鈕高度與圓角統一 */
+    #contact button[type="submit"]{height:48px;border-radius:12px;}
     
-    #contact form {
-      display: flex;
-      flex-direction: column;
-    }
-
-    #contact textarea {
-      box-sizing: border-box;   /* 確保不會超出父層 */
-      width: 100%;              /* 撐滿格子 */
-      max-width: 100%;          /* 限制最大寬度 */
-      border-radius: 12px;      /* 保持和 input 一致 */
-    }
-
+    /* 讓左右兩側卡片拉齊高度（選配） */
+    #contact .grid.grid-2{ align-items: stretch; }
 
     /* Footer */
     footer{padding:24px 0;border-top:1px solid var(--border)}
