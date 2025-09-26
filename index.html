@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>潘皇書｜網站設計 Portfolio & 服務</title>
+  <meta name="description" content="專注高效能、好維護的網站設計與前端工程。作品集、服務項目、案例研究與聯絡方式。" />
+  <meta name="keywords" content="網站設計, 前端工程, UI/UX, RWD, Cloudflare, SEO, 台灣, Portfolio" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23111317'/><path d='M14 46V18h12l4 6h20v22H14Z' fill='%2360a5fa'/></svg>" type="image/svg+xml" />
+  <meta property="og:title" content="潘皇書｜網站設計 Portfolio & 服務" />
+  <meta property="og:description" content="專注高效能、好維護的網站設計與前端工程。作品集、服務項目、案例研究與聯絡方式。" />
+  <meta property="og:type" content="website" />
+  <!-- og:image 以單檔為主不外連，如要社群卡片，建議日後放絕對網址 -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <style>
+    /* ========== 基礎設置（單檔版） ========== */
+    :root{
+      --bg:#0b0c10;--surface:#111317;--text:#e8e9ee;--muted:#b9bcc7;--primary:#60a5fa;--accent:#34d399;--line:#22252b;
+      --r:16px;--space-1:.25rem;--space-2:.5rem;--space-3:.75rem;--space-4:1rem;--space-5:1.5rem;--space-6:2rem;--space-7:3rem;--space-8:4rem;
+      --font:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans,Arial,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+      --fs-1:clamp(2rem,4vw,3rem);--fs-2:clamp(1.5rem,3vw,2rem);--fs-3:clamp(1.125rem,2vw,1.25rem);--fs-4:1rem;--lh:1.7
+    }
+    @media (prefers-color-scheme: light){
+      :root{--bg:#f7f7fb;--surface:#ffffff;--text:#1a1c22;--muted:#4b4f5d;--line:#e4e6ee}
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:var(--font);line-height:var(--lh);background:var(--bg);color:var(--text);text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+    img,svg{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    a:hover{text-decoration:underline}
+    button{font:inherit}
+    :focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+    .lead{font-size:var(--fs-3);color:var(--muted)}
+
+    .container{width:min(1200px,92%);margin-inline:auto}
+    .section{padding-block:var(--space-8)}
+    .section__title{font-size:var(--fs-2);margin:0 0 var(--space-5)}
+    .section__head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-4);margin-bottom:var(--space-5)}
+    .grid{display:grid;gap:var(--space-5)}
+    .grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media (max-width:900px){.grid--3{grid-template-columns:1fr 1fr}}
+    @media (max-width:640px){.grid--3{grid-template-columns:1fr}}
+
+    .site-header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(8px);background:color-mix(in oklab,var(--bg) 80%,transparent);border-bottom:1px solid var(--line)}
+    .site-header .container{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding-block:var(--space-3)}
+    .brand{display:inline-flex;align-items:center;gap:.6rem;font-weight:700}
+    .brand__logo{font-size:1.25rem}
+    .brand__text{letter-spacing:.08em}
+    .site-nav .navlist{display:flex;gap:.8rem;align-items:center;margin:0;padding:0;list-style:none}
+    .nav-toggle{display:none}
+    @media (max-width:800px){
+      .nav-toggle{display:inline-flex;background:var(--surface);border:1px solid var(--line);padding:.4rem .6rem;border-radius:.6rem}
+      .site-nav .navlist{display:none;flex-direction:column;position:absolute;top:60px;right:4%;background:var(--surface);border:1px solid var(--line);padding:var(--space-4);border-radius:var(--r);min-width:220px}
+      .site-nav .navlist.is-open{display:flex}
+    }
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.66rem 1rem;border:1px solid var(--line);border-radius:.8rem;background:var(--surface);cursor:pointer;transition:transform .15s ease,background .2s ease,border-color .2s ease;text-decoration:none}
+    .btn:hover{transform:translateY(-1px)}
+    .btn--primary{background:var(--primary);border-color:transparent;color:#071021}
+    .btn--primary:hover{filter:brightness(1.05)}
+
+    .hero{padding-block:var(--space-8);border-bottom:1px solid var(--line)}
+    .hero__inner{display:grid;grid-template-columns:1.2fr .8fr;gap:var(--space-6);align-items:center}
+    .hero__title{font-size:var(--fs-1);line-height:1.15;margin:0 0 var(--space-4)}
+    .hero__desc{color:var(--muted);margin:0 0 var(--space-5)}
+    .hero__cta{display:flex;gap:.8rem;margin-bottom:var(--space-4)}
+    .hero__bullets{margin:0;padding-left:1.2em;color:var(--muted)}
+    .hero__media{aspect-ratio:16/11;border:1px dashed var(--line);border-radius:var(--r);background:var(--surface);display:grid;place-items:center;padding:var(--space-4)}
+    .accent{color:var(--accent)}
+    @media (max-width:960px){.hero__inner{grid-template-columns:1fr}}
+
+    .card{background:var(--surface);border:1px solid var(--line);padding:var(--space-5);border-radius:var(--r)}
+    .card__title{margin:0 0 var(--space-3);font-size:1.25rem}
+    .card__desc{color:var(--muted);margin:0 0 var(--space-3)}
+    .card__list{margin:0;padding-left:1.2em}
+
+    .filters{display:flex;flex-wrap:wrap;gap:.5rem}
+    .filter{padding:.4rem .8rem;border-radius:.6rem;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+    .filter.is-active{background:color-mix(in oklab,var(--primary) 30%,var(--surface))}
+    .work-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--space-4)}
+    .work-card{grid-column:span 4;display:flex;flex-direction:column;gap:.6rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;text-decoration:none;transition:transform .15s ease,box-shadow .2s ease}
+    .work-card:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.18)}
+    @media (max-width:1024px){.work-card{grid-column:span 6}}
+    @media (max-width:640px){.work-card{grid-column:span 12}}
+    .work-card__media{aspect-ratio:16/10;background:#0e1015}
+    .work-card__media img{width:100%;height:100%;object-fit:cover}
+    .work-card__meta{display:flex;align-items:center;justify-content:space-between;gap:.4rem;padding:var(--space-3) var(--space-4)}
+    .work-card__title{margin:0;font-size:1.05rem}
+    .work-card__tags{color:var(--muted);font-size:.9rem}
+    .more-note{margin-top:var(--space-4);color:var(--muted)}
+
+    .badge{background:color-mix(in oklab,var(--accent) 30%,var(--surface));padding:.2rem .5rem;border-radius:.5rem;border:1px solid var(--line)}
+    .case{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:var(--space-5)}
+    .case__head{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3);flex-wrap:wrap}
+    .case__title{margin:0}
+    .case__meta{display:flex;gap:1rem;flex-wrap:wrap;color:var(--muted);padding:0;margin:0;list-style:none}
+    .case-detail .lead{margin-top:0}
+    .case-media{margin-block:var(--space-4)}
+    .case-media img{border-radius:var(--r);border:1px solid var(--line)}
+
+    .about{display:grid;grid-template-columns:.9fr 1.1fr;gap:var(--space-6);align-items:center}
+    .about__media{aspect-ratio:1/1;border-radius:50%;overflow:hidden;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center}
+    .about__stats{display:flex;gap:var(--space-5);flex-wrap:wrap;margin-top:var(--space-4)}
+    .stat{display:flex;flex-direction:column;gap:.2rem}
+    .stat__num{font-weight:700}
+    @media (max-width:900px){.about{grid-template-columns:1fr}}
+
+    .contact{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:var(--space-5)}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)}
+    .field{display:flex;flex-direction:column;gap:.35rem}
+    .field input,.field textarea{width:100%;padding:.7rem .9rem;border-radius:.6rem;border:1px solid var(--line);background:transparent;color:var(--text)}
+    .field--full{grid-column:1/-1}
+    .form-help{color:var(--muted)}
+    .form-actions{display:flex;gap:.6rem;margin-top:var(--space-4)}
+    .form-status{display:block;margin-top:.6rem;color:var(--muted)}
+
+    .site-footer{border-top:1px solid var(--line);padding-block:var(--space-6)}
+    .footer__inner{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap}
+    .footer__copy{margin:0}
+    .social{display:flex;gap:.8rem;list-style:none;margin:0;padding:0}
+
+    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{position:static;width:auto;height:auto;padding:.4rem;background:var(--primary);color:#000}
+
+    .lightbox[hidden]{display:none}
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.7);display:grid;place-items:center;z-index:100}
+    .lightbox__figure{max-width:min(1200px,94%);max-height:90vh;display:grid;gap:.6rem}
+    .lightbox__img{max-height:78vh;object-fit:contain;border-radius:.8rem;background:#0e1015}
+    .lightbox__caption{text-align:center;color:#ccd0dd}
+    .lightbox__close,.lightbox__nav{position:fixed;border:none;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(6px);padding:.4rem .6rem;border-radius:.6rem;cursor:pointer}
+    .lightbox__close{top:1rem;right:1rem;font-size:1.4rem;line-height:1}
+    .lightbox__nav{top:50%;transform:translateY(-50%)}
+    .lightbox__nav--prev{left:1rem}
+    .lightbox__nav--next{right:1rem}
+
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":"潘皇書",
+    "url":"https://your-domain.example",
+    "jobTitle":"Web Designer & Frontend Engineer",
+    "sameAs":[],
+    "description":"專注高效能、好維護的網站設計與前端工程。"
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主內容</a>
+
+  <header class="site-header" data-js="sticky-header">
+    <div class="container">
+      <a class="brand" href="/" aria-label="首頁">
+        <span class="brand__logo" aria-hidden="true">▦</span>
+        <span class="brand__text">PAN HS</span>
+      </a>
+      <nav class="site-nav" aria-label="主選單">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="navlist" data-js="nav-toggle">選單</button>
+        <ul id="navlist" class="navlist">
+          <li><a href="#services">服務</a></li>
+          <li><a href="#work">作品</a></li>
+          <li><a href="#cases">案例研究</a></li>
+          <li><a href="#about">關於我</a></li>
+          <li><a href="#contact" class="btn btn--primary">聯絡</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" aria-label="主視覺">
+      <div class="container hero__inner">
+        <div class="hero__copy">
+          <h1 class="hero__title">把你的點子，做成<br><span class="accent">高效能的網站</span></h1>
+          <p class="hero__desc">我把 UI/UX 與工程結構一次打包：快、好維護、易擴充，並且對 SEO 友善。支援 Cloudflare Pages、R2、GA4 佈署與最佳化。</p>
+          <div class="hero__cta">
+            <a href="#work" class="btn btn--primary">看作品</a>
+            <a href="#services" class="btn">看服務</a>
+          </div>
+          <ul class="hero__bullets" role="list">
+            <li>RWD 響應式｜可擴充設計系統</li>
+            <li>輕量、無框架依賴｜可直上 Cloudflare</li>
+            <li>針對核心 Web Vitals 最佳化</li>
+          </ul>
+        </div>
+        <div class="hero__media">
+          <img src="" alt="網站設計與前端工程示意" decoding="async" fetchpriority="high" id="hero-img" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="section" aria-labelledby="services-title">
+      <div class="container">
+        <h2 id="services-title" class="section__title">服務項目</h2>
+        <div class="grid grid--3">
+          <article class="card">
+            <h3 class="card__title">形象官網 / 個人品牌</h3>
+            <p class="card__desc">為中小企業、個人品牌打造高質感官網，重視敘事與轉換率。</p>
+            <ul class="card__list">
+              <li>資訊架構與導覽規劃</li>
+              <li>SEO 基礎設置</li>
+              <li>內容上線協助</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3 class="card__title">作品集 / 案例頁模板</h3>
+            <p class="card__desc">為設計師、攝影師、學生履歷打造快速上稿與易瀏覽的作品集。</p>
+            <ul class="card__list">
+              <li>圖片燈箱與分類篩選</li>
+              <li>案例研究模板</li>
+              <li>Cloudflare R2 圖片託管建議</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3 class="card__title">前端工程與最佳化</h3>
+            <p class="card__desc">使用語義化 HTML、可維護 CSS、零依賴純 JS，提升速度與穩定。</p>
+            <ul class="card__list">
+              <li>Core Web Vitals 改善</li>
+              <li>可組件化樣式與指令碼</li>
+              <li>雲端佈署與快取策略</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work (Portfolio) -->
+    <section id="work" class="section" aria-labelledby="work-title">
+      <div class="container">
+        <div class="section__head">
+          <h2 id="work-title" class="section__title">精選作品</h2>
+          <div class="filters" role="group" aria-label="作品分類篩選">
+            <button class="filter is-active" data-filter="*">全部</button>
+            <button class="filter" data-filter="branding">品牌</button>
+            <button class="filter" data-filter="ecommerce">電商</button>
+            <button class="filter" data-filter="portfolio">作品集</button>
+          </div>
+        </div>
+
+        <div class="work-grid" data-js="work-grid">
+          <!-- 使用 data-full 帶入大圖（data URL），img 用小圖（同一份亦可） -->
+          <a class="work-card" href="#" data-tags="portfolio branding" data-caption="作品 A｜個人品牌網站" data-full="">
+            <figure class="work-card__media">
+              <img alt="作品 A 預覽圖" loading="lazy" decoding="async" />
+            </figure>
+            <div class="work-card__meta">
+              <h3 class="work-card__title">作品 A｜個人品牌</h3>
+              <span class="work-card__tags">#portfolio #branding</span>
+            </div>
+          </a>
+
+          <a class="work-card" href="#" data-tags="ecommerce" data-caption="作品 B｜簡易電商頁" data-full="">
+            <figure class="work-card__media">
+              <img alt="作品 B 預覽圖" loading="lazy" decoding="async" />
+            </figure>
+            <div class="work-card__meta">
+              <h3 class="work-card__title">作品 B｜電商頁</h3>
+              <span class="work-card__tags">#ecommerce</span>
+            </div>
+          </a>
+
+          <a class="work-card" href="#" data-tags="portfolio" data-caption="作品 C｜攝影作品集" data-full="">
+            <figure class="work-card__media">
+              <img alt="作品 C 預覽圖" loading="lazy" decoding="async" />
+            </figure>
+            <div class="work-card__meta">
+              <h3 class="work-card__title">作品 C｜攝影集</h3>
+              <span class="work-card__tags">#portfolio</span>
+            </div>
+          </a>
+
+          <a class="work-card" href="#" data-tags="branding" data-caption="作品 D｜活動登陸頁" data-full="">
+            <figure class="work-card__media">
+              <img alt="作品 D 預覽圖" loading="lazy" decoding="async" />
+            </figure>
+            <div class="work-card__meta">
+              <h3 class="work-card__title">作品 D｜活動頁</h3>
+              <span class="work-card__tags">#branding</span>
+            </div>
+          </a>
+
+          <a class="work-card" href="#" data-tags="portfolio ecommerce" data-caption="作品 E｜作品＋商品" data-full="">
+            <figure class="work-card__media">
+              <img alt="作品 E 預覽圖" loading="lazy" decoding="async" />
+            </figure>
+            <div class="work-card__meta">
+              <h3 class="work-card__title">作品 E｜作品＋商品</h3>
+              <span class="work-card__tags">#portfolio #ecommerce</span>
+            </div>
+          </a>
+        </div>
+
+        <p class="more-note">想看更多？前往 <a href="#cases">案例研究</a> 或 <a href="#contact">聯絡我</a> 索取完整清單。</p>
+      </div>
+    </section>
+
+    <!-- Case Studies -->
+    <section id="cases" class="section" aria-labelledby="cases-title">
+      <div class="container">
+        <h2 id="cases-title" class="section__title">案例研究（樣板）</h2>
+        <div class="case-list">
+          <article class="case">
+            <div class="case__head">
+              <h3 class="case__title"><a href="#cases">案例標題：XX 品牌形象官網</a></h3>
+              <span class="badge">模板</span>
+            </div>
+            <p class="case__summary">專注於敘事與轉換率的品牌官網，導入輕量級動畫，改善導航清晰度與內容模組化。</p>
+            <ul class="case__meta" role="list">
+              <li><strong>負責範疇：</strong>IA、UI、前端、佈署</li>
+              <li><strong>關鍵成果：</strong>跳出率下降 23%，轉換率 +18%</li>
+              <li><strong>技術棧：</strong>HTML、CSS、JS、Cloudflare Pages、R2</li>
+            </ul>
+            <figure class="case-media">
+              <img id="case-hero" alt="案例頁展示圖" loading="lazy" decoding="async" />
+            </figure>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="section" aria-labelledby="about-title">
+      <div class="container">
+        <div class="about">
+          <div class="about__media">
+            <img id="about-img" alt="個人照片或圖形" loading="lazy" decoding="async" />
+          </div>
+          <div class="about__copy">
+            <h2 id="about-title" class="section__title">關於我</h2>
+            <p>嗨，我是 <strong>潘皇書</strong>。我把 UI/UX 的細節與工程的穩定結構結合，為客戶做出「快、穩、易維護」的網站。也協助雲端佈署、R2 圖片託管與 GA4 追蹤設定。</p>
+            <ul>
+              <li>熟悉資訊架構（IA）、設計系統與文字層級</li>
+              <li>語義化標記、可及性（a11y）、SEO 基礎</li>
+              <li>Core Web Vitals 優化與快取策略</li>
+            </ul>
+            <div class="about__stats" role="group" aria-label="簡要數據">
+              <div class="stat"><span class="stat__num">30+</span><span class="stat__label">模塊組件</span></div>
+              <div class="stat"><span class="stat__num">95+</span><span class="stat__label">Lighthouse 分數</span></div>
+              <div class="stat"><span class="stat__num">&lt;200KB</span><span class="stat__label">首屏資源</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section" aria-labelledby="contact-title">
+      <div class="container">
+        <h2 id="contact-title" class="section__title">聯絡我</h2>
+        <form class="contact" data-js="contact-form" aria-describedby="contact-help">
+          <div class="form-grid">
+            <label class="field">
+              <span>您的姓名</span>
+              <input name="name" type="text" placeholder="王小明" required autocomplete="name" />
+            </label>
+            <label class="field">
+              <span>Email</span>
+              <input name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
+            </label>
+            <label class="field field--full">
+              <span>需求簡述</span>
+              <input name="subject" type="text" placeholder="想製作形象官網／作品集..." required />
+            </label>
+            <label class="field field--full">
+              <span>訊息</span>
+              <textarea name="message" placeholder="請簡述你的目標、時程與預算範圍..." rows="5" required></textarea>
+            </label>
+          </div>
+          <p id="contact-help" class="form-help">送出後我會在 1–2 個工作日回覆。若表單無法使用，也可直接寄信至 <a href="mailto:yourmail@example.com">yourmail@example.com</a>。</p>
+          <div class="form-actions">
+            <button type="submit" class="btn btn--primary">送出</button>
+            <button type="reset" class="btn">清除</button>
+          </div>
+          <output class="form-status" role="status" aria-live="polite"></output>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer__inner">
+      <p class="footer__copy">© <span data-js="year"></span> 潘皇書. All rights reserved.</p>
+      <ul class="social" role="list" aria-label="社群連結">
+        <li><a href="#" aria-label="GitHub" rel="me">GitHub</a></li>
+        <li><a href="#" aria-label="LinkedIn" rel="me">LinkedIn</a></li>
+        <li><a href="#" aria-label="YouTube" rel="me">YouTube</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" data-js="lightbox" hidden>
+    <button class="lightbox__close" data-js="lightbox-close" aria-label="關閉">×</button>
+    <figure class="lightbox__figure">
+      <img class="lightbox__img" alt="" />
+      <figcaption class="lightbox__caption"></figcaption>
+    </figure>
+    <button class="lightbox__nav lightbox__nav--prev" data-js="lightbox-prev" aria-label="上一張">‹</button>
+    <button class="lightbox__nav lightbox__nav--next" data-js="lightbox-next" aria-label="下一張">›</button>
+  </div>
+
+  <script>
+  /* 單檔版主腳本：會自動注入 SVG 圖到各處，並啟用導航、篩選、燈箱、mailto 表單 */
+  (function(){
+    // ===== 產生簡易 SVG 佔位圖（轉為 data URL）=====
+    function svgDataURL(label, w=1200, h=800){
+      const esc = s => s.replace(/#/g, '%23').replace(/"/g, "'").replace(/</g, '%3C').replace(/>/g, '%3E').replace(/\s+/g,' ');
+      const svg =
+`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+  <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+    <stop offset="0%" stop-color="#1f2937"/><stop offset="100%" stop-color="#0b1220"/></linearGradient></defs>
+  <rect width="100%" height="100%" fill="url(#g)"/>
+  <g fill="none" stroke="#334155" stroke-width="2">
+    <path d="M0 ${h*0.2} H${w}"/><path d="M0 ${h*0.4} H${w}"/><path d="M0 ${h*0.6} H${w}"/><path d="M0 ${h*0.8} H${w}"/>
+  </g>
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af"
+        font-family="system-ui,-apple-system,Segoe UI,Roboto,Noto Sans,Arial,sans-serif" font-size="48">${label}</text>
+</svg>`;
+      return "data:image/svg+xml;utf8," + esc(svg);
+    }
+
+    // 預設圖
+    const heroURL = svgDataURL("HERO / 主視覺", 1200, 720);
+    const caseURL = svgDataURL("CASE HERO", 1200, 720);
+    const aboutURL = svgDataURL("ABOUT", 900, 900);
+    const works = [
+      svgDataURL("WORK A", 1200, 800),
+      svgDataURL("WORK B", 1200, 800),
+      svgDataURL("WORK C", 1200, 800),
+      svgDataURL("WORK D", 1200, 800),
+      svgDataURL("WORK E", 1200, 800)
+    ];
+
+    // 注入主圖
+    const heroImg = document.getElementById('hero-img');
+    if(heroImg) heroImg.src = heroURL;
+    const caseHero = document.getElementById('case-hero');
+    if(caseHero) caseHero.src = caseURL;
+    const aboutImg = document.getElementById('about-img');
+    if(aboutImg) aboutImg.src = aboutURL;
+
+    // 注入作品圖（縮圖與大圖同一份）
+    const workCards = Array.from(document.querySelectorAll('.work-grid .work-card'));
+    workCards.forEach((card, i) => {
+      const img = card.querySelector('img');
+      const src = works[i % works.length];
+      if(img) img.src = src;
+      card.dataset.full = src;
+    });
+
+    // 年份
+    document.querySelectorAll('[data-js="year"]').forEach(el => el.textContent = new Date().getFullYear());
+
+    // 行動版導覽
+    const toggle = document.querySelector('[data-js="nav-toggle"]');
+    const navlist = document.getElementById('navlist');
+    if(toggle && navlist){
+      toggle.addEventListener('click', () => {
+        const open = navlist.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+    }
+
+    // Work 篩選
+    const grid = document.querySelector('[data-js="work-grid"]');
+    const filters = document.querySelectorAll('.filter');
+    if(grid && filters.length){
+      filters.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filters.forEach(b => b.classList.toggle('is-active', b === btn));
+          const f = btn.dataset.filter;
+          const cards = grid.querySelectorAll('.work-card');
+          cards.forEach(card => {
+            const tags = (card.dataset.tags || '').split(' ');
+            const show = f === '*' || tags.includes(f);
+            card.style.display = show ? '' : 'none';
+          });
+        });
+      });
+    }
+
+    // 燈箱
+    const lb = document.querySelector('[data-js="lightbox"]');
+    const lbImg = lb?.querySelector('.lightbox__img');
+    const lbCap = lb?.querySelector('.lightbox__caption');
+    const closeBtn = lb?.querySelector('[data-js="lightbox-close"]');
+    const prevBtn = lb?.querySelector('[data-js="lightbox-prev"]');
+    const nextBtn = lb?.querySelector('[data-js="lightbox-next"]');
+    let items = [];
+    let idx = -1;
+
+    function openLightbox(i){
+      if(!lb) return;
+      idx = i;
+      const item = items[idx];
+      const full = item.dataset.full || '';
+      if(lbImg) lbImg.src = full;
+      if(lbCap) lbCap.textContent = item.dataset.caption || '';
+      lb.hidden = false;
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(){
+      if(!lb) return;
+      lb.hidden = true;
+      document.body.style.overflow = '';
+      if(lbImg) lbImg.src = '';
+      idx = -1;
+    }
+    function nav(delta){
+      if(!items.length) return;
+      idx = (idx + delta + items.length) % items.length;
+      openLightbox(idx);
+    }
+
+    if(grid && lb){
+      items = Array.from(grid.querySelectorAll('.work-card'));
+      items.forEach((a, i) => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          openLightbox(i);
+        });
+      });
+      closeBtn?.addEventListener('click', closeLightbox);
+      lb.addEventListener('click', (e) => { if(e.target === lb) closeLightbox(); });
+      document.addEventListener('keydown', (e) => {
+        if(lb.hidden) return;
+        if(e.key === 'Escape') closeLightbox();
+        if(e.key === 'ArrowLeft') nav(-1);
+        if(e.key === 'ArrowRight') nav(1);
+      });
+      prevBtn?.addEventListener('click', () => nav(-1));
+      nextBtn?.addEventListener('click', () => nav(1));
+    }
+
+    // 聯絡表單（mailto 方案）
+    const form = document.querySelector('[data-js="contact-form"]');
+    const status = form?.querySelector('.form-status');
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const name = data.get('name');
+      const email = data.get('email');
+      const subject = data.get('subject');
+      const message = data.get('message');
+      const to = 'yourmail@example.com'; // TODO: 改成你的信箱
+      const body = [
+        '姓名: ' + name,
+        'Email: ' + email,
+        '主旨: ' + subject,
+        '',
+        message
+      ].join('\\n');
+      const mailto = \`mailto:\${to}?subject=\${encodeURIComponent('[網站洽談] ' + subject)}&body=\${encodeURIComponent(body)}\`;
+      window.location.href = mailto;
+      if(status) status.textContent = '已開啟郵件軟體，若未自動開啟，請直接寄信至 ' + to;
+      form.reset();
+    });
+  })();
+  </script>
+</body>
+</html>
