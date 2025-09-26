@@ -41,10 +41,10 @@
     /* Header */
     .skip{position:absolute;left:-9999px;top:auto} .skip:focus{left:12px;top:12px;z-index:9999;background:#000;color:#fff;padding:.5rem;border-radius:8px}
     header{position:fixed;top:0;left:0;right:0;z-index:999;background:color-mix(in oklab,var(--bg) 84%, transparent);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border);transition:.3s ease}
-    .header-inner { display:flex; align-items:center; justify-content:space-between; gap:16px;padding:14px 20px; /* ← 原本只有上下 padding，這裡加左右 20px */}
+    .header-inner { display:flex; align-items:center; justify-content:space-between; gap:16px;padding:14px 20px;}
     header.scrolled .header-inner{padding:10px 20px}
-    .logo span {font-size: 1rem;   /* 原本會繼承 body 16px，這裡固定一個大小 */ font-weight: 600;  /* 保持專業感 */}
-    .nav a { font-size: 0.95rem;  /* 稍微縮小，讓 header 看起來更平衡 */}
+    .logo span {font-size: 1rem;font-weight: 600;}
+    .nav a { font-size: 0.95rem;}
     .logo{display:flex;align-items:center;gap:.6rem;font-weight:700}
     .logo svg{width:28px;height:28px}
     nav{display:flex;align-items:center;gap:10px}
@@ -69,28 +69,23 @@
     .logos{opacity:.9;filter:grayscale(100%)}
     .logos svg{height:28px;width:auto}
 
-    /* Services — refined v2 (只需替換這段) */
-    #services .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;                       /* 卡片間距更舒適 */align-items:stretch;}
+    /* Services — refined v2 */
+    #services .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch;}
     @media (max-width:980px){#services .grid-3{ grid-template-columns:repeat(2,1fr); }}
     @media (max-width:640px){#services .grid-3{ grid-template-columns:1fr; }}
 
-    /* 卡片：改用 CSS Grid 對齊圖示與文字，並固定最小高度 */
-    .service.card{display:grid;grid-template-columns:44px 1fr; /* 左 44px 放圖示，右側放文字 */grid-auto-rows:minmax(min-content,auto);gap:12px 16px;                  /* (row-gap, col-gap) */align-items:start;padding:18px 20px; min-height:140px;               /* 每張卡至少同高度 */border-radius:16px;background:var(--card);border:1px solid var(--border);transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;}
-    .service.card:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(0,0,0,.22),0 0 12px rgba(100, 180, 255, .45); /* 邊框外的微光 */border-color:rgba(100,180,255,.7);            /* 邊框顏色加亮 */}
+    .service.card{display:grid;grid-template-columns:44px 1fr;grid-auto-rows:minmax(min-content,auto);gap:12px 16px;align-items:start;padding:18px 20px;min-height:140px;border-radius:16px;background:var(--card);border:1px solid var(--border);transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;}
+    .service.card:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(0,0,0,.22),0 0 12px rgba(100, 180, 255, .45);border-color:rgba(100,180,255,.7);}
 
-    /* 圖示固定大小並讓它跨兩行（標題+內文），自然置頂對齊 */
-    .service .ic{grid-column:1; grid-row:1 / span 2; /* 佔左側並跨兩行 */width:40px; height:40px;            /* 比原本 36px 更穩 */border-radius:10px;display:grid; place-items:center;background:var(--elev);border:1px solid var(--border);font-size:18px; line-height:1;}
-
-    /* 標題與內文放在右欄，行距與字級統一，避免擠壓 */
-    .service h3{grid-column:2;margin:0 0 6px;font-size:1.02rem;                 /* 稍降字級避免斷行過多 */line-height:1.35;letter-spacing:.2px;}
+    .service .ic{grid-column:1;grid-row:1 / span 2;width:40px;height:40px;border-radius:10px;display:grid;place-items:center;background:var(--elev);border:1px solid var(--border);font-size:18px;line-height:1;}
+    .service h3{grid-column:2;margin:0 0 6px;font-size:1.02rem;line-height:1.35;letter-spacing:.2px;}
     .service p{grid-column:2;margin:0;color:var(--muted);}
 
-    /* Work grid */
     /* Work — 3 卡片樣式 */
-    .work-card{overflow:hidden;border-radius:18px;transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;display:block; /* 讓整張卡可點 */}
-    .work-card:hover{transform:translateY(-6px);                /* 微微凸起 */box-shadow:0 18px 40px rgba(0,0,0,.28);    /* hover 陰影 */}
+    .work-card{overflow:hidden;border-radius:18px;transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;display:block;}
+    .work-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(0,0,0,.28);}
     .work-figure{ margin:0; background:linear-gradient(135deg,#202635,#0d1017); }
-    .work-figure img{display:block;width:100%;height:100%;aspect-ratio:16/10;   /* 固定比例，縮圖不會拉長 */object-fit:cover;     /* 以裁切方式填滿 */border-bottom:1px solid var(--border);}
+    .work-figure img{display:block;width:100%;height:100%;aspect-ratio:16/10;object-fit:cover;border-bottom:1px solid var(--border);}
     .work-info{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-top:1px solid var(--border);}
 
     /* Case, process */
@@ -99,27 +94,21 @@
     .num{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font-weight:700}
     
     /* ===== Pricing — unified layout & glow hover ===== */
-    #pricing .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch;          /* 讓卡片填滿同一列高度 */grid-auto-rows:1fr;           /* 每列等高 */}
-    @media (max-width:980px){
-    #pricing .grid-3{ grid-template-columns:repeat(2,1fr); }}
-    @media (max-width:640px){
-    #pricing .grid-3{ grid-template-columns:1fr; }}
+    #pricing .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch;grid-auto-rows:1fr;}
+    @media (max-width:980px){#pricing .grid-3{ grid-template-columns:repeat(2,1fr); }}
+    @media (max-width:640px){#pricing .grid-3{ grid-template-columns:1fr; }}
 
-    /* 卡片本體：一致的內距/圓角/排版 */
-    .card.pricing{height:100%;display:flex;flex-direction:column;justify-content:flex-start;gap:12px;padding:20px;border-radius:16px;background:var(--card);border:1px solid var(--border);/* 讓所有卡片的視覺高度接近（避免某張太矮） */min-height:240px;transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;}
-
-    /* Hover：微浮起 + 邊框發光（與服務項目一致） */
+    .card.pricing{height:100%;display:flex;flex-direction:column;justify-content:flex-start;gap:12px;padding:20px;border-radius:16px;background:var(--card);border:1px solid var(--border);min-height:240px;transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;}
     .card.pricing:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(0,0,0,.22),0 0 12px rgba(100,180,255,.45);border-color:rgba(100,180,255,.65);}
 
-    /* 標題、價錢、清單：字級/行距/間距統一 */
     .card.pricing h3{margin:0;font-size:1.06rem;line-height:1.35;letter-spacing:.2px;}
     .card.pricing .price{margin:4px 0 8px;font-size:1.12rem;font-weight:700;line-height:1.45;}
-    .card.pricing ul{margin:6px 0 0;padding-left:1.1rem;     /* 統一縮排 */list-style:disc;display:grid;gap:6px;                 /* 每條條目間距一致 */}
-    #pricing h2 + p{ margin-top:6px; } /* 小標題行距微調 */
+    .card.pricing ul{margin:6px 0 0;padding-left:1.1rem;list-style:disc;display:grid;gap:6px;}
+    #pricing h2 + p{ margin-top:6px; }
 
-    /* 提醒文字（6 個月條款）置中與間距 */
+    /* 提醒文字（6 個月條款） */
     #pricing .note{margin-top:16px;text-align:center;font-size:.95rem;}
-    
+
     /* Testimonials */
     .slider{position:relative;overflow:hidden}
     .slides{display:flex;transition:transform .5s ease}
@@ -136,44 +125,24 @@
     .faq .ans{padding:0 16px 16px}
 
     /* Contact（refined） */
-    #contact form.card{padding:18px 20px;      /* 內距，避免貼邊 */ display:grid;gap:16px;               /* 欄位間距統一 */}
-    #contact .form-row{display:grid;grid-template-columns:1fr 1fr; /* 左右兩欄 */ gap:14px;}
-    @media (max-width:720px){ #contact .form-row{ grid-template-columns:1fr; } /* 手機改為單欄 */}
+    #contact form.card{padding:18px 20px;display:grid;gap:16px;}
+    #contact .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    @media (max-width:720px){ #contact .form-row{ grid-template-columns:1fr; }}
 
-    #contact label{ display:block; font-size:.95rem; font-weight:600; color:var(--text);margin:2px 0 6px;       /* 標籤與欄位距離 */}
+    #contact label{ display:block; font-size:.95rem; font-weight:600; color:var(--text);margin:2px 0 6px;}
 
-    /* 欄位外觀統一、不要超出容器 */
-    #contact input,
-    #contact textarea,
-    #contact select{width:100%;padding:.9rem 1rem;border:1px solid color-mix(in oklab, var(--border) 85%, transparent);border-radius:12px;background:var(--elev); /* 與卡片做出層次 */color:var(--text);box-sizing:border-box;box-shadow: inset 0 1px 0 rgba(255,255,255,.03);}
-    #contact input::placeholder,
-    #contact textarea::placeholder{ color:var(--muted); }
-    #contact textarea{min-height:160px;       /* 高度更舒適 */resize:vertical;        /* 可垂直縮放 */max-width:100%;}
+    #contact input,#contact textarea,#contact select{width:100%;padding:.9rem 1rem;border:1px solid color-mix(in oklab, var(--border) 85%, transparent);border-radius:12px;background:var(--elev);color:var(--text);box-sizing:border-box;box-shadow: inset 0 1px 0 rgba(255,255,255,.03);}
+    #contact input::placeholder,#contact textarea::placeholder{ color:var(--muted); }
+    #contact textarea{min-height:160px;resize:vertical;max-width:100%;}
 
-    /* 聚焦時的可視化外框 */
-    #contact input:focus,
-    #contact textarea:focus,
-    #contact select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in oklab, var(--accent) 35%, transparent);}
+    #contact input:focus,#contact textarea:focus,#contact select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in oklab, var(--accent) 35%, transparent);}
 
-    #contact .help{font-size:.86rem;color:var(--muted);margin-top:-4px;        /* 與 textarea 更貼近 */}
-
-    /* 送出按鈕高度與圓角統一 */
+    #contact .help{font-size:.86rem;color:var(--muted);margin-top:-4px;}
     #contact button[type="submit"]{height:48px;border-radius:12px;}
-    
-    /* 讓左右兩側卡片拉齊高度（選配） */
     #contact .grid.grid-2{ align-items: stretch; }
 
     /* Footer */
     footer{padding:24px 0;border-top:1px solid var(--border)}
-
-    /* Lightbox */
-    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;place-items:center;z-index:1000}
-    .lightbox.open{display:grid}
-    .lightbox .inner{width:min(1000px,92vw);background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
-    .lightbox header{position:unset;background:unset;border-bottom:1px solid var(--border)}
-    .lightbox .media{max-height:70vh;display:grid;place-items:center;background:#000}
-    .lightbox img{width:100%;height:auto}
-    .lb-ctrl{display:flex;justify-content:space-between;padding:8px 12px;border-top:1px solid var(--border)}
 
     /* Back to top */
     .top{position:fixed;right:16px;bottom:16px;padding:.6rem .8rem;border-radius:12px;border:1px solid var(--border);background:var(--card);display:none;z-index:999}
@@ -237,53 +206,54 @@
     </section>
 
     <!-- Services -->
-     <section id="services">
+    <section id="services">
       <div class="container">
         <h2>服務項目</h2>
         <p class="muted">從策略、設計到前端開發與上線顧問，提供一條龍服務。</p>
         <div class="grid grid-3" style="margin-top:12px">
-      <!-- 1. 單檔登陸頁 / 小官網 -->
-      <article class="service card reveal">
-        <div class="ic" aria-hidden="true">🧩</div>
-        <h3>單檔登陸頁 / 小官網</h3>
-        <p class="muted">只用一個 HTML 完成排版、RWD、動效與內容，適合活動/產品介紹。</p>
-      </article>
+          <!-- 1. 單檔登陸頁 / 小官網 -->
+          <article class="service card reveal">
+            <div class="ic" aria-hidden="true">🧩</div>
+            <h3>單檔登陸頁 / 小官網</h3>
+            <p class="muted">只用一個 HTML 完成排版、RWD、動效與內容，適合活動/產品介紹。</p>
+          </article>
 
-      <!-- 2. 單檔作品集與案例牆 -->
-      <article class="service card reveal">
-        <div class="ic" aria-hidden="true">🖼️</div>
-        <h3>單檔作品集與案例牆</h3>
-        <p class="muted">三張可點卡片、滑過微浮起、點擊直達外部網站或 Demo。</p>
-      </article>
+          <!-- 2. 單檔作品集與案例牆 -->
+          <article class="service card reveal">
+            <div class="ic" aria-hidden="true">🖼️</div>
+            <h3>單檔作品集與案例牆</h3>
+            <p class="muted">三張可點卡片、滑過微浮起、點擊直達外部網站或 Demo。</p>
+          </article>
 
-      <!-- 3. 單檔聯絡表單（第三方代收） -->
-      <article class="service card reveal">
-        <div class="ic" aria-hidden="true">✉️</div>
-        <h3>單檔聯絡表單（可真的送出）</h3>
-        <p class="muted">前端單頁，表單以外部代收服務接收（仍只需這個 HTML 檔）。</p>
-      </article>
+          <!-- 3. 單檔聯絡表單（第三方代收） -->
+          <article class="service card reveal">
+            <div class="ic" aria-hidden="true">✉️</div>
+            <h3>單檔聯絡表單（可真的送出）</h3>
+            <p class="muted">前端單頁，表單以外部代收服務接收（仍只需這個 HTML 檔）。</p>
+          </article>
 
-      <!-- 4. 單檔效能最佳化 -->
-      <article class="service card reveal">
-        <div class="ic" aria-hidden="true">⚡</div>
-        <h3>單檔效能最佳化</h3>
-        <p class="muted">Critical CSS 內嵌、lazyload、srcset、預連線，提升 Lighthouse 分數。</p>
-      </article>
+          <!-- 4. 單檔效能最佳化 -->
+          <article class="service card reveal">
+            <div class="ic" aria-hidden="true">⚡</div>
+            <h3>單檔效能最佳化</h3>
+            <p class="muted">Critical CSS 內嵌、lazyload、srcset、預連線，提升 Lighthouse 分數。</p>
+          </article>
 
-      <!-- 5. 單檔 SEO / 追蹤 -->
-      <article class="service card reveal">
-        <div class="ic" aria-hidden="true">🔍</div>
-        <h3>單檔 SEO / 追蹤</h3>
-        <p class="muted">Meta/OG/JSON-LD、GA4 snippet 皆可內嵌於同一個 HTML。</p>
-      </article>
+          <!-- 5. 單檔 SEO / 追蹤 -->
+          <article class="service card reveal">
+            <div class="ic" aria-hidden="true">🔍</div>
+            <h3>單檔 SEO / 追蹤</h3>
+            <p class="muted">Meta/OG/JSON-LD、GA4 snippet 皆可內嵌於同一個 HTML。</p>
+          </article>
 
-      <!-- 6. 單檔輕電商（外部結帳） -->
-      <article class="service card reveal">
-        <div class="ic" aria-hidden="true">🛒</div>
-        <h3>單檔輕電商（外部結帳）</h3>
-        <p class="muted">按鈕直連 Stripe/Shopify 結帳流程，無後端也能收款。</p>
-      </article>
-    </div>
+          <!-- 6. 單檔輕電商（外部結帳） -->
+          <article class="service card reveal">
+            <div class="ic" aria-hidden="true">🛒</div>
+            <h3>單檔輕電商（外部結帳）</h3>
+            <p class="muted">按鈕直連 Stripe/Shopify 結帳流程，無後端也能收款。</p>
+          </article>
+        </div>
+      </div> <!-- ✅ 補上：.container 的關閉 -->
     </section>
 
     <!-- Work -->
@@ -343,93 +313,92 @@
     </section>
 
     <!-- Pricing -->
-  <section id="pricing">
-    <div class="container">
-      <h2>價格方案</h2>
-      <p class="muted">一次性建置費 — 適合不同需求的個人、商家與品牌</p>
+    <section id="pricing">
+      <div class="container">
+        <h2>價格方案</h2>
+        <p class="muted">一次性建置費 — 適合不同需求的個人、商家與品牌</p>
 
-      <div class="grid grid-3" style="margin-top:12px">
-        <!-- 入門版 -->
-        <article class="card pricing reveal">
-          <h3>入門版</h3>
-          <p class="price">NT$3,000~5,000 / RM400~750</p>
-          <ul>
-            <li>單頁 HTML（RWD 模板）</li>
-            <li>首頁 + 作品/菜單 + 聯絡方式</li>
-            <li>上傳至 Cloudflare Pages / GitHub Pages</li>
-          </ul>
-        </article>
+        <div class="grid grid-3" style="margin-top:12px">
+          <!-- 入門版 -->
+          <article class="card pricing reveal">
+            <h3>入門版</h3>
+            <p class="price">NT$3,000~5,000 / RM400~750</p>
+            <ul>
+              <li>單頁 HTML（RWD 模板）</li>
+              <li>首頁 + 作品/菜單 + 聯絡方式</li>
+              <li>上傳至 Cloudflare Pages / GitHub Pages</li>
+            </ul>
+          </article>
 
-        <!-- 進階版 -->
-        <article class="card pricing reveal">
-          <h3>進階版</h3>
-          <p class="price">NT$8,000~10,000 / RM1,100~1,350</p>
-          <ul>
-            <li>半客製化排版（顏色 / 字體 / 元件）</li>
-            <li>SEO Meta / OG 標籤</li>
-            <li>GA4 追蹤碼</li>
-            <li>聯絡表單（Formspree / Google 表單）</li>
-          </ul>
-        </article>
+          <!-- 進階版 -->
+          <article class="card pricing reveal">
+            <h3>進階版</h3>
+            <p class="price">NT$8,000~10,000 / RM1,100~1,350</p>
+            <ul>
+              <li>半客製化排版（顏色 / 字體 / 元件）</li>
+              <li>SEO Meta / OG 標籤</li>
+              <li>GA4 追蹤碼</li>
+              <li>聯絡表單（Formspree / Google 表單）</li>
+            </ul>
+          </article>
 
-        <!-- 專業版 -->
-        <article class="card pricing reveal">
-          <h3>專業版</h3>
-          <p class="price">NT$15,000+ / RM2,300+</p>
-          <ul>
-            <li>完全客製化設計</li>
-            <li>特效 / 動畫（hover、光暈）</li>
-            <li>效能最佳化（Lighthouse &gt;90 分）</li>
-            <li>自訂網域 + SSL</li>
-          </ul>
-        </article>
+          <!-- 專業版 -->
+          <article class="card pricing reveal">
+            <h3>專業版</h3>
+            <p class="price">NT$15,000+ / RM2,300+</p>
+            <ul>
+              <li>完全客製化設計</li>
+              <li>特效 / 動畫（hover、光暈）</li>
+              <li>效能最佳化（Lighthouse &gt;90 分）</li>
+              <li>自訂網域 + SSL</li>
+            </ul>
+          </article>
+        </div>
+
+        <!-- 維護方案 -->
+        <h2 style="margin-top:48px">維護方案</h2>
+        <p class="muted">每月服務費 — 提供網站更新、追蹤與安心維護</p>
+
+        <div class="grid grid-3" style="margin-top:12px">
+          <!-- 基礎維護 -->
+          <article class="card pricing reveal">
+            <h3>基礎維護</h3>
+            <p class="price">NT$500~800 / RM70~110 per month</p>
+            <ul>
+              <li>網站代管（Cloudflare / GitHub Pages）</li>
+              <li>每月 1 次小修改（文字 / 圖片）</li>
+              <li>SSL / HTTPS 維護</li>
+            </ul>
+          </article>
+
+          <!-- 進階維護 -->
+          <article class="card pricing reveal">
+            <h3>進階維護</h3>
+            <p class="price">NT$1,300~1,800 / RM180~250 per month</p>
+            <ul>
+              <li>含基礎維護</li>
+              <li>每月最多 3 次小修改</li>
+              <li>GA4 / Search Console 簡易報告</li>
+              <li>基礎 SEO 優化</li>
+            </ul>
+          </article>
+
+          <!-- 專業維護 -->
+          <article class="card pricing reveal">
+            <h3>專業維護</h3>
+            <p class="price">NT$2,500+ / RM350+ per month</p>
+            <ul>
+              <li>含進階維護</li>
+              <li>不限次數修改</li>
+              <li>季度 SEO 報告 + 優化建議</li>
+              <li>效能檢測與改善</li>
+            </ul>
+          </article>
+        </div>
+
+        <p class="muted note">若需維護服務，至少需簽訂 6 個月方案</p>
       </div>
-
-      <!-- 新增：維護方案 -->
-      <h2 style="margin-top:48px">維護方案</h2>
-      <p class="muted">每月服務費 — 提供網站更新、追蹤與安心維護</p>
-
-      <div class="grid grid-3" style="margin-top:12px">
-        <!-- 基礎維護 -->
-        <article class="card pricing reveal">
-          <h3>基礎維護</h3>
-          <p class="price">NT$500~800 / RM70~110 per month</p>
-          <ul>
-            <li>網站代管（Cloudflare / GitHub Pages）</li>
-            <li>每月 1 次小修改（文字 / 圖片）</li>
-            <li>SSL / HTTPS 維護</li>
-          </ul>
-        </article>
-
-        <!-- 進階維護 -->
-        <article class="card pricing reveal">
-          <h3>進階維護</h3>
-          <p class="price">NT$1,300~1,800 / RM180~250 per month</p>
-          <ul>
-            <li>含基礎維護</li>
-            <li>每月最多 3 次小修改</li>
-            <li>GA4 / Search Console 簡易報告</li>
-            <li>基礎 SEO 優化</li>
-          </ul>
-        </article>
-
-        <!-- 專業維護 -->
-        <article class="card pricing reveal">
-          <h3>專業維護</h3>
-          <p class="price">NT$2,500+ / RM350+ per month</p>
-          <ul>
-            <li>含進階維護</li>
-            <li>不限次數修改</li>
-            <li>季度 SEO 報告 + 優化建議</li>
-            <li>效能檢測與改善</li>
-          </ul>
-        </article>
-      </div>
-         <p class="muted note" style="margin-top:16px; text-align:center; font-size:0.95rem;">
-           若需維護服務，至少需簽訂 6 個月方案
-         </p>
-    </div>
-  </section>
+    </section>
 
     <!-- Testimonials -->
     <section id="testimonials">
@@ -569,7 +538,7 @@
 
   // ===== Sticky header + active nav =====
   const header = $('#site-header');
-  const sections = ['services','work','cases','process','pricing','faq','contact'].map(id=>({id, el:$('#'+id)}));
+  const sections = ['services','work','process','pricing','faq','contact'].map(id=>({id, el:$('#'+id)}));
   const navLinks = $$('#nav a');
   const onScroll = () => {
     header.classList.toggle('scrolled', window.scrollY>10);
@@ -601,49 +570,13 @@
 
   // ===== Smooth anchor scroll =====
   $$('#nav a[href^="#"]').forEach(a=>{
-    a.addEventListener('click', e=>{ e.preventDefault(); const id=a.getAttribute('href').slice(1); const el=$('#'+id); if(el){ window.scrollTo({top:el.offsetTop-70, behavior:'smooth'});} });
-  });
-
-  // ===== Work filter =====
-  const chips = $$('.chip');
-  const items = $$('#work-grid .work-item');
-  chips.forEach(ch=>ch.addEventListener('click', ()=>{
-    chips.forEach(c=>c.classList.remove('active')); ch.classList.add('active');
-    const cat = ch.dataset.cat;
-    items.forEach(it=>{
-      const show = (cat==='all') || it.dataset.cat===cat;
-      it.style.display = show ? '' : 'none';
+    a.addEventListener('click', e=>{
+      e.preventDefault();
+      const id=a.getAttribute('href').slice(1);
+      const el=$('#'+id);
+      if(el){ window.scrollTo({top:el.offsetTop-70, behavior:'smooth'}); }
     });
-  }));
-
-  // ===== Lightbox (with placeholder image generator) =====
-  const lb = $('#lightbox'); const lbImg = $('#lb-img'); const lbTitle = $('#lb-title');
-  const workButtons = $$('#work-grid button'); let currentIndex = 0;
-  function placeholderSVG(title){
-    const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='1600' height='1000'>\
-      <defs>\
-        <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>\
-          <stop offset='0%' stop-color='%23202635'/>\
-          <stop offset='100%' stop-color='%230d1017'/>\
-        </linearGradient>\
-      </defs>\
-      <rect width='100%25' height='100%25' fill='url(%23g)'/>\
-      <text x='50%25' y='50%25' fill='%23ffffff' font-family='Arial' font-size='64' text-anchor='middle' dominant-baseline='middle'>${title}</text>\
-    </svg>`;
-    return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
-  }
-  function openLB(i){
-    currentIndex = i;
-    const btn = workButtons[i];
-    lbImg.src = placeholderSVG(btn.dataset.title);
-    lbTitle.textContent = btn.dataset.title;
-    lb.classList.add('open');
-  }
-  workButtons.forEach((b,i)=>b.addEventListener('click', ()=>openLB(i)));
-  $('#close').addEventListener('click', ()=>lb.classList.remove('open'));
-  $('#prev').addEventListener('click', ()=>openLB((currentIndex-1+workButtons.length)%workButtons.length));
-  $('#next').addEventListener('click', ()=>openLB((currentIndex+1)%workButtons.length));
-  document.addEventListener('keydown', e=>{ if(e.key==='Escape') lb.classList.remove('open'); });
+  });
 
   // ===== Slider =====
   const slidesEl = $('#slides'); const dots = $$('.dot'); let idx=0; let timer;
