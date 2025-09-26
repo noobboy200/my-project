@@ -69,9 +69,14 @@
     .logos{opacity:.9;filter:grayscale(100%)}
     .logos svg{height:28px;width:auto}
 
-    /* Services */
-    .service{padding:18px}
-    .service .ic{width:26px;height:26px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:var(--elev);border:1px solid var(--border);margin-bottom:8px}
+    /* Services — refined */
+    #services .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:stretch;              /* 拉齊每張卡片高度 */}
+    @media (max-width:980px){#services .grid-3{ grid-template-columns:repeat(2,1fr); }}
+    @media (max-width:640px){#services .grid-3{ grid-template-columns:1fr; }}
+    .service.card{height:100%;padding:20px;                     /* 統一內距 */display:flex;gap:14px;align-items:flex-start;border-radius:16px;background:var(--card);border:1px solid var(--border);}
+    .service .ic{flex:0 0 36px;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--elev);border:1px solid var(--border);font-size:18px;                   /* emoji 大小一致 */line-height:1;margin-top:2px;                   /* 與標題對齊 */}
+    .service h3{margin:0 0 6px;font-size:1.06rem;line-height:1.3;letter-spacing:.2px;}
+    .service p{margin:0;color:var(--muted);}
 
     /* Work grid */
     /* Work — 3 卡片樣式 */
@@ -209,8 +214,11 @@
     </section>
 
     <!-- Services -->
-    <section id="services">
-      <div class="grid grid-3" style="margin-top:12px">
+     <section id="services">
+      <div class="container">
+        <h2>服務項目</h2>
+        <p class="muted">從策略、設計到前端開發與上線顧問，提供一條龍服務。</p>
+        <div class="grid grid-3" style="margin-top:12px">
       <!-- 1. 單檔登陸頁 / 小官網 -->
       <article class="service card reveal">
         <div class="ic" aria-hidden="true">🧩</div>
