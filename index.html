@@ -43,9 +43,25 @@
     .grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
     @media (max-width:900px){.grid--3{grid-template-columns:1fr 1fr}}
     @media (max-width:640px){.grid--3{grid-template-columns:1fr}}
+  
+    /* 固定在頁面頂端、提高層級、滑動時加陰影 */
+    .site-header{
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* 提高層級避免被內容蓋住 */
+    backdrop-filter: saturate(180%) blur(8px);
+    background: color-mix(in oklab, var(--bg) 85%, transparent);
+    border-bottom: 1px solid var(--line);
+    transition: background .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
 
-    .site-header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(8px);background:color-mix(in oklab,var(--bg) 80%,transparent);border-bottom:1px solid var(--line)}
-    .site-header .container{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding-block:var(--space-3)}
+  /* 當頁面往下捲動一點點時，加強背景與投影，避免透明時看不清楚 */
+  .site-header.is-scrolled{
+    background: color-mix(in oklab, var(--bg) 96%, transparent);
+    box-shadow: 0 6px 24px rgba(0,0,0,.18);
+    border-color: color-mix(in oklab, var(--line) 80%, transparent);
+  }
+
     .brand{display:inline-flex;align-items:center;gap:.6rem;font-weight:700}
     .brand__logo{font-size:1.25rem}
     .brand__text{letter-spacing:.08em}
@@ -153,7 +169,20 @@
   }
   </script>
 </head>
-<body>
+    <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const headerEl = document.querySelector('.site-header');
+      if (headerEl) {
+        const onScroll = () => {
+          const y = window.scrollY || window.pageYOffset || 0;
+          headerEl.classList.toggle('is-scrolled', y > 4);
+        };
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+      }
+    });
+    </script>
+  <body>
   <a class="skip-link" href="#main">跳到主內容</a>
 
   <header class="site-header" data-js="sticky-header">
