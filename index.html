@@ -668,7 +668,7 @@
   // init
   onScroll();
 
-/* ===== i18n (ZH/EN) — 改善英文行銷語氣 + 修好 Pricing/Stack/FAQ/Contact ===== */
+/* ===== i18n (ZH/EN) — 改善：用 SELECTOR_MAP 顯式指定所有需要切換的元素 ===== */
 (function(){
   const META = {
     zh: {
@@ -678,25 +678,28 @@
       ogDesc: "單一 HTML 也能專業：RWD、SEO/GA4、表單整合、輕電商、效能最佳化。適合個人與小型商家，快速上線。"
     },
     en: {
-      title: "Aurevo | Web Designer · Single-File Sites, Landing Pages, SEO & Performance",
-      desc: "I build single-file HTML one-pagers and microsites—responsive, SEO-ready, with real forms and lite commerce. Fast to ship, easy to maintain, and budget-friendly for creators, restaurants, salons, artists, and small businesses.",
-      ogTitle: "Aurevo | Web Designer · Single-File Sites, Landing Pages, SEO & Performance",
-      ogDesc: "Launch a fast, polished one-page site—SEO-ready, form-enabled, and easy to maintain."
+      title: "Aurevo | Web Designer · Single-File HTML, Landing Pages, SEO & Performance",
+      desc: "Single-file HTML one-pagers and microsites built to ship fast: responsive (RWD), clean SEO/GA4, working forms, and lightweight commerce—lean to maintain, ready to grow.",
+      ogTitle: "Aurevo | Web Designer · Single-File HTML, Landing Pages, SEO & Performance",
+      ogDesc: "Launch fast with one clean HTML file—RWD, SEO/GA4, forms, lite commerce, and performance tuning for small teams and solo brands."
     }
   };
 
-  /* 以 selector 精準覆寫（含 Pricing 價格節點） */
+  /* 需要保留 HTML 標籤或精準定位的元素，靠 selector 指派 */
   const SELECTOR_MAP = [
+    /* ===== Hero ===== */
     { sel: '.hero .tag', key: 'hero.tag', type: 'text' },
     { sel: '.hero h1', key: 'hero.h1', type: 'html' },
     { sel: '.hero p.muted', key: 'hero.lead', type: 'text' },
     { sel: '.hero .btn.primary', key: 'cta.primary', type: 'text' },
     { sel: '.hero .btn:not(.primary)', key: 'cta.secondary', type: 'text' },
 
+    /* Stats */
     { sel: '.stats .stat:nth-child(1) .muted', key: 'stats.projects', type: 'text' },
     { sel: '.stats .stat:nth-child(2) .muted', key: 'stats.satisfaction', type: 'text' },
     { sel: '.stats .stat:nth-child(3) .muted', key: 'stats.timeline', type: 'text' },
 
+    /* ===== Nav ===== */
     { sel: '#nav a[href="#services"]', key: 'nav.services', type: 'text' },
     { sel: '#nav a[href="#work"]', key: 'nav.work', type: 'text' },
     { sel: '#nav a[href="#process"]', key: 'nav.process', type: 'text' },
@@ -704,10 +707,9 @@
     { sel: '#nav a[href="#faq"]', key: 'nav.faq', type: 'text' },
     { sel: '#nav a[href="#contact"]', key: 'nav.quote', type: 'text' },
 
+    /* ===== Services ===== */
     { sel: '#services h2', key: 'sec.services', type: 'text' },
     { sel: '#services > .container > p.muted', key: 'sec.services.lead', type: 'text' },
-
-    // Services 6 張卡
     { sel: '#services .service.card:nth-of-type(1) h3', key: 'svc.1.title', type: 'text' },
     { sel: '#services .service.card:nth-of-type(1) p',  key: 'svc.1.desc',  type: 'text' },
     { sel: '#services .service.card:nth-of-type(2) h3', key: 'svc.2.title', type: 'text' },
@@ -721,230 +723,156 @@
     { sel: '#services .service.card:nth-of-type(6) h3', key: 'svc.6.title', type: 'text' },
     { sel: '#services .service.card:nth-of-type(6) p',  key: 'svc.6.desc',  type: 'text' },
 
+    /* ===== Work ===== */
     { sel: '#work h2', key: 'sec.work', type: 'text' },
     { sel: '#work #portfolio .work-card:nth-of-type(1) .work-info .muted', key: 'work.1.tag', type: 'text' },
     { sel: '#work #portfolio .work-card:nth-of-type(2) .work-info .muted', key: 'work.2.tag', type: 'text' },
     { sel: '#work #portfolio .work-card:nth-of-type(3) .work-info .muted', key: 'work.3.tag', type: 'text' },
 
+    /* ===== Process ===== */
     { sel: '#process h2', key: 'sec.process', type: 'text' },
     ...Array.from({length:6}, (_,i)=>[
       { sel: `#process .step:nth-of-type(${i+1}) strong`, key: `proc.${i+1}.title`, type: 'text' },
       { sel: `#process .step:nth-of-type(${i+1}) p`,     key: `proc.${i+1}.desc`,  type: 'text' },
     ]).flat(),
 
+    /* ===== Pricing（一次性建置費）===== */
     { sel: '#pricing h2', key: 'sec.pricing', type: 'text' },
     { sel: '#pricing h2 + p.muted', key: 'sec.pricing.lead', type: 'text' },
-
-    // 定價卡片標題（名稱）
-    { sel: '#pricing .grid.grid-3 article:nth-of-type(1) h3', key: 'plan.1', type: 'text' },
-    { sel: '#pricing .grid.grid-3 article:nth-of-type(2) h3', key: 'plan.2', type: 'text' },
-    { sel: '#pricing .grid.grid-3 article:nth-of-type(3) h3', key: 'plan.3', type: 'text' },
-    // 👉 新增：定價卡片價格（一次性）
+    { sel: '#pricing-build article:nth-of-type(1) h3', key: 'plan.1', type: 'text' },
+    { sel: '#pricing-build article:nth-of-type(2) h3', key: 'plan.2', type: 'text' },
+    { sel: '#pricing-build article:nth-of-type(3) h3', key: 'plan.3', type: 'text' },
     { sel: '#pricing-build article:nth-of-type(1) .price', key: 'price.p1', type: 'text' },
     { sel: '#pricing-build article:nth-of-type(2) .price', key: 'price.p2', type: 'text' },
     { sel: '#pricing-build article:nth-of-type(3) .price', key: 'price.p3', type: 'text' },
+    // P1 features
+    { sel: '#pricing-build article:nth-of-type(1) li:nth-of-type(1)', key: 'p1.f1', type: 'text' },
+    { sel: '#pricing-build article:nth-of-type(1) li:nth-of-type(2)', key: 'p1.f2', type: 'text' },
+    { sel: '#pricing-build article:nth-of-type(1) li:nth-of-type(3)', key: 'p1.f3', type: 'text' },
+    // P2 features
+    { sel: '#pricing-build article:nth-of-type(2) li:nth-of-type(1)', key: 'p2.f1', type: 'text' },
+    { sel: '#pricing-build article:nth-of-type(2) li:nth-of-type(2)', key: 'p2.f2', type: 'text' },
+    { sel: '#pricing-build article:nth-of-type(2) li:nth-of-type(3)', key: 'p2.f3', type: 'text' },
+    { sel: '#pricing-build article:nth-of-type(2) li:nth-of-type(4)', key: 'p2.f4', type: 'text' },
+    // P3 features
+    { sel: '#pricing-build article:nth-of-type(3) li:nth-of-type(1)', key: 'p3.f1', type: 'text' },
+    { sel: '#pricing-build article:nth-of-type(3) li:nth-of-type(2)', key: 'p3.f2', type: 'text' },
+    { sel: '#pricing-build article:nth-of-type(3) li:nth-of-type(3)', key: 'p3.f3', type: 'text' },
+    { sel: '#pricing-build article:nth-of-type(3) li:nth-of-type(4)', key: 'p3.f4', type: 'text' },
 
-    // 維護方案
+    /* ===== Maintenance（維護方案）===== */
     { sel: '#pricing h2[style*="margin-top:48px"]', key: 'sec.maint', type: 'text' },
     { sel: '#pricing h2[style*="margin-top:48px"] + p.muted', key: 'sec.maint.lead', type: 'text' },
-    { sel: '#pricing .grid.grid-3 + h2 + p + .grid.grid-3 article:nth-of-type(1) h3', key: 'plan.m1', type: 'text' },
-    { sel: '#pricing .grid.grid-3 + h2 + p + .grid.grid-3 article:nth-of-type(2) h3', key: 'plan.m2', type: 'text' },
-    { sel: '#pricing .grid.grid-3 + h2 + p + .grid.grid-3 article:nth-of-type(3) h3', key: 'plan.m3', type: 'text' },
-    // 👉 新增：維護價格（按月）
+    { sel: '#pricing-maint article:nth-of-type(1) h3', key: 'plan.m1', type: 'text' },
+    { sel: '#pricing-maint article:nth-of-type(2) h3', key: 'plan.m2', type: 'text' },
+    { sel: '#pricing-maint article:nth-of-type(3) h3', key: 'plan.m3', type: 'text' },
     { sel: '#pricing-maint article:nth-of-type(1) .price', key: 'price.m1', type: 'text' },
     { sel: '#pricing-maint article:nth-of-type(2) .price', key: 'price.m2', type: 'text' },
     { sel: '#pricing-maint article:nth-of-type(3) .price', key: 'price.m3', type: 'text' },
-
+    // M1 features
+    { sel: '#pricing-maint article:nth-of-type(1) li:nth-of-type(1)', key: 'm1.f1', type: 'text' },
+    { sel: '#pricing-maint article:nth-of-type(1) li:nth-of-type(2)', key: 'm1.f2', type: 'text' },
+    { sel: '#pricing-maint article:nth-of-type(1) li:nth-of-type(3)', key: 'm1.f3', type: 'text' },
+    // M2 features
+    { sel: '#pricing-maint article:nth-of-type(2) li:nth-of-type(1)', key: 'm2.f1', type: 'text' },
+    { sel: '#pricing-maint article:nth-of-type(2) li:nth-of-type(2)', key: 'm2.f2', type: 'text' },
+    { sel: '#pricing-maint article:nth-of-type(2) li:nth-of-type(3)', key: 'm2.f3', type: 'text' },
+    { sel: '#pricing-maint article:nth-of-type(2) li:nth-of-type(4)', key: 'm2.f4', type: 'text' },
+    // M3 features
+    { sel: '#pricing-maint article:nth-of-type(3) li:nth-of-type(1)', key: 'm3.f1', type: 'text' },
+    { sel: '#pricing-maint article:nth-of-type(3) li:nth-of-type(2)', key: 'm3.f2', type: 'text' },
+    { sel: '#pricing-maint article:nth-of-type(3) li:nth-of-type(3)', key: 'm3.f3', type: 'text' },
+    { sel: '#pricing-maint article:nth-of-type(3) li:nth-of-type(4)', key: 'm3.f4', type: 'text' },
     { sel: '#pricing .note', key: 'maint.note', type: 'text' },
 
+    /* ===== Testimonials ===== */
     { sel: '#testimonials h2', key: 'sec.testimonials', type: 'text' },
+    { sel: '#testimonials .slide:nth-of-type(1) p:nth-of-type(1)', key: 'ts.1.txt', type: 'text' },
+    { sel: '#testimonials .slide:nth-of-type(1) p.muted', key: 'ts.1.who', type: 'text' },
+    { sel: '#testimonials .slide:nth-of-type(2) p:nth-of-type(1)', key: 'ts.2.txt', type: 'text' },
+    { sel: '#testimonials .slide:nth-of-type(2) p.muted', key: 'ts.2.who', type: 'text' },
+    { sel: '#testimonials .slide:nth-of-type(3) p:nth-of-type(1)', key: 'ts.3.txt', type: 'text' },
+    { sel: '#testimonials .slide:nth-of-type(3) p.muted', key: 'ts.3.who', type: 'text' },
 
+    /* ===== Tech & Tools（每張卡：標題+副標）===== */
     { sel: '#stack h2', key: 'sec.stack', type: 'text' },
+    { sel: '#stack .card:nth-of-type(1) strong', key: 'stack.1.title', type: 'text' },
+    { sel: '#stack .card:nth-of-type(1) .muted', key: 'stack.1.desc',  type: 'text' },
+    { sel: '#stack .card:nth-of-type(2) strong', key: 'stack.2.title', type: 'text' },
+    { sel: '#stack .card:nth-of-type(2) .muted', key: 'stack.2.desc',  type: 'text' },
+    { sel: '#stack .card:nth-of-type(3) strong', key: 'stack.3.title', type: 'text' },
+    { sel: '#stack .card:nth-of-type(3) .muted', key: 'stack.3.desc',  type: 'text' },
+    { sel: '#stack .card:nth-of-type(4) strong', key: 'stack.4.title', type: 'text' },
+    { sel: '#stack .card:nth-of-type(4) .muted', key: 'stack.4.desc',  type: 'text' },
+    { sel: '#stack .card:nth-of-type(5) strong', key: 'stack.5.title', type: 'text' },
+    { sel: '#stack .card:nth-of-type(5) .muted', key: 'stack.5.desc',  type: 'text' },
+    { sel: '#stack .card:nth-of-type(6) strong', key: 'stack.6.title', type: 'text' },
+    { sel: '#stack .card:nth-of-type(6) .muted', key: 'stack.6.desc',  type: 'text' },
 
+    /* ===== FAQ（每題：問題+回答）===== */
     { sel: '#faq h2', key: 'sec.faq', type: 'text' },
+    { sel: '#faq details:nth-of-type(1) summary strong', key: 'faq.q1', type: 'text' },
+    { sel: '#faq details:nth-of-type(1) .ans', key: 'faq.a1', type: 'text' },
+    { sel: '#faq details:nth-of-type(2) summary strong', key: 'faq.q2', type: 'text' },
+    { sel: '#faq details:nth-of-type(2) .ans', key: 'faq.a2', type: 'text' },
+    { sel: '#faq details:nth-of-type(3) summary strong', key: 'faq.q3', type: 'text' },
+    { sel: '#faq details:nth-of-type(3) .ans', key: 'faq.a3', type: 'text' },
 
+    /* ===== Contact（標題、標籤、placeholder、選項、按鈕、提示）===== */
     { sel: '#contact h2', key: 'sec.contact', type: 'text' },
     { sel: '#contact aside h3', key: 'contact.other', type: 'text' },
+    { sel: '#contact label[for="name"]', key: 'form.name.label', type: 'text' },
+    { sel: '#name', key: 'form.name.ph', type: 'attr', attr: 'placeholder' },
+    { sel: '#contact label[for="email"]', key: 'form.email.label', type: 'text' },
+    { sel: '#email', key: 'form.email.ph', type: 'attr', attr: 'placeholder' },
+    { sel: '#contact label[for="budget"]', key: 'form.budget.label', type: 'text' },
+    { sel: '#budget option[value=""]', key: 'form.budget.opt0', type: 'text' },
+    { sel: '#budget option:nth-of-type(2)', key: 'form.budget.opt1', type: 'text' },
+    { sel: '#budget option:nth-of-type(3)', key: 'form.budget.opt2', type: 'text' },
+    { sel: '#budget option:nth-of-type(4)', key: 'form.budget.opt3', type: 'text' },
+    { sel: '#contact label[for="timeline"]', key: 'form.timeline.label', type: 'text' },
+    { sel: '#timeline option:nth-of-type(1)', key: 'form.timeline.opt1', type: 'text' },
+    { sel: '#timeline option:nth-of-type(2)', key: 'form.timeline.opt2', type: 'text' },
+    { sel: '#timeline option:nth-of-type(3)', key: 'form.timeline.opt3', type: 'text' },
+    { sel: '#contact label[for="msg"]', key: 'form.msg.label', type: 'text' },
+    { sel: '#msg', key: 'form.msg.ph', type: 'attr', attr: 'placeholder' },
+    { sel: '#contact .help', key: 'form.help', type: 'text' },
+    { sel: '#contact button[type="submit"]', key: 'form.submit', type: 'text' },
 
+    /* Footer chips + BackToTop aria */
     { sel: 'footer .tag[href="#work"]', key: 'nav.work', type: 'text' },
     { sel: 'footer .tag[href="#pricing"]', key: 'nav.pricing', type: 'text' },
     { sel: 'footer .tag[href="#contact"]', key: 'nav.contact', type: 'text' },
-
     { sel: '#backTop', key: 'ui.backTop', type: 'attr', attr: 'aria-label' },
   ];
 
-  /* 字典：掃描 text/placeholder/aria/alt 的對照（確保標點完全一致） */
-  const DICT = {
-    zh: {
-      // Nav & common
-      "服務": "Services", "作品": "Work", "流程": "Process", "方案": "Pricing", "FAQ": "FAQ",
-      "取得報價": "Request a Quote", "聯絡": "Contact",
-
-      // Services lead
-      "從策略、設計到前端開發與上線顧問，提供一條龍服務。":
-        "End-to-end—from strategy and design to front-end and launch advisory.",
-
-      // Service cards (features)
-      "只用一個 HTML 完成排版、RWD 與動效，適合活動／新產品／個人品牌。":
-        "One HTML file, clean layout, responsive, tasteful motion—perfect for launches and personal brands.",
-      "可點卡片、滑過微浮起、點擊直達外部網站或 Demo。":
-        "Clickable cards with a subtle hover lift and direct links to sites or live demos.",
-      "串 Formspree／Google 表單，無後端也能收件與通知。":
-        "Connect Formspree or Google Forms—receive real submissions without a backend.",
-      "Lazyload、圖片壓縮、預連線，實測 Lighthouse 高分更好載入。":
-        "Lazy-loading, image compression, and preconnect—better Lighthouse scores and faster loads.",
-      "Meta/OG/JSON-LD、GA4 追蹤碼與事件，設定一次即上線。":
-        "Meta/OG/JSON-LD plus GA4 events—configured and ready to ship.",
-      "購買按鈕直連 Stripe／Shopify 結帳流程，快速開始收款。":
-        "Buy buttons go straight to Stripe/Shopify checkout so you can start taking payments fast.",
-
-      // Work tags
-      "登陸頁 / RWD": "Landing page / RWD",
-      "官網 / 品牌升級": "Website / Brand refresh",
-      "電商前端": "E-commerce front-end",
-
-      // Process titles
-      "諮詢與需求彙整": "Discovery & scope",
-      "版型挑選與結構規劃": "Template & structure",
-      "視覺風格與色彩套用": "Visuals & content",
-      "前端開發": "Front-end build",
-      "上線與驗收": "Launch & QA",
-      "維護與成長": "Maintenance & growth",
-      // Process desc
-      "釐清目標、受眾、內容模組與素材來源，提供時程與預估。":
-        "Align on goals, audience, modules, and assets—plus timeline and estimate.",
-      "決定區塊（Hero／服務／作品／方案／FAQ／聯絡），規劃 RWD。":
-        "Pick sections (hero/services/work/pricing/FAQ/contact) and plan responsive layout.",
-      "套用品牌色，整理圖片、文案，確保一致性。":
-        "Apply brand colors, refine imagery and copy to keep it cohesive.",
-      "語意化標記、效能最佳化、SEO／追蹤碼與表單整合。":
-        "Semantic markup, performance passes, SEO/analytics, and forms wired up.",
-      "部署 Cloudflare／GitHub Pages，網址與 SSL 設定，測試完成。":
-        "Deploy to Cloudflare or GitHub Pages, set domain & SSL, complete testing.",
-      "以月費持續微調內容、追蹤報表與轉換優化。（至少 6 個月）":
-        "Monthly tweaks, reporting, and conversion wins. (6-month minimum)",
-
-      // Pricing lead
-      "一次到位的建置費，依需求彈性調整。":
-        "One-time build fee; flexible by scope.",
-      // Maintenance lead
-      "穩定運營、持續調整，專注在你的內容與行銷。":
-        "Run stable and iterate often—so you can focus on content and marketing.",
-      "若需維護服務，至少需簽訂 6 個月方案":
-        "Maintenance requires a minimum 6-month commitment",
-
-      // Testimonials
-      "「合作非常順暢，從策略、設計到上線都很專業，轉換率顯著提升。」":
-        "“Smooth collaboration from strategy to launch—very professional, and conversions went up.”",
-      "— 某培訓公司行銷主管": "— Marketing Lead, Training Company",
-      "「設計系統讓我們新品頁很快就能上線，節省了大量開發成本。」":
-        "“The design system helped us ship new product pages quickly and save development costs.”",
-      "— B2B SaaS PM": "— B2B SaaS PM",
-      "「網站速度很快、SEO 也有成效，品牌形象全面升級。」":
-        "“Fast site and visible SEO results—our brand presence leveled up.”",
-      "— DTC 品牌主理人": "— DTC Brand Owner",
-
-      // Tech stack cards（短句）
-      "語意化／結構化":"Semantic HTML / Structure",
-      "RWD／Grid／動畫":"RWD / CSS Grid / Animation",
-      "互動效果／表單驗證":"Interactions / Form validation",
-      "Lazyload／圖片壓縮":"Lazy-loading / Image compression",
-      "標籤／追蹤碼":"SEO tags / Tracking",
-      "客製圖示／輕量動效":"Custom icons / Lightweight motion",
-
-      // FAQ
-      "時程需要多久？":"How long will it take?",
-      "依頁數與功能而定，常見為 2~4 週。電商或多語系另議。":
-        "Depends on scope and features. Typically 2–4 weeks; commerce or multilingual sites vary.",
-      "是否提供設計到上線的一條龍？":"Do you handle end-to-end?",
-      "可以，包含策略、設計、前端、網域、主機、GA/SEO 等設定。":
-        "Yes—strategy, design, front-end, domain/hosting, and GA/SEO configuration.",
-      "需要準備什麼？":"What should I prepare?",
-      "品牌素材、文案與參考網站。若無，我可協助整理與規劃。":
-        "Brand assets, copy, and reference sites. If you don’t have them, I’ll help curate and plan.",
-
-      // Pricing 列表項（補齊：原本沒翻到）
-      "單頁 HTML（RWD 模板）":"Single-page HTML (RWD template)",
-      "首頁 + 作品/菜單 + 聯絡方式":"Home + Work/Menu + Contact",
-      "部署代上線":"Deployment & go-live support",
-      "半客製化排版（顏色 / 元件）":"Semi-custom layout (colors/components)",
-      "SEO Meta / OG 標籤":"SEO meta / OG tags",
-      "GA4 追蹤碼":"GA4 tracking",
-      "聯絡表單（Formspree / Google 表單）":"Contact form (Formspree / Google Forms)",
-      "完全客製化設計":"Fully custom design",
-      "互動動效":"Interactive motion",
-      "效能最佳化（Lighthouse >90）":"Performance tuning (Lighthouse >90)",
-      "自訂網域 + SSL":"Custom domain + SSL",
-
-      // 維護列表項
-      "網站代管（Cloudflare / GitHub Pages）":"Managed hosting (Cloudflare / GitHub Pages)",
-      "每月 1 次小修改（文字 / 圖片）":"1 small edit / month (copy or image)",
-      "SSL 維護":"SSL upkeep",
-      "含基礎維護":"Includes Basic plan",
-      "每月最多 3 次小修改":"Up to 3 small edits / month",
-      "GA4 / Search Console 簡易報告":"Simple GA4 / Search Console report",
-      "基礎 SEO ":"Basic SEO ",
-      "含進階維護":"Includes Advanced plan",
-      "不限次數修改":"Unlimited edits",
-      "季度 SEO 報告與建議":"Quarterly SEO report & recommendations",
-      "效能檢測":"Performance checks",
-
-      // Contact labels & UI
-      "聯絡我／取得報價":"Contact / Request a Quote",
-      "你的稱呼":"Your name",
-      "Email":"Email",
-      "預算區間（可估）":"Budget range (est.)",
-      "希望時程":"Timeline",
-      "專案描述":"Project brief",
-      "請選擇":"Please select",
-      "2 週內":"Within 2 weeks",
-      "1 個月內":"Within 1 month",
-      "彈性":"Flexible",
-      "送出需求":"Send request",
-      "其他聯絡方式":"Other ways to reach me",
-      "工作地點：遠端":"Work location: Remote",
-
-      // Small bits
-      "查看模板":"View Templates",
-      "立即洽談":"Let’s talk",
-      "完成專案":"Projects delivered",
-      "客戶滿意度":"Client satisfaction",
-      "一般交付":"Typical timeline",
-    }
-  };
-
-  /* 完整句子/需含標籤的字串（中英各自維護） */
   const STRINGS = {
     zh: {
-      'hero.tag': '可客製化 · RWD 響應式 · SEO 友善',
-      'hero.h1': '為你的品牌，打造<strong>低成本</strong><strong>高品質</strong>的網站體驗。',
-      'hero.lead': 'Aurevo 專做單檔 HTML 一頁式／小官網：RWD 響應式、SEO / GA4、表單整合、輕電商，速度快、好維護、成本小。',
-      'cta.primary': '立即洽談',
-      'cta.secondary': '查看模板',
+      /* Hero */
+      'hero.tag':'可客製化 · RWD 響應式 · SEO 友善',
+      'hero.h1':'為你的品牌，打造<strong>低成本</strong><strong>高品質</strong>的網站體驗。',
+      'hero.lead':'Aurevo 專做單檔 HTML 一頁式／小官網：RWD 響應式、SEO / GA4、表單整合、輕電商，速度快、好維護、成本小。',
+      'cta.primary':'立即洽談',
+      'cta.secondary':'查看模板',
 
+      /* Nav & stats */
       'nav.services':'服務','nav.work':'作品','nav.process':'流程','nav.pricing':'方案','nav.faq':'FAQ','nav.quote':'取得報價','nav.contact':'聯絡',
+      'stats.projects':'完成專案','stats.satisfaction':'客戶滿意度','stats.timeline':'一般交付',
 
+      /* Services */
       'sec.services':'服務項目',
       'sec.services.lead':'從策略、設計到前端開發與上線顧問，提供一條龍服務。',
+      'svc.1.title':'單檔登陸頁 / 小官網','svc.1.desc':'只用一個 HTML 完成排版、RWD 與動效，適合活動／新產品／個人品牌。',
+      'svc.2.title':'單檔作品集與案例牆','svc.2.desc':'可點卡片、滑過微浮起、點擊直達外部網站或 Demo。',
+      'svc.3.title':'單檔聯絡表單（可真的送出）','svc.3.desc':'串 Formspree／Google 表單，無後端也能收件與通知。',
+      'svc.4.title':'單檔效能最佳化','svc.4.desc':'Lazyload、圖片壓縮、預連線，實測 Lighthouse 高分更好載入。',
+      'svc.5.title':'單檔 SEO / 追蹤','svc.5.desc':'Meta/OG/JSON-LD、GA4 追蹤碼與事件，設定一次即上線。',
+      'svc.6.title':'單檔輕電商（外部結帳）','svc.6.desc':'購買按鈕直連 Stripe／Shopify 結帳流程，快速開始收款。',
 
-      'svc.1.title':'單檔登陸頁 / 小官網',
-      'svc.1.desc':'只用一個 HTML 完成排版、RWD 與動效，適合活動／新產品／個人品牌。',
-      'svc.2.title':'單檔作品集與案例牆',
-      'svc.2.desc':'可點卡片、滑過微浮起、點擊直達外部網站或 Demo。',
-      'svc.3.title':'單檔聯絡表單（可真的送出）',
-      'svc.3.desc':'串 Formspree／Google 表單，無後端也能收件與通知。',
-      'svc.4.title':'單檔效能最佳化',
-      'svc.4.desc':'Lazyload、圖片壓縮、預連線，實測 Lighthouse 高分更好載入。',
-      'svc.5.title':'單檔 SEO / 追蹤',
-      'svc.5.desc':'Meta/OG/JSON-LD、GA4 追蹤碼與事件，設定一次即上線。',
-      'svc.6.title':'單檔輕電商（外部結帳）',
-      'svc.6.desc':'購買按鈕直連 Stripe／Shopify 結帳流程，快速開始收款。',
+      /* Work */
+      'sec.work':'作品','work.1.tag':'登陸頁 / RWD','work.2.tag':'官網 / 品牌升級','work.3.tag':'電商前端',
 
-      'sec.work':'作品',
-      'work.1.tag':'登陸頁 / RWD',
-      'work.2.tag':'官網 / 品牌升級',
-      'work.3.tag':'電商前端',
-
+      /* Process */
       'sec.process':'合作流程',
       'proc.1.title':'諮詢與需求彙整','proc.1.desc':'釐清目標、受眾、內容模組與素材來源，提供時程與預估。',
       'proc.2.title':'版型挑選與結構規劃','proc.2.desc':'決定區塊（Hero／服務／作品／方案／FAQ／聯絡），規劃 RWD。',
@@ -953,157 +881,188 @@
       'proc.5.title':'上線與驗收','proc.5.desc':'部署 Cloudflare／GitHub Pages，網址與 SSL 設定，測試完成。',
       'proc.6.title':'維護與成長','proc.6.desc':'以月費持續微調內容、追蹤報表與轉換優化。（至少 6 個月）',
 
-      'sec.pricing':'價格方案',
-      'sec.pricing.lead':'一次到位的建置費，依需求彈性調整。',
+      /* Pricing build */
+      'sec.pricing':'價格方案','sec.pricing.lead':'一次到位的建置費，依需求彈性調整。',
       'plan.1':'入門版','plan.2':'進階版','plan.3':'專業版',
-      // 一次性價格（中文不加 per month）
-      'price.p1':'NT$3,000~5,000 / RM400~750',
-      'price.p2':'NT$8,000~10,000 / RM1,100~1,350',
-      'price.p3':'NT$15,000+ / RM2,300+',
+      'price.p1':'NT$3,000～5,000／RM400～750',
+      'price.p2':'NT$8,000～10,000／RM1,100～1,350',
+      'price.p3':'NT$15,000 起／RM2,300 起',
+      'p1.f1':'單頁 HTML（RWD 模板）','p1.f2':'首頁 + 作品/菜單 + 聯絡方式','p1.f3':'部署代上線',
+      'p2.f1':'半客製化排版（顏色 / 元件）','p2.f2':'SEO Meta / OG 標籤','p2.f3':'GA4 追蹤碼','p2.f4':'聯絡表單（Formspree / Google 表單）',
+      'p3.f1':'完全客製化設計','p3.f2':'互動動效','p3.f3':'效能最佳化（Lighthouse >90）','p3.f4':'自訂網域 + SSL',
 
-      'sec.maint':'維護方案',
-      'sec.maint.lead':'穩定運營、持續調整，專注在你的內容與行銷。',
+      /* Maintenance */
+      'sec.maint':'維護方案','sec.maint.lead':'穩定運營、持續調整，專注在你的內容與行銷。',
       'plan.m1':'基礎維護','plan.m2':'進階維護','plan.m3':'專業維護',
-      // 維護價格（中文顯示「每月」）
-      'price.m1':'每月 NT$500~800 / RM70~110',
-      'price.m2':'每月 NT$1,300~1,800 / RM180~250',
-      'price.m3':'每月 NT$2,500+ / RM350+',
+      'price.m1':'NT$500～800／RM70～110／月',
+      'price.m2':'NT$1,300～1,800／RM180～250／月',
+      'price.m3':'NT$2,500 起／RM350 起／月',
+      'm1.f1':'網站代管（Cloudflare / GitHub Pages）','m1.f2':'每月 1 次小修改（文字 / 圖片）','m1.f3':'SSL 維護',
+      'm2.f1':'含基礎維護','m2.f2':'每月最多 3 次小修改','m2.f3':'GA4 / Search Console 簡易報告','m2.f4':'基礎 SEO',
+      'm3.f1':'含進階維護','m3.f2':'不限次數修改','m3.f3':'季度 SEO 報告與建議','m3.f4':'效能檢測',
       'maint.note':'若需維護服務，至少需簽訂 6 個月方案',
 
+      /* Testimonials */
       'sec.testimonials':'客戶推薦',
+      'ts.1.txt':'「合作非常順暢，從策略、設計到上線都很專業，轉換率顯著提升。」','ts.1.who':'— 某培訓公司行銷主管',
+      'ts.2.txt':'「設計系統讓我們新品頁很快就能上線，節省了大量開發成本。」','ts.2.who':'— B2B SaaS PM',
+      'ts.3.txt':'「網站速度很快、SEO 也有成效，品牌形象全面升級。」','ts.3.who':'— DTC 品牌主理人',
+
+      /* Stack */
       'sec.stack':'技術與工具',
+      'stack.1.title':'HTML5','stack.1.desc':'語意化／結構化',
+      'stack.2.title':'CSS3','stack.2.desc':'RWD／Grid／動畫',
+      'stack.3.title':'JavaScript','stack.3.desc':'互動效果／表單驗證',
+      'stack.4.title':'效能最佳化','stack.4.desc':'Lazyload／圖片壓縮／預連線',
+      'stack.5.title':'SEO / GA4','stack.5.desc':'標籤／追蹤碼／事件',
+      'stack.6.title':'SVG & 動態效果','stack.6.desc':'客製圖示／輕量動效',
+
+      /* FAQ */
       'sec.faq':'常見問題',
+      'faq.q1':'時程需要多久？','faq.a1':'依頁數與功能而定，常見為 2～4 週。電商或多語系另議。',
+      'faq.q2':'是否提供設計到上線的一條龍？','faq.a2':'可以，包含策略、設計、前端、網域、主機、GA/SEO 等設定。',
+      'faq.q3':'需要準備什麼？','faq.a3':'品牌素材、文案與參考網站。若無，我可協助整理與規劃。',
 
-      'sec.contact':'聯絡我／取得報價',
-      'contact.other':'其他聯絡方式',
+      /* Contact */
+      'sec.contact':'聯絡我／取得報價','contact.other':'其他聯絡方式',
+      'form.name.label':'你的稱呼','form.name.ph':'王小明',
+      'form.email.label':'Email','form.email.ph':'you@example.com',
+      'form.budget.label':'預算區間（可估）',
+      'form.budget.opt0':'請選擇','form.budget.opt1':'NT$ 3k ~ 5k','form.budget.opt2':'NT$ 8k ~ 10k','form.budget.opt3':'NT$ 15k+',
+      'form.timeline.label':'希望時程','form.timeline.opt1':'2 週內','form.timeline.opt2':'1 個月內','form.timeline.opt3':'彈性',
+      'form.msg.label':'專案描述','form.msg.ph':'簡述目標、頁數、功能、參考網站等…',
+      'form.help':'送出後我會在 1～2 個工作天內回覆。','form.submit':'送出需求',
 
+      /* Footer & UI */
       'ui.backTop':'回到頂部',
-
-      'form.required':'請完整填寫必填欄位',
-      'form.received':'已收到！我會在 1~2 個工作天內回覆你。',
     },
 
     en: {
-      'hero.tag': 'Customizable · Responsive · SEO-ready',
-      'hero.h1': 'Launch a <strong>lean</strong>, <strong>high-impact</strong> site for your brand.',
-      'hero.lead': 'I build single-file HTML one-pagers and microsites—RWD, SEO/GA4, real forms, and lite commerce. Fast to ship, easy to maintain, and budget-friendly.',
-      'cta.primary': 'Let’s talk',
-      'cta.secondary': 'View Templates',
+      /* Hero（更地道） */
+      'hero.tag':'Customizable · Responsive · SEO-friendly',
+      'hero.h1':'Launch a <strong>lean</strong>, <strong>high-quality</strong> website for your brand.',
+      'hero.lead':'I build single-file HTML one-pagers and microsites: fast RWD, clean SEO/GA4, working forms, and lightweight commerce—built to ship quickly and stay easy to maintain.',
+      'cta.primary':'Start your project',
+      'cta.secondary':'View templates',
 
-      'nav.services':'Services','nav.work':'Work','nav.process':'Process','nav.pricing':'Pricing','nav.faq':'FAQ','nav.quote':'Request a Quote','nav.contact':'Contact',
+      /* Nav & stats */
+      'nav.services':'Services','nav.work':'Work','nav.process':'Process','nav.pricing':'Pricing','nav.faq':'FAQ','nav.quote':'Get a quote','nav.contact':'Contact',
+      'stats.projects':'Projects delivered','stats.satisfaction':'Client satisfaction','stats.timeline':'Typical timeline',
 
+      /* Services（自然行銷語氣） */
       'sec.services':'Services',
-      'sec.services.lead':'End-to-end—from strategy and design to front-end and launch advisory.',
+      'sec.services.lead':'End-to-end—strategy, design, front-end, and launch support.',
+      'svc.1.title':'Single-file landing page / microsite','svc.1.desc':'One HTML file—layout, RWD, micro-interactions. Ideal for launches and personal brands.',
+      'svc.2.title':'Portfolio & case grid','svc.2.desc':'Tap-through cards with subtle hover lift and outbound links.',
+      'svc.3.title':'Contact form (real submissions)','svc.3.desc':'Formspree or Google Forms—capture leads without a backend.',
+      'svc.4.title':'Performance tuning','svc.4.desc':'Lazyload, compressed images, preconnect. Proven Lighthouse scores and faster loads.',
+      'svc.5.title':'SEO & analytics','svc.5.desc':'Meta/OG/JSON-LD plus GA4 events—wired and ship-ready.',
+      'svc.6.title':'Lite commerce (external checkout)','svc.6.desc':'“Buy” buttons that go straight to Stripe/Shopify checkout.',
 
-      'svc.1.title':'Single-file landing pages & microsites',
-      'svc.1.desc':'One HTML file, clean layout, responsive, tasteful motion—perfect for launches and personal brands.',
-      'svc.2.title':'Single-file portfolio & case gallery',
-      'svc.2.desc':'Clickable cards with subtle hover and direct links to sites or live demos.',
-      'svc.3.title':'Contact forms (no backend needed)',
-      'svc.3.desc':'Hook up Formspree or Google Forms to receive real submissions and notifications.',
-      'svc.4.title':'Performance tuning',
-      'svc.4.desc':'Lazy-loading, compressed images, preconnect—measurably better Lighthouse scores and faster loads.',
-      'svc.5.title':'SEO & analytics',
-      'svc.5.desc':'Meta/OG/JSON-LD with GA4 events—set up the right way.',
-      'svc.6.title':'Lite commerce (external checkout)',
-      'svc.6.desc':'Buy buttons that go straight to Stripe/Shopify checkout so you can take payments quickly.',
+      /* Work */
+      'sec.work':'Work','work.1.tag':'Landing page / RWD','work.2.tag':'Website / Brand refresh','work.3.tag':'E-commerce front-end',
 
-      'sec.work':'Work',
-      'work.1.tag':'Landing page / RWD',
-      'work.2.tag':'Website / Brand refresh',
-      'work.3.tag':'E-commerce front-end',
-
+      /* Process */
       'sec.process':'Process',
-      'proc.1.title':'Discovery & scope','proc.1.desc':'Align on goals, audience, modules, and assets—plus timeline and estimate.',
-      'proc.2.title':'Template & structure','proc.2.desc':'Pick sections (hero/services/work/pricing/FAQ/contact) and plan responsive layout.',
-      'proc.3.title':'Visuals & content','proc.3.desc':'Apply brand colors, refine imagery and copy to keep it cohesive.',
-      'proc.4.title':'Front-end build','proc.4.desc':'Semantic markup, performance passes, SEO/analytics, and forms wired up.',
-      'proc.5.title':'Launch & QA','proc.5.desc':'Deploy to Cloudflare or GitHub Pages, set domain & SSL, final checks.',
-      'proc.6.title':'Maintenance & growth','proc.6.desc':'Monthly tweaks, reporting, and conversion wins. (6-month minimum)',
+      'proc.1.title':'Discovery & scoping','proc.1.desc':'Clarify goals, audience, modules, assets, and provide timeline & estimate.',
+      'proc.2.title':'Template & structure','proc.2.desc':'Choose sections (hero/services/work/pricing/FAQ/contact) and plan RWD.',
+      'proc.3.title':'Visual & colors','proc.3.desc':'Apply brand colors, curate images and copy for consistency.',
+      'proc.4.title':'Front-end development','proc.4.desc':'Semantic markup, performance, SEO/analytics, and form integrations.',
+      'proc.5.title':'Launch & QA','proc.5.desc':'Deploy to Cloudflare/GitHub Pages, set domain & SSL, and test thoroughly.',
+      'proc.6.title':'Maintenance & growth','proc.6.desc':'Monthly refinements, reporting, and conversion tuning. (6-month minimum)',
 
-      'sec.pricing':'Pricing',
-      'sec.pricing.lead':'One-time build fee; flexible by scope.',
+      /* Pricing build */
+      'sec.pricing':'Pricing','sec.pricing.lead':'One-time build fee, adjustable by scope.',
       'plan.1':'Starter','plan.2':'Growth','plan.3':'Pro',
-      // 一次性價格（英文補充 one-time）
-      'price.p1':'NT$3,000–5,000 / RM 400–750 (one-time)',
-      'price.p2':'NT$8,000–10,000 / RM 1,100–1,350 (one-time)',
-      'price.p3':'NT$15,000+ / RM 2,300+ (one-time)',
+      'price.p1':'NT$3,000–5,000 / RM400–750 (one-time)',
+      'price.p2':'NT$8,000–10,000 / RM1,100–1,350 (one-time)',
+      'price.p3':'From NT$15,000 / RM2,300 (one-time)',
+      'p1.f1':'Single-page HTML (RWD template)','p1.f2':'Home + work/menu + contact','p1.f3':'Deployment & launch included',
+      'p2.f1':'Semi-custom layout (colors / components)','p2.f2':'SEO meta / OG tags','p2.f3':'GA4 tracking','p2.f4':'Contact form (Formspree / Google Forms)',
+      'p3.f1':'Fully custom design','p3.f2':'Interactive motion','p3.f3':'Performance tuning (Lighthouse >90)','p3.f4':'Custom domain + SSL',
 
-      'sec.maint':'Maintenance Plans',
-      'sec.maint.lead':'Run stable and iterate often—so you can focus on content and marketing.',
-      'plan.m1':'Basic Maintenance','plan.m2':'Advanced Maintenance','plan.m3':'Pro Maintenance',
-      // 維護價格（英文用 /month）
-      'price.m1':'NT$500–800 / RM 70–110 / month',
-      'price.m2':'NT$1,300–1,800 / RM 180–250 / month',
-      'price.m3':'NT$2,500+ / RM 350+ / month',
-      'maint.note':'Maintenance requires a minimum 6-month commitment',
+      /* Maintenance */
+      'sec.maint':'Maintenance plans','sec.maint.lead':'Stay stable, keep improving—and focus on your content and marketing.',
+      'plan.m1':'Basic maintenance','plan.m2':'Advanced maintenance','plan.m3':'Pro maintenance',
+      'price.m1':'NT$500–800 / RM70–110 per month',
+      'price.m2':'NT$1,300–1,800 / RM180–250 per month',
+      'price.m3':'From NT$2,500 / RM350 per month',
+      'm1.f1':'Site hosting (Cloudflare / GitHub Pages)','m1.f2':'1 minor change/month (copy / image)','m1.f3':'SSL upkeep',
+      'm2.f1':'Includes Basic','m2.f2':'Up to 3 minor changes/month','m2.f3':'GA4 / Search Console snapshot','m2.f4':'Baseline SEO',
+      'm3.f1':'Includes Advanced','m3.f2':'Unlimited edits','m3.f3':'Quarterly SEO report & recs','m3.f4':'Performance audits',
+      'maint.note':'Maintenance requires a minimum 6-month commitment.',
 
+      /* Testimonials（保留原意、修飾語氣） */
       'sec.testimonials':'Testimonials',
-      'sec.stack':'Tech & Tools',
+      'ts.1.txt':'“Smooth from strategy to launch—professional throughout, and conversions went up.”','ts.1.who':'— Marketing Lead, Training Company',
+      'ts.2.txt':'“The design system helped us ship product pages fast and cut dev costs.”','ts.2.who':'— B2B SaaS PM',
+      'ts.3.txt':'“Fast site and visible SEO lift—our brand presence leveled up.”','ts.3.who':'— DTC Brand Owner',
+
+      /* Stack（標題與副標都切換） */
+      'sec.stack':'Tech & tools',
+      'stack.1.title':'HTML5','stack.1.desc':'Semantic, accessible structure',
+      'stack.2.title':'CSS3','stack.2.desc':'Responsive layout & animation',
+      'stack.3.title':'JavaScript','stack.3.desc':'Snappy interactions & validation',
+      'stack.4.title':'Performance','stack.4.desc':'Lazyload, compression, preconnect',
+      'stack.5.title':'SEO / GA4','stack.5.desc':'Schema, meta, events',
+      'stack.6.title':'SVG & motion','stack.6.desc':'Crisp icons, subtle micro-interactions',
+
+      /* FAQ（精準對應） */
       'sec.faq':'FAQ',
+      'faq.q1':'How long does it take?','faq.a1':'Depends on scope; typically 2–4 weeks. Commerce or multi-language by discussion.',
+      'faq.q2':'Do you offer end-to-end service?','faq.a2':'Yes—strategy, design, front-end, domain/hosting, and GA/SEO setup.',
+      'faq.q3':'What should I prepare?','faq.a3':'Brand assets, copy, and reference sites. If you don’t have them, I can help curate and plan.',
 
-      'sec.contact':'Contact / Request a Quote',
-      'contact.other':'Other ways to reach me',
+      /* Contact（所有表單字串顯式指定） */
+      'sec.contact':'Contact / Get a quote','contact.other':'Other ways to reach me',
+      'form.name.label':'Your name','form.name.ph':'Jane Doe',
+      'form.email.label':'Email','form.email.ph':'you@example.com',
+      'form.budget.label':'Budget range (est.)',
+      'form.budget.opt0':'Please select','form.budget.opt1':'NT$ 3k – 5k','form.budget.opt2':'NT$ 8k – 10k','form.budget.opt3':'NT$ 15k+',
+      'form.timeline.label':'Desired timeline','form.timeline.opt1':'Within 2 weeks','form.timeline.opt2':'Within 1 month','form.timeline.opt3':'Flexible',
+      'form.msg.label':'Project brief','form.msg.ph':'Goals, pages, features, reference sites…',
+      'form.help':"Got it—I'll reply within 1–2 business days.",'form.submit':'Send request',
 
+      /* Footer & UI */
       'ui.backTop':'Back to Top',
-
-      'form.required':'Please complete the required fields',
-      'form.received':"Got it! I’ll reply within 1–2 business days.",
     }
   };
 
+  /* 可選：保留原有 DICT（完全比對替換），但主要依 SELECTOR_MAP 控制關鍵內容 */
+  const DICT = { zh: {} };
+
   function setMeta(lang){
-    const m = META[lang];
+    const m = META[lang]; if(!m) return;
     document.title = m.title;
-    const md = document.querySelector('meta[name="description"]');
-    if(md) md.setAttribute('content', m.desc);
-    const ogt = document.querySelector('meta[property="og:title"]');
-    if(ogt) ogt.setAttribute('content', m.ogTitle);
-    const ogd = document.querySelector('meta[property="og:description"]');
-    if(ogd) ogd.setAttribute('content', m.ogDesc);
-    const twt = document.querySelector('meta[name="twitter:title"]');
-    if(twt) twt.setAttribute('content', m.ogTitle);
-    const twd = document.querySelector('meta[name="twitter:description"]');
-    if(twd) twd.setAttribute('content', m.ogDesc);
+    const md = document.querySelector('meta[name="description"]'); if(md) md.setAttribute('content', m.desc);
+    const ogt = document.querySelector('meta[property="og:title"]'); if(ogt) ogt.setAttribute('content', m.ogTitle);
+    const ogd = document.querySelector('meta[property="og:description"]'); if(ogd) ogd.setAttribute('content', m.ogDesc);
+    const twt = document.querySelector('meta[name="twitter:title"]'); if(twt) twt.setAttribute('content', m.ogTitle);
+    const twd = document.querySelector('meta[name="twitter:description"]'); if(twd) twd.setAttribute('content', m.ogDesc);
   }
 
   function applySelectors(lang){
-    const pack = STRINGS[lang];
-    SELECTOR_MAP.forEach(it=>{
-      const el = document.querySelector(it.sel);
-      if(!el) return;
-      const val = pack[it.key];
-      if(val==null) return;
-      if(it.type==='html') el.innerHTML = val;
-      else if(it.type==='attr') el.setAttribute(it.attr || 'aria-label', val);
+    const pack = STRINGS[lang]; if(!pack) return;
+    SELECTOR_MAP.forEach(({sel,key,type,attr})=>{
+      const el = document.querySelector(sel); if(!el) return;
+      const val = pack[key]; if(val==null) return;
+      if(type==='html') el.innerHTML = val;
+      else if(type==='attr') el.setAttribute(attr || 'aria-label', val);
       else el.textContent = val;
     });
   }
 
   function walkTextNodes(root, fn){
     const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
-    const nodes = [];
-    while(w.nextNode()) nodes.push(w.currentNode);
-    nodes.forEach(fn);
+    const nodes = []; while(w.nextNode()) nodes.push(w.currentNode); nodes.forEach(fn);
   }
 
   function applyDict(lang){
-    const zh = DICT.zh;
+    const zh = DICT.zh; if(!zh || lang!=='en') return; // 只在切英文時用字典補刀（可避免誤傷）
     walkTextNodes(document.body, node=>{
-      const t = node.nodeValue.trim();
-      if(!t) return;
-      if(zh[t]!=null){
-        node.nodeValue = (lang==='en') ? zh[t] : t;
-      }
-    });
-    ['placeholder','aria-label','alt','title','value'].forEach(attr=>{
-      document.querySelectorAll(`[${attr}]`).forEach(el=>{
-        const v = el.getAttribute(attr);
-        if(!v) return;
-        if(zh[v]!=null){
-          el.setAttribute(attr, (lang==='en') ? zh[v] : v);
-        }
-      });
+      const t = node.nodeValue && node.nodeValue.trim();
+      if(!t || zh[t]==null) return;
+      node.nodeValue = zh[t];
     });
   }
 
@@ -1122,8 +1081,7 @@
     const url = new URL(location.href);
     const q = url.searchParams.get('lang');
     if(q==='en' || q==='zh') return q;
-    const saved = localStorage.getItem('lang');
-    if(saved) return saved;
+    const saved = localStorage.getItem('lang'); if(saved) return saved;
     const nav = (navigator.language || '').toLowerCase();
     return nav.startsWith('zh') ? 'zh' : 'en';
   }
