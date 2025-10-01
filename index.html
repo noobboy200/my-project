@@ -6,7 +6,7 @@
 
 <title>Aurevo</title>
 <meta name="description" content="Aurevo 專做單檔 HTML 網站與登陸頁：RWD 響應式、SEO / GA4、表單整合、輕電商連結、圖片與效能最佳化。適合個人品牌、網紅、小型餐廳、美容院、藝術家與小企業，快速上線、維護成本低。">
-<link rel="https://assets-dg0.pages.dev/asstes/pubilc/images/Aurevo/Aurevo_logo_v2.png" type="image/png" href="https://my-project-542.pages.dev/">
+<link rel="icon" href="https://assets-dg0.pages.dev/assets/public/images/Aurevo/Aurevo_logo_v2.png" type="image/png">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#0b0c10">
 <meta name="keywords" content="Aurevo, 單檔HTML網站, 一頁式網站, 登陸頁, 個人品牌網站, 小型餐廳網站, 美容院網站, 藝術家網站, 小企業網站, RWD 響應式, 前端開發, SEO, GA4, 表單整合, 輕電商, Stripe 結帳, Shopify, 圖片壓縮, Lazyload, Critical CSS, Cloudflare Pages, 作品集網站">
@@ -208,22 +208,27 @@
 <body>
   <a class="skip" href="#main">跳到主內容</a>
   <header id="site-header">
-    <div class="container header-inner">
-      <a class="logo" href="#home" aria-label="Home">
-         <img src="https://assets-dg0.pages.dev/asstes/pubilc/images/Aurevo/Aurevo_logo_v1.png" alt="Aurevo Logo" style="height:40px; width:auto;">
-        <a href="#services">服務</a>
-        <a href="#work">作品</a>
-        <a href="#process">流程</a>
-        <a href="#pricing">方案</a>
-        <a href="#faq">FAQ</a>
-        <a href="#contact" class="btn">取得報價</a>
-      </nav>
-      <div style="display:flex;align-items:center;gap:8px">
-        <button class="btn menu" id="menu" aria-expanded="false" aria-controls="nav">目錄</button>
-        <button class="btn ghost" id="langToggle" aria-label="切換語言">EN</button>
-      </div>
+  <div class="container header-inner">
+    <a class="logo" href="#home" aria-label="Home">
+      <img src="https://assets-dg0.pages.dev/assets/public/images/Aurevo/Aurevo_logo_v1.png" alt="Aurevo Logo" style="height:40px;width:auto;">
+    </a>
+
+    <!-- ✅ 正確的 nav 包裹 -->
+    <nav class="nav" id="nav" aria-label="主導覽">
+      <a href="#services">服務</a>
+      <a href="#work">作品</a>
+      <a href="#process">流程</a>
+      <a href="#pricing">方案</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact" class="btn">取得報價</a>
+    </nav>
+
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="btn menu" id="menu" aria-expanded="false" aria-controls="nav">目錄</button>
+      <button class="btn ghost" id="langToggle" aria-label="切換語言">EN</button>
     </div>
-  </header>
+  </div>
+</header>
 
   <main id="main">
     <!-- Hero -->
@@ -615,20 +620,22 @@
   };
   window.addEventListener('scroll', onScroll, {passive:true});
 
-  // ===== Mobile menu =====
-  const menuBtn = $('#menu');
-  const nav = $('#nav');
+// ===== Mobile menu =====
+const menuBtn = $('#menu');
+const nav = $('#nav');
+if (menuBtn && nav) {
   menuBtn.addEventListener('click', ()=>{
     const open = !nav.classList.contains('open');
-    nav.classList.toggle('open', open); menuBtn.setAttribute('aria-expanded', String(open));
+    nav.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
   });
-  nav.addEventListener('click', e=>{ if(e.target.tagName==='A'){ nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded','false'); } });
-
-  // ===== Reveal on view =====
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('show'); io.unobserve(en.target);} });
-  }, {threshold:.2});
-  $$('.reveal').forEach(el=>io.observe(el));
+  nav.addEventListener('click', e=>{
+    if(e.target.tagName==='A'){
+      nav.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded','false');
+    }
+  });
+}
 
   // ===== Smooth anchor scroll =====
   $$('#nav a[href^="#"]').forEach(a=>{
@@ -1024,7 +1031,11 @@
       'ui.backTop':'Back to Top',
     }
   };
-
+STRINGS.zh['form.required'] = '請完整填寫必填欄位';
+STRINGS.en['form.required'] = 'Please complete the required fields.';
+STRINGS.zh['form.received'] = '已收到表單，謝謝！我會在 1～2 個工作天內回覆。';
+STRINGS.en['form.received'] = "Got it! I'll get back to you within 1–2 business days.";
+  
   /* 可選：保留原有 DICT（完全比對替換），但主要依 SELECTOR_MAP 控制關鍵內容 */
   const DICT = { zh: {} };
 
