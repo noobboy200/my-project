@@ -64,7 +64,9 @@
     .header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 20px}
     header.scrolled .header-inner{padding:10px 20px}
     .logo{display:flex;align-items:center;gap:.6rem;font-weight:700}
-    .logo img{height:40px;width:auto}
+    .logo-img {height: 64px;width: auto;}
+    @media (max-width: 640px) {.logo-img {height: 48px; /* 小螢幕縮小一點 */}}
+
     nav{display:flex;align-items:center;gap:10px;margin-left:auto}
     .nav a{padding:.6rem .8rem;border-radius:10px;color:var(--muted);font-size:.95rem}
     .nav a:hover,.nav a.active{background:var(--elev);color:var(--text)}
@@ -167,7 +169,7 @@
     "@type": "Organization",
     "name": "Aurevo",
     "url": "https://my-project-542.pages.dev/",
-    "logo": "https://assets-dg0.pages.dev/assets/public/images/Aurevo/Aurevo_logo_v2.png",
+    "logo": "images/aurevo_logo_v1.png",
     "description": "Aurevo 專做單檔 HTML 網站與登陸頁：RWD、SEO/GA4、表單整合、輕電商與效能最佳化，快速上線、維護成本低。",
     "sameAs": [
       "https://www.linkedin.com/",
@@ -196,7 +198,7 @@
   <header id="site-header">
     <div class="container header-inner">
       <a class="logo" href="#home" aria-label="Home">
-        <img src="images/aurevo_logo_v2.png" alt="Aurevo Logo" loading="eager" decoding="async">
+        <img src="images/aurevo_logo_v1.png" alt="Aurevo Logo" loading="eager" decoding="async">
       </a>
 
       <nav class="nav" id="nav" aria-label="主導覽">
