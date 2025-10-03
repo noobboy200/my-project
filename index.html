@@ -3,6 +3,7 @@ wode<!doctype html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark">
 
   <title>Aurevo</title>
   <meta name="description" content="Aurevo 專做單檔 HTML 網站與登陸頁：RWD 響應式、SEO / GA4、表單整合、輕電商連結、圖片與效能最佳化。適合個人品牌、網紅、小型餐廳、美容院、藝術家與小企業，快速上線、維護成本低。">
@@ -31,9 +32,15 @@ wode<!doctype html>
   <link rel="preconnect" href="https://dummyimage.com" crossorigin>
 
   <style>
-    :root{
-      --bg:#0b0c10;--card:#111317;--elev:#161922;--muted:#8b94a7;--text:#e9edf6;--accent:#5ea1ff;--accent-2:#8cf2c6;--accent-3:#ffd166;--danger:#ff6b6b;--ok:#39d98a;--border:#242837;--shadow:0 10px 30px rgba(0,0,0,.25);
-    }
+    /* Light theme (預設) */
+    :root{--bg:#f7f8fa; --card:#ffffff; --elev:#f2f4f8;--muted:#55626f;--text:#1f2937;--accent:#336dff;--accent-2:#22c8a3;--accent-3:#ffcc66;--danger:#e65252;--ok:#16a34a;--border:#e5e7eb;--shadow:0 10px 30px rgba(0,0,0,.06);}
+
+    /* Dark theme (你原本的顏色) */
+    [data-theme="dark"]{--bg:#0b0c10;--card:#111317;--elev:#161922;--muted:#8b94a7;--text:#e9edf6;--accent:#5ea1ff;--accent-2:#8cf2c6;--accent-3:#ffd166;--danger:#ff6b6b; --ok:#39d98a; --border:#242837;--shadow:0 10px 30px rgba(0,0,0,.25);}
+
+    /* 顏色切換時更順眼一點（可選） */
+    html, body { transition: background-color .25s ease, color .25s ease; }
+
     html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
     img{max-width:100%;height:auto;display:block}
     a{color:inherit;text-decoration:none}
@@ -213,6 +220,7 @@ wode<!doctype html>
       <div style="display:flex;align-items:center;gap:8px">
         <button class="btn menu" id="menu" aria-expanded="false" aria-controls="nav">目錄</button>
         <button class="btn ghost" id="langToggle" aria-label="切換語言">EN</button>
+        <button class="btn ghost" id="themeToggle" aria-label="切換主題" title="切換主題">🌙</button>
       </div>
     </div>
   </header>
@@ -1039,6 +1047,70 @@ wode<!doctype html>
       });
     });
   })();
+    
+/* ===== Theme (light/dark) ===== */
+(function(){
+  const THEME_KEY = 'theme'; // 'light' | 'dark'
+  const html = document.documentElement;
+  const btn  = document.getElementById('themeToggle');
+
+  function systemPrefersDark(){
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
+  function getInitTheme(){
+    // 1) URL ?theme=dark|light（可選）
+    const q = new URL(location.href).searchParams.get('theme');
+    if(q === 'dark' || q === 'light') return q;
+    // 2) localStorage
+    const saved = localStorage.getItem(THEME_KEY);
+    if(saved === 'dark' || saved === 'light') return saved;
+    // 3) 系統偏好
+    return systemPrefersDark() ? 'dark' : 'light';
+  }
+
+  function setTheme(theme){
+    if(theme === 'dark') html.setAttribute('data-theme','dark');
+    else html.removeAttribute('data-theme'); // light = 預設 :root
+    localStorage.setItem(THEME_KEY, theme);
+
+    // 切換按鈕圖示 / 無障礙文字
+    if(btn){
+      const isDark = theme === 'dark';
+      btn.textContent = isDark ? '☀️' : '🌙';
+      btn.setAttribute('aria-label', isDark ? '切換為淺色主題' : '切換為深色主題');
+      btn.title = btn.getAttribute('aria-label');
+    }
+
+    // 也更新 <meta name="theme-color">，讓行動裝置地址列顏色跟著變
+    const metaTC = document.querySelector('meta[name="theme-color"]');
+    if(metaTC){
+      const bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
+      metaTC.setAttribute('content', bg || (theme==='dark' ? '#0b0c10' : '#f7f8fa'));
+    }
+  }
+
+  // 初始化
+  const init = getInitTheme();
+  setTheme(init);
+
+  // 監聽系統偏好變更（只有當使用者尚未手動指定時才跟隨）
+  const mql = window.matchMedia('(prefers-color-scheme: dark)');
+  mql.addEventListener?.('change', (e)=>{
+    const saved = localStorage.getItem(THEME_KEY);
+    if(saved !== 'dark' && saved !== 'light'){
+      setTheme(e.matches ? 'dark' : 'light');
+    }
+  });
+
+  // 按鈕切換
+  if(btn){
+    btn.addEventListener('click', ()=>{
+      const cur = (html.getAttribute('data-theme') === 'dark') ? 'dark' : 'light';
+      setTheme(cur === 'dark' ? 'light' : 'dark');
+    });
+  }
+})();
   </script>
 </body>
 </html>
