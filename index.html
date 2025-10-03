@@ -8,13 +8,13 @@ wode<!doctype html>
   <title>Aurevo</title>
   <meta name="description" content="Aurevo 專做單檔 HTML 網站與登陸頁：RWD 響應式、SEO / GA4、表單整合、輕電商連結、圖片與效能最佳化。適合個人品牌、網紅、小型餐廳、美容院、藝術家與小企業，快速上線、維護成本低。">
   <meta name="robots" content="index,follow">
-  <meta name="theme-color" content="#0b0c10">
   <meta name="keywords" content="Aurevo, 單檔HTML網站, 一頁式網站, 登陸頁, 個人品牌網站, 小型餐廳網站, 美容院網站, 藝術家網站, 小企業網站, RWD 響應式, 前端開發, SEO, GA4, 表單整合, 輕電商, Stripe 結帳, Shopify, 圖片壓縮, Lazyload, Critical CSS, Cloudflare Pages, 作品集網站">
 
   <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="images/aurevo_logo_v2_symbol.png">
   <link rel="icon" type="image/png" sizes="16x16" href="images/aurevo_logo_v2_symbol.png">
   <link rel="apple-touch-icon" href="images/aurevo_logo_v2_symbol.png" sizes="180x180">
+  <link rel="mask-icon" href="/images/aurevo_logo_v2_symbol.png" color="#0b0c10">
   <meta name="theme-color" content="#0b0c10">
   
   <!-- Open Graph -->
@@ -75,7 +75,9 @@ wode<!doctype html>
     header.scrolled .header-inner{padding:10px 20px}
     .logo{display:flex;align-items:center;gap:.6rem;font-weight:700}
     .logo-img {height: 64px;width: auto;}
-    @media (max-width: 640px) {.logo-img {height: 36px; /* 小螢幕縮小一點 */}}
+    .logo-img { height:64px; width:auto; filter: drop-shadow(0 1px 0.5px rgba(0,0,0,.35)); }
+    html[data-theme="dark"] .logo-img { filter: drop-shadow(0 1px 0.5px rgba(255,255,255,.2)); }
+    @media (max-width: 640px){ .logo-img { height:36px; } }
 
     nav{display:flex;align-items:center;gap:10px;margin-left:auto}
     .nav a{padding:.6rem .8rem;border-radius:10px;color:var(--muted);font-size:.95rem}
