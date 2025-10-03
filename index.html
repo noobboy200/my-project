@@ -4,12 +4,12 @@ wode<!doctype html>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light dark">
-
+  
   <title>Aurevo</title>
   <meta name="description" content="Aurevo 專做單檔 HTML 網站與登陸頁：RWD 響應式、SEO / GA4、表單整合、輕電商連結、圖片與效能最佳化。適合個人品牌、網紅、小型餐廳、美容院、藝術家與小企業，快速上線、維護成本低。">
   <meta name="robots" content="index,follow">
   <meta name="keywords" content="Aurevo, 單檔HTML網站, 一頁式網站, 登陸頁, 個人品牌網站, 小型餐廳網站, 美容院網站, 藝術家網站, 小企業網站, RWD 響應式, 前端開發, SEO, GA4, 表單整合, 輕電商, Stripe 結帳, Shopify, 圖片壓縮, Lazyload, Critical CSS, Cloudflare Pages, 作品集網站">
-
+  
   <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="images/aurevo_logo_v2_symbol.png">
   <link rel="icon" type="image/png" sizes="16x16" href="images/aurevo_logo_v2_symbol.png">
@@ -74,10 +74,21 @@ wode<!doctype html>
     .header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 20px}
     header.scrolled .header-inner{padding:10px 20px}
     .logo{display:flex;align-items:center;gap:.6rem;font-weight:700}
-    .logo-img {height: 64px;width: auto;}
-    .logo-img { height:64px; width:auto; filter: drop-shadow(0 1px 0.5px rgba(0,0,0,.35)); }
-    html[data-theme="dark"] .logo-img { filter: drop-shadow(0 1px 0.5px rgba(255,255,255,.2)); }
-    @media (max-width: 640px){ .logo-img { height:36px; } }
+    
+    /* 基礎：柔和但明顯一點的陰影 */
+    .logo-img{height:64px; width:auto;
+    /* 多層陰影：小半徑提輪廓 + 大半徑做柔化 */
+    filter:drop-shadow(0 0.5px 0.4px rgba(0,0,0,.35))drop-shadow(0 2px 3px rgba(0,0,0,.18))drop-shadow(0 6px 10px rgba(0,0,0,.10));transition: filter .2s ease;}
+
+    /* 小螢幕維持你原本高度 */
+    @media (max-width:640px){.logo-img{ height:36px; }}
+
+    /* 深色主題：用一層淡淡的白光提亮邊緣，再加輕微黑影穩定感 */
+    html[data-theme="dark"] .logo-img{filter:drop-shadow(0 0.5px 0.6px rgba(255,255,255,.35))drop-shadow(0 1px 2px rgba(0,0,0,.22))drop-shadow(0 4px 8px rgba(0,0,0,.14));}
+
+    /* 捲動後（header 有實底時）把陰影稍微收斂，避免太厚重 */
+    header.scrolled .logo-img{filter:drop-shadow(0 0.5px 0.3px rgba(0,0,0,.25))drop-shadow(0 1px 2px rgba(0,0,0,.12));}
+    html[data-theme="dark"] header.scrolled .logo-img{filter:drop-shadow(0 0.5px 0.5px rgba(255,255,255,.28))drop-shadow(0 1px 2px rgba(0,0,0,.16));}
 
     nav{display:flex;align-items:center;gap:10px;margin-left:auto}
     .nav a{padding:.6rem .8rem;border-radius:10px;color:var(--muted);font-size:.95rem}
