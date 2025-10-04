@@ -142,14 +142,16 @@
     .num{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font-weight:700}
 
     /* Pricing */
-    /* 手機/一般：高度自動，避免內容溢出 */
-    #pricing .grid-3{ gap:24px; align-items:stretch; }
+  #pricing .grid-3{display:grid;gap:24px;align-items:start;}
 
-    /* 桌機再開等高（多欄時才需要） */
-    @media (min-width: 981px){#pricing .grid-3{ grid-auto-rows: 1fr; }}
-    /* 手機單欄：不要硬撐 100% 高度 */
-    @media (max-width: 980px){
-    .card.pricing{ height:auto; }}
+  /* 桌機多欄才等高 */
+  @media (min-width: 981px){
+  #pricing .grid-3{ grid-auto-rows: 1fr; }}
+
+  /* 手機單欄自動高度 */
+  @media (max-width: 980px){
+  #pricing .grid-3{ grid-auto-rows: auto; }.card.pricing{ height:auto; }}
+
     .card.pricing:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(0,0,0,.22),0 0 12px rgba(100,180,255,.45);border-color:rgba(100,180,255,.65)}
     .card.pricing h3{margin:0;font-size:1.06rem;line-height:1.35;letter-spacing:.2px}
     .card.pricing .price{margin:4px 0 8px;font-size:1.12rem;font-weight:700;line-height:1.45}
@@ -210,19 +212,20 @@ html:not([data-theme="dark"]) .nav a {color: #374151;transition: color 0.2s ease
 html:not([data-theme="dark"]) .nav a:hover,
 html:not([data-theme="dark"]) .nav a.active {color: #0b0c10;background: rgba(255, 255, 255, 0.6);}
 
-/* ==== Mobile: right-side mini drawer ==== */
-@media (max-width:880px){
+  @media (max-width:880px){
   .menu{ display:inline-flex; }
 
-  header .nav{position: fixed;top: calc(var(--headerH, 64px) + 10px);right: max(12px, env(safe-area-inset-right, 0px));
-    --drawerW: clamp(260px, 28vw, 360px);width: var(--drawerW);max-height: calc(100vh - var(--headerH, 64px) - 22px);display: flex;flex-direction: column;gap: 0;padding: 10px;overflow: auto;background: color-mix(in oklab, var(--card) 96%, transparent);backdrop-filter: saturate(160%) blur(12px);
-    -webkit-backdrop-filter: saturate(160%) blur(12px);border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);border-radius: 16px;box-shadow: 0 12px 36px rgba(0,0,0,.18);z-index: 1000;transform: translateX(115%);opacity: 0;visibility: hidden;transition: transform .22s ease, opacity .18s ease, visibility 0s .22s;will-change: transform;}
-  header .nav.open{transform: translateX(0);opacity: 1;visibility: visible;transition: transform .22s ease, opacity .18s ease;}
+  /* 黑玻璃背景遮罩 */
+  .menu-overlay{position: fixed;inset: 0;background: rgba(0,0,0,.45);opacity: 0;visibility: hidden;transition: opacity .25s ease, visibility 0s .25s;z-index: 999;}
+  .menu-overlay.show{opacity: 1;visibility: visible;transition: opacity .25s ease;}
 
-  header .nav a{padding: 14px 10px;text-align: center;border-radius: 12px;color: var(--text);background: transparent;}
+  /* 導覽抽屜 */
+  header .nav{position: fixed;top: 0;right: 0;height: 100vh;width: clamp(260px, 75vw, 340px);display: flex;flex-direction: column;padding: 16px;background: color-mix(in oklab, var(--card) 98%, transparent);backdrop-filter: blur(16px);-webkit-backdrop-filter: blur(16px);border-left: 1px solid color-mix(in oklab, var(--border) 80%, transparent);box-shadow: -6px 0 18px rgba(0,0,0,.25);transform: translateX(100%);transition: transform .25s ease;z-index: 1000;}
+  header .nav.open{ transform: translateX(0); }
+
+  header .nav a{padding: 14px 10px;text-align: center;border-radius: 12px;color: var(--text);}
   header .nav a + a:not(.btn){border-top: 1px solid color-mix(in oklab, var(--border) 88%, transparent);}
-
-  header .nav .btn{margin-top: 10px;width: 100%;justify-content: center;background: linear-gradient(180deg, rgba(255,255,255,.06), transparent);}}
+  header .nav .btn{margin-top: 12px;width: 100%;justify-content: center;}}
 
   @keyframes menu-pop{
     from{ transform: translateY(-6px); opacity: 0; }to{ transform: none; opacity: 1; }}}
@@ -309,6 +312,8 @@ html:not([data-theme="dark"]) .nav a.active {color: #0b0c10;background: rgba(255
       </div>
     </div>
   </header>
+
+  <div class="menu-overlay" id="menuOverlay"></div>
 
   <main id="main">
     <!-- Hero -->
@@ -680,6 +685,7 @@ html:not([data-theme="dark"]) .nav a.active {color: #0b0c10;background: rgba(255
 
   // ===== Mobile menu =====
   const menuBtn = $('#menu');
+  const overlay = $('#menuOverlay');
   const nav = $('#nav');
   if (menuBtn && nav) {
     menuBtn.addEventListener('click', ()=>{const open = !nav.classList.contains('open');nav.classList.toggle('open', open);menuBtn.setAttribute('aria-expanded', String(open));document.body.style.overflow = open ? 'hidden' : '';});
