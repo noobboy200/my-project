@@ -155,7 +155,7 @@
     .slider{position:relative;overflow:hidden}
     .slides{display:flex;transition:transform .5s ease}
     .slide{min-width:100%;padding:18px}
-    .slider .nav{position:absolute;inset:auto 0 10px 0;display:flex;justify-content:center;gap:10px}
+    .slider .slider-nav{position:absolute;inset:auto 0 10px 0;display:flex;justify-content:center;gap:10px}
     .dot{width:9px;height:9px;border-radius:50%;background:var(--border);border:none}
     .dot.active{background:var(--accent)}
 
@@ -528,7 +528,7 @@ html:not([data-theme="dark"]) .nav a.active {color: #0b0c10;background: rgba(255
               <p class="muted">— DTC 品牌主理人</p>
             </div>
           </div>
-          <div class="nav">
+          <div class="slider-nav">
             <button class="dot" aria-label="第 1 則"></button>
             <button class="dot" aria-label="第 2 則"></button>
             <button class="dot" aria-label="第 3 則"></button>
@@ -802,6 +802,7 @@ if ('ResizeObserver' in window) {
     const SELECTOR_MAP = [
       /* Hero */
       { sel: '.hero .tag', key: 'hero.tag', type: 'text' },
+      { sel: '#menu', key: 'ui.menu', type: 'text' },
       { sel: '.hero h1', key: 'hero.h1', type: 'html' },
       { sel: '.hero p.muted', key: 'hero.lead', type: 'text' },
       { sel: '.hero .btn.primary', key: 'cta.primary', type: 'text' },
@@ -957,6 +958,7 @@ if ('ResizeObserver' in window) {
     const STRINGS = {
       zh: {
         'hero.tag':'可客製化 · RWD 響應式 · SEO 友善',
+        'ui.menu': '目錄',
         'hero.h1':'為你的品牌，打造<strong>低成本</strong><strong>高品質</strong>的網站體驗。',
         'hero.lead':'Aurevo 專做單檔 HTML 一頁式／小官網：RWD 響應式、SEO / GA4、表單整合、輕電商，速度快、好維護、成本小。',
         'cta.primary':'立即洽談','cta.secondary':'查看模板',
@@ -1021,6 +1023,7 @@ if ('ResizeObserver' in window) {
       },
       en: {
         'hero.tag':'Customizable · Responsive · SEO-friendly',
+        'ui.menu': 'Menu',
         'hero.h1':'Launch a <strong>lean</strong>, <strong>high-quality</strong> website for your brand.',
         'hero.lead':'I build single-file HTML one-pagers and microsites: fast RWD, clean SEO/GA4, working forms, and lightweight commerce—built to ship quickly and stay easy to maintain.',
         'cta.primary':'Start your project','cta.secondary':'View templates',
