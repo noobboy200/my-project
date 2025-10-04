@@ -142,14 +142,22 @@
     .num{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font-weight:700}
 
     /* Pricing */
-    #pricing .grid-3{gap:24px;align-items:stretch;grid-auto-rows:1fr}
-    .card.pricing{height:100%;display:flex;flex-direction:column;gap:12px;padding:20px;border-radius:16px;background:var(--card);border:1px solid var(--border);min-height:240px;transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease}
+    /* 手機/一般：高度自動，避免內容溢出 */
+    #pricing .grid-3{ gap:24px; align-items:stretch; }
+
+    /* 桌機再開等高（多欄時才需要） */
+    @media (min-width: 981px){#pricing .grid-3{ grid-auto-rows: 1fr; }}
+    /* 手機單欄：不要硬撐 100% 高度 */
+    @media (max-width: 980px){
+    .card.pricing{ height:auto; }}
     .card.pricing:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(0,0,0,.22),0 0 12px rgba(100,180,255,.45);border-color:rgba(100,180,255,.65)}
     .card.pricing h3{margin:0;font-size:1.06rem;line-height:1.35;letter-spacing:.2px}
     .card.pricing .price{margin:4px 0 8px;font-size:1.12rem;font-weight:700;line-height:1.45}
     .card.pricing ul{margin:6px 0 0;padding-left:1.1rem;list-style:disc;display:grid;gap:6px}
     #pricing h2 + p{margin-top:6px}
     #pricing .note{grid-column:1 / -1;display:block;text-align:center;font-size:.95rem;color:var(--muted);margin-top:20px}
+    .card.pricing{ position:relative; z-index:0; }
+    .card.pricing:hover{ z-index:1; }  /* 只有滑過時抬升陰影，不影響排版 */
 
     /* Testimonials */
     .slider{position:relative;overflow:hidden}
@@ -202,23 +210,19 @@ html:not([data-theme="dark"]) .nav a {color: #374151;transition: color 0.2s ease
 html:not([data-theme="dark"]) .nav a:hover,
 html:not([data-theme="dark"]) .nav a.active {color: #0b0c10;background: rgba(255, 255, 255, 0.6);}
 
-/* ===== Mobile menu (beautified) ===== */
-  @media (max-width:880px){
+/* ==== Mobile: right-side mini drawer ==== */
+@media (max-width:880px){
   .menu{ display:inline-flex; }
 
-  /* 只鎖定 header 裡的導覽，避免和其他 .nav 衝突 */
-  header .nav{position: fixed;inset: calc(var(--headerH, 64px) + 10px) 12px auto 12px;display: none;flex-direction: column;
-    gap: 0;                                /* 由分隔線控制間距 */
-    width: min(92vw, 520px);               /* 手機面板寬度 */
-    margin: 0 auto;padding: 8px;background: color-mix(in oklab, var(--card) 95%, transparent);backdrop-filter: saturate(160%) blur(12px);-webkit-backdrop-filter: saturate(160%) blur(12px);border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);border-radius: 18px;box-shadow: 0 12px 36px rgba(0,0,0,.14);z-index: 1000;animation: menu-pop .16s ease;}
-  header .nav.open{ display:flex; }
+  header .nav{position: fixed;top: calc(var(--headerH, 64px) + 10px);right: max(12px, env(safe-area-inset-right, 0px));
+    --drawerW: clamp(260px, 28vw, 360px);width: var(--drawerW);max-height: calc(100vh - var(--headerH, 64px) - 22px);display: flex;flex-direction: column;gap: 0;padding: 10px;overflow: auto;background: color-mix(in oklab, var(--card) 96%, transparent);backdrop-filter: saturate(160%) blur(12px);
+    -webkit-backdrop-filter: saturate(160%) blur(12px);border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);border-radius: 16px;box-shadow: 0 12px 36px rgba(0,0,0,.18);z-index: 1000;transform: translateX(115%);opacity: 0;visibility: hidden;transition: transform .22s ease, opacity .18s ease, visibility 0s .22s;will-change: transform;}
+  header .nav.open{transform: translateX(0);opacity: 1;visibility: visible;transition: transform .22s ease, opacity .18s ease;}
 
-  /* 連結樣式 */
-  header .nav a{padding: 14px 12px;border-radius: 12px;text-align: center;font-size: 1.02rem;color: var(--text);background: transparent;}
-  /* 分隔線（最後那顆 CTA 不畫） */
+  header .nav a{padding: 14px 10px;text-align: center;border-radius: 12px;color: var(--text);background: transparent;}
   header .nav a + a:not(.btn){border-top: 1px solid color-mix(in oklab, var(--border) 88%, transparent);}
-  /* 內部 CTA 置滿版、看起來像主按鈕 */
-  header .nav .btn{margin-top: 8px;width: 100%;justify-content: center;background: linear-gradient(180deg, rgba(255,255,255,.06), transparent);}
+
+  header .nav .btn{margin-top: 10px;width: 100%;justify-content: center;background: linear-gradient(180deg, rgba(255,255,255,.06), transparent);}}
 
   @keyframes menu-pop{
     from{ transform: translateY(-6px); opacity: 0; }to{ transform: none; opacity: 1; }}}
