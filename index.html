@@ -45,6 +45,8 @@
     html, body { transition: background-color .25s ease, color .25s ease; }
 
     html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
+    html,body{overflow-x:hidden}img,svg,canvas,video{max-width:100%;height:auto}
+    .work-figure img{display:block}
     img{max-width:100%;height:auto;display:block}
     a{color:inherit;text-decoration:none}
     .container{width:min(1160px,92vw);margin-inline:auto}
@@ -66,7 +68,9 @@
     .grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
     @media (max-width:980px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(2,1fr)}.grid-2{grid-template-columns:1fr}}
     @media (max-width:640px){.grid-4,.grid-3{grid-template-columns:1fr}}
-
+    @media (max-width:360px){h1{font-size:clamp(1.9rem, 7vw, 2.4rem)}.header-inner{padding:12px 14px}.service.card{grid-template-columns:36px 1fr}.client-logo{max-width:90px; max-height:32px}}
+    @media (prefers-reduced-motion: reduce){.reveal._pending{opacity:1 !important; transform:none !important; transition:none !important}.slides{transition:none !important}}
+    
     /* Header */
     .skip{position:absolute;left:-9999px;top:auto}
     .skip:focus{left:12px;top:12px;z-index:9999;background:#000;color:#fff;padding:.5rem;border-radius:8px}
@@ -78,7 +82,7 @@
     /* 基礎：柔和但明顯一點的陰影 */
     .logo-img{height:64px; width:auto;
     /* 多層陰影：小半徑提輪廓 + 大半徑做柔化 */
-    filter:drop-shadow(0 0.5px 0.4px rgba(0,0,0,.35))drop-shadow(0 2px 3px rgba(0,0,0,.18))drop-shadow(0 6px 10px rgba(0,0,0,.10));transition: filter .2s ease;}
+    filter:drop-shadow(0 .4px .3px rgba(0,0,0,.28))drop-shadow(0 1.5px 2.4px rgba(0,0,0,.16))drop-shadow(0 4px 8px rgba(0,0,0,.08));transition: filter .2s ease;}
 
     /* 小螢幕維持你原本高度 */
     @media (max-width:640px){.logo-img{ height:36px; }}
@@ -95,16 +99,17 @@
     .nav a:hover,.nav a.active{background:var(--elev);color:var(--text)}
     .menu{display:none}
     @media (max-width:880px){
-      .nav{position:fixed;inset:64px 12px auto 12px;display:none;flex-direction:column;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px}
-      .nav.open{display:flex}
-      .menu{display:inline-flex}
-    }
+      .nav{position:fixed;inset: calc(var(--headerH, 64px) + 8px) 12px auto 12px; /* 跟著 header 高度走 */display:none;flex-direction:column;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;}
+      .nav.open{display:flex}}
 
     /* Hero */
     .hero{padding-top:120px}
     .hero-wrap{display:grid;gap:28px;grid-template-columns:1.1fr .9fr;align-items:center}
     @media (max-width:980px){.hero-wrap{grid-template-columns:1fr}}
-    .hero-art{aspect-ratio:4/3;border-radius:22px;background:conic-gradient(from 0deg at 30% 30%, #2b88ff, #8cf2c6, #ffd166, #2b88ff);mask:radial-gradient(circle at 45% 55%, transparent 0 22%, rgba(0,0,0,.4) 22.5% 28%, transparent 28.5% 100%), linear-gradient(#000 0 0);mask-composite:exclude;opacity:.9}
+    .hero-art{aspect-ratio:4/3;border-radius:22px;background:conic-gradient(from 0deg at 30% 30%, #2b88ff, #8cf2c6, #ffd166, #2b88ff);mask:radial-gradient(circle at 45% 55%, transparent 0 22%, rgba(0,0,0,.4) 22.5% 28%, transparent 28.5% 100%), linear-gradient(#000 0 0);mask-composite:exclude;
+    /*新增 -webkit- 前綴版本 */
+    -webkit-mask-image: radial-gradient(circle at 45% 55%, transparent 0 22%, rgba(0,0,0,.4) 22.5% 28%, transparent 28.5% 100%), linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; /* 近似 exclude：WebKit 用法不同 */}
     .stats{display:flex;gap:20px;flex-wrap:wrap}
     .stat{padding:10px 14px;border:1px dashed var(--border);border-radius:14px;min-width:140px}
 
@@ -332,7 +337,7 @@
         <div class="grid grid-3" id="portfolio">
           <a class="work-card card reveal" href="https://example.com/project-a" target="_blank" rel="noopener" aria-label="前往 專案 A 網站（新分頁開啟）">
             <figure class="work-figure">
-              <img src="https://dummyimage.com/800x500/111317/8b94a7.png&text=Project+A" alt="專案 A — 登陸頁設計（RWD）" loading="lazy" decoding="async">
+              <img src="https://dummyimage.com/800x500/111317/8b94a7.png&amp.text=Project+A" alt="專案 A — 登陸頁設計（RWD）" loading="lazy" decoding="async">
             </figure>
             <div class="work-info">
               <strong>專案 A</strong>
@@ -342,7 +347,7 @@
 
           <a class="work-card card reveal" href="https://example.com/project-b" target="_blank" rel="noopener" aria-label="前往 專案 B 網站（新分頁開啟）">
             <figure class="work-figure">
-              <img src="https://dummyimage.com/800x500/111317/8b94a7.png&text=Project+B" alt="專案 B — 商業官網改版" loading="lazy" decoding="async">
+              <img src="https://dummyimage.com/800x500/111317/8b94a7.png&amp.text=Project+B" alt="專案 B — 商業官網改版" loading="lazy" decoding="async">
             </figure>
             <div class="work-info">
               <strong>專案 B</strong>
@@ -352,7 +357,7 @@
 
           <a class="work-card card reveal" href="https://example.com/project-c" target="_blank" rel="noopener" aria-label="前往 專案 C 網站（新分頁開啟）">
             <figure class="work-figure">
-              <img src="https://dummyimage.com/800x500/111317/8b94a7.png&text=Project+C" alt="專案 C — 電商前端" loading="lazy" decoding="async">
+              <img src="https://dummyimage.com/800x500/111317/8b94a7.png&amp.text=Project+C" alt="專案 C — 電商前端" loading="lazy" decoding="async">
             </figure>
             <div class="work-info">
               <strong>專案 C</strong>
@@ -628,14 +633,14 @@
 
   // ===== Smooth anchor scroll =====
   $$('#nav a[href^="#"]').forEach(a=>{
-    a.addEventListener('click', e=>{
-      e.preventDefault();
-      const id=a.getAttribute('href').slice(1);
-      const el=$('#'+id);
-      if(el){ window.scrollTo({top:el.offsetTop-70, behavior:'smooth'}); }
-    });
-  });
-
+  a.addEventListener('click', e=>{
+    e.preventDefault();
+    const id=a.getAttribute('href').slice(1);
+    const el=$('#'+id);
+    if(!el){return;}
+    const headerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--headerH')) || 70;
+    const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - (headerH + 10));window.scrollTo({top, behavior:'smooth'});});});
+    
   // ===== Slider =====
   const slidesEl = $('#slides'); const dots = $$('.dot'); let idx=0; let timer;
   function go(i){ idx = (i + dots.length) % dots.length; slidesEl.style.transform = `translateX(${-idx*100}% )`; dots.forEach((d,j)=>d.classList.toggle('active', j===idx)); }
@@ -664,24 +669,20 @@
     // 標記為待顯示，避免初始就透明導致「什麼都看不到」
     items.forEach(el => el.classList.add('_pending'));
     // 若 IntersectionObserver 可用，漸顯；否則直接顯示
-    if('IntersectionObserver' in window){
-      const io = new IntersectionObserver((entries)=>{
-        entries.forEach(({isIntersecting,target})=>{
-          if(isIntersecting){
-            target.classList.add('show');
-            target.classList.remove('_pending');
-            io.unobserve(target);
-          }
-        });
-      },{root:null,rootMargin:'0px 0px -10% 0px',threshold:0.1});
-      items.forEach(el=>io.observe(el));
-    }else{
-      items.forEach(el=>{ el.classList.add('show'); el.classList.remove('_pending'); });
-    }
-  }
+    if('IntersectionObserver' in window){const io = new IntersectionObserver((entries)=>{entries.forEach(({isIntersecting,target})=>{
+    if(isIntersecting){target.classList.add('show');target.classList.remove('_pending');io.unobserve(target);}});},{root:null,rootMargin:'0px 0px -10% 0px',threshold:0.1});items.forEach(el=>io.observe(el));}else{items.forEach(el=>{ el.classList.add('show'); el.classList.remove('_pending'); });}}
 
+  if (menuBtn && nav) {menuBtn.addEventListener('click', ()=>{const open = !nav.classList.contains('open');nav.classList.toggle('open', open);menuBtn.setAttribute('aria-expanded', String(open));document.body.style.overflow = open ? 'hidden' : '';});
+  nav.addEventListener('click', e=>{if(e.target.tagName==='A'){nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');document.body.style.overflow = '';}});}
+    
   // init
   onScroll();
+    
+  function setHeaderVar(){
+  const h = header.getBoundingClientRect().height || 64;document.documentElement.style.setProperty('--headerH', h + 'px');}
+  setHeaderVar();
+  window.addEventListener('resize', setHeaderVar, {passive:true});
+  window.addEventListener('scroll', ()=>{ setHeaderVar(); }, {passive:true});
 
   /* ===== i18n (ZH/EN) ===== */
   (function(){
