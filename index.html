@@ -141,18 +141,27 @@
     .step{display:flex;gap:14px;padding:16px;border:1px dashed var(--border);border-radius:16px;background:var(--elev)}
     .num{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font-weight:700}
 
-    /* ====== 起點：Pricing Cards（等高＋按鈕修正＋熱門醒目） ====== */
-    #pricing .grid-3, #maintenance .grid-3 {align-items: stretch;gap: 28px;}
-    .card.pricing {position: relative;display: flex;flex-direction: column;justify-content: space-between;gap: 16px;padding: 26px 24px 90px;border-radius: 18px;background: var(--card);border: 1px solid var(--border);box-shadow: 0 10px 24px rgba(0,0,0,.08);transition: all .25s ease;overflow: hidden;}
-    .card.pricing:hover {transform: translateY(-3px);box-shadow: 0 14px 28px rgba(0,0,0,.12);}
-    .card.pricing h3 {margin: 0 0 10px;font-size: 1.1rem;color: var(--text);}
-    .card.pricing strong {font-size: 1.2rem;}
-    .card.pricing .actions {margin-top: auto;position: absolute;left: 0;right: 0;bottom: 0;}
-    .card.pricing .btn.primary {display: block;width: 100%;border-radius: 0 0 18px 18px;height: 50px;font-weight: 600;letter-spacing: .5px;background: var(--brand);}
-    .card.pricing .btn.primary:hover {background: color-mix(in oklab, var(--brand) 90%, #000 10%);transform: none;}
-    .card.pricing .badge {position: absolute;top: 18px;right: 18px;padding: 4px 10px;border-radius: 8px;font-size: .8rem;background: color-mix(in oklab, var(--accent) 85%, #fff 15%);color: #fff;font-weight: 600;text-shadow: 0 1px 2px rgba(0,0,0,.25);box-shadow: 0 2px 6px rgba(0,0,0,.1);}
-    @media (max-width:880px){#pricing .grid-3,#maintenance .grid-3{grid-template-columns:1fr;gap:20px;}.card.pricing{padding:24px 20px 80px;}}
-    /* ====== 結束：Pricing Cards（等高＋按鈕修正＋熱門醒目） ====== */
+    /* ==== 起點：Pricing & Maintenance（美化版；直接覆蓋舊的） ==== */
+    :root{--brand:#336dff;} html[data-theme="dark"] :root{--brand:#5ea1ff;}
+    #pricing .grid-3,#pricing-maint .grid-3{align-items:stretch;gap:28px;}
+    .card.pricing{position:relative;display:flex;flex-direction:column;justify-content:flex-start;gap:14px;padding:26px 24px 88px;border:1px solid var(--border);border-radius:18px;background:var(--card);box-shadow:0 10px 24px rgba(0,0,0,.06);transition:transform .22s ease,box-shadow .22s ease, border-color .22s ease;overflow:hidden;}
+    .card.pricing:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.12);border-color:color-mix(in oklab,var(--border) 70%, var(--brand) 30%);}
+    .card.pricing h3{margin:0 0 6px;font-size:1.06rem;letter-spacing:.2px;}
+    .card.pricing .price{margin:2px 0 8px;font-weight:700;}
+    .card.pricing ul{margin:8px 0 0;padding-left:1.1rem;display:grid;gap:6px;list-style:disc;}
+    /* 角標（熱門） */
+    .card.pricing .badge{position:absolute;top:14px;right:14px;padding:4px 10px;border-radius:9px;font-size:.8rem;font-weight:700;background:color-mix(in oklab,var(--brand) 92%, #ffffff 8%);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.25);box-shadow:0 2px 6px rgba(0,0,0,.12);}
+    html:not([data-theme="dark"]) .card.pricing .badge{background:linear-gradient(180deg,color-mix(in oklab,var(--brand) 92%,#fff 8%),color-mix(in oklab,var(--brand) 78%,#000 22%));}
+    /* CTA 區（貼齊卡片底部；不會外溢） */
+    .card.pricing .actions{position:absolute;left:0;right:0;bottom:0;}
+    .card.pricing .btn.primary{display:block;width:100%;height:52px;line-height:52px;text-align:center;border:0;border-radius:0 0 18px 18px;background:var(--brand);color:#fff;font-weight:700;letter-spacing:.3px;box-shadow:inset 0 -1px 0 rgba(255,255,255,.12);transition:filter .15s ease, background .2s ease;}
+    .card.pricing .btn.primary:hover{filter:brightness(.95);}
+    .card.pricing .btn.primary:active{filter:brightness(.9);}
+    .card.pricing .btn.primary:focus-visible{outline:2px solid color-mix(in oklab,var(--brand) 70%,#fff 30%);outline-offset:-2px;}
+    /* 桌機維持等高；手機單欄自動高度 */
+    @media (min-width:981px){#pricing .grid-3,#pricing-maint .grid-3{grid-auto-rows:1fr;}}
+    @media (max-width:980px){#pricing .grid-3,#pricing-maint .grid-3{grid-template-columns:1fr;gap:20px;} .card.pricing{padding:22px 18px 78px;}}
+    /* ==== 結束：Pricing & Maintenance（美化版） ==== */
 
     /* Testimonials */
     .slider{position:relative;overflow:hidden}
