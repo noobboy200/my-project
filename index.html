@@ -202,6 +202,38 @@ html:not([data-theme="dark"]) .nav a {color: #374151;transition: color 0.2s ease
 html:not([data-theme="dark"]) .nav a:hover,
 html:not([data-theme="dark"]) .nav a.active {color: #0b0c10;background: rgba(255, 255, 255, 0.6);}
 
+    /* 手機版：顯示 Menu 按鈕，並將 nav 以抽屜顯示 */
+@media (max-width:880px){
+  .menu{ display: inline-flex; }              /* ← 這行讓按鈕出現 */
+  .nav{ position: fixed;inset: calc(var(--headerH, 64px) + 8px) 12px auto 12px;display: none;flex-direction: column;background: var(--card);border: 1px solid var(--border);border-radius: 16px;padding: 12px;z-index: 1000;                            /* ← 保險：確保蓋在內容之上 */}
+  .nav.open{ display:flex; }}
+
+    /* --- Testimonials Slider: mobile-safe --- */
+.slider{ position:relative; overflow:hidden; }
+.slides{
+  display:flex;
+  will-change: transform;
+  transition: transform .45s ease;   /* 稍快一點比較利落 */
+  touch-action: pan-y;               /* 允許垂直捲動，避免卡手勢 */}
+.slide{
+  flex: 0 0 100%;                    /* 每張嚴格佔 100% 寬 */
+  box-sizing: border-box;
+  padding: 18px;
+  min-height: 1px;                   /* 防偶發 layout bug */
+  contain: layout paint;             /* 降低重排影響 */
+  word-wrap: break-word;             /* 長字不撐寬 */}
+
+  /* 文字行高稍加大，手機更穩定 */
+  #testimonials p{ line-height: 1.7; }
+
+  /* 導覽點點：可點、大小一致 */
+  .slider .nav{ position:absolute; inset:auto 0 10px 0; display:flex; justify-content:center; gap:10px; }
+  .dot{width:10px; height:10px; border-radius:50%;background: var(--border); border:none; cursor:pointer;transition: transform .15s ease, background .15s ease;}
+  .dot.active{ background: var(--accent); transform: scale(1.1); }
+
+    /* 防止任何子元素把容器撐寬（保險） */
+    #testimonials, #testimonials * { max-width: 100%; }
+
   </style>
 
   <script type="application/ld+json">
@@ -642,12 +674,61 @@ html:not([data-theme="dark"]) .nav a.active {color: #0b0c10;background: rgba(255
     // 原生定位，會自動套用上面的 scroll-padding-top
     el.scrollIntoView({ behavior: 'smooth', block: 'start' });});});
     
-  // ===== Slider =====
-  const slidesEl = $('#slides'); const dots = $$('.dot'); let idx=0; let timer;
-  function go(i){ idx = (i + dots.length) % dots.length; slidesEl.style.transform = `translateX(${-idx*100}% )`; dots.forEach((d,j)=>d.classList.toggle('active', j===idx)); }
-  function auto(){ clearInterval(timer); timer = setInterval(()=>go(idx+1), 5000); }
-  dots.forEach((d,i)=>d.addEventListener('click', ()=>{ go(i); auto(); }));
-  if (slidesEl && dots.length) { go(0); auto(); }
+// ===== Slider (mobile-safe) =====
+const slidesEl = $('#slides');
+const dots     = $$('.dot');
+let idx = 0, timer = null;
+
+function go(i){
+  if (!slidesEl || !dots.length) return;idx = (i + dots.length) % dots.length;
+  // 用 translate3d 觸發 GPU，加上百分比位移避免小數誤差
+  slidesEl.style.transform = `translate3d(-${idx * 100}%, 0, 0)`;dots.forEach((d, j) => d.classList.toggle('active', j === idx));}
+
+function auto(){clearInterval(timer);timer = setInterval(() => go(idx + 1), 5000);}
+
+// 初始化點點
+dots.forEach((d, i) => d.addEventListener('click', () => { go(i); auto(); }));
+
+// 規一化高度（避免不同語言/行數造成高度跳動）
+function normalizeSliderHeight(){
+  if (!slidesEl) return;
+  const slides = $$('.slide', slidesEl);
+  const h = Math.max(...slides.map(s => s.getBoundingClientRect().height));slidesEl.parentElement.style.minHeight = Math.ceil(h) + 'px';}
+
+  // 監聽字型/視窗/內容變化（高度變更時重新計算）
+  window.addEventListener('resize', normalizeSliderHeight, { passive:true });
+  if (window.ResizeObserver){
+    const ro = new ResizeObserver(normalizeSliderHeight);ro.observe(slidesEl);}
+    if (document.fonts && document.fonts.ready){document.fonts.ready.then(normalizeSliderHeight);}
+
+  // 簡易滑動手勢（可選，但有助於手機 UX）
+(function attachSwipe(el){
+  if (!el) return;
+  let startX = 0, deltaX = 0, dragging = false;
+
+  const onStart = e => {dragging = true;startX = (e.touches ? e.touches[0].clientX : e.clientX);deltaX = 0;clearInterval(timer);el.style.transition = 'none';};
+  const onMove = e => {
+    if (!dragging) return;
+    const x = (e.touches ? e.touches[0].clientX : e.clientX);deltaX = x - startX;
+    // 依容器寬度算偏移百分比
+    const w = el.getBoundingClientRect().width;
+    const offsetPct = (-idx * 100) + (deltaX / w) * 100;el.style.transform = `translate3d(${offsetPct}%, 0, 0)`;};
+  const onEnd = () => {if (!dragging) return;dragging = false;el.style.transition = 'transform .45s ease';
+    const w = el.getBoundingClientRect().width;
+    // 滑過 1/4 寬就換頁，容錯較高
+    if (Math.abs(deltaX) > w * 0.25){go(idx + (deltaX < 0 ? 1 : -1));} else {go(idx);}auto();};
+
+  el.addEventListener('pointerdown', onStart);
+  el.addEventListener('pointermove', onMove);
+  el.addEventListener('pointerup', onEnd);
+  el.addEventListener('pointercancel', onEnd);
+  // 觸控瀏覽器（iOS Safari）保險
+  el.addEventListener('touchstart', onStart, { passive:true });
+  el.addEventListener('touchmove',  onMove,  { passive:true });
+  el.addEventListener('touchend',   onEnd,   { passive:true });})(slidesEl);
+
+  // 啟動
+  if (slidesEl && dots.length){ go(0); auto(); normalizeSliderHeight(); }
 
   // ===== Form (fake submit demo) =====
   const form = $('#form'); const status = $('#form-status');
