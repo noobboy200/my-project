@@ -174,7 +174,7 @@
 .card.pricing[data-popular="true"]{background: linear-gradient(180deg, color-mix(in oklab, var(--card) 96%, transparent) 0%, var(--card) 100%);border-color: color-mix(in oklab, var(--accent) 35%, var(--border));box-shadow: 0 16px 42px rgba(0,0,0,.18);}
 
 /* 小角標：熱門 */
-.card.pricing .badge{position: absolute; top: 14px;right: 14px;padding: .28rem .6rem;font-size: .82rem;border-radius: 999px;background: color-mix(in oklab, var(--accent) 18%, var(--elev));color: color-mix(in oklab, #fff 92%, var(--text));border: 1px solid color-mix(in oklab, var(--accent) 30%, var(--border));}
+.card.pricing .badge {background: color-mix(in oklab, var(--accent) 80%, #fff 20%);color: #fff;font-weight: 600;text-shadow: 0 1px 2px rgba(0,0,0,.25);border: none;}
 
 /* 標題 / 價格排版 */
 .card.pricing h3{margin: 2px 0 2px;font-size: 1.06rem;line-height: 1.35;letter-spacing: .2px;}
@@ -210,6 +210,18 @@
   .card.pricing .badge{ top: 10px; right: 10px; }}
 
 /* ====== 替換結束：Pricing（行銷展示級 + 留白） ====== */
+
+    /* ==== START: Fix CTA Button Overflow ==== */
+  .card.pricing {overflow: hidden;            /* 防止按鈕溢出卡片 */position: relative;}
+
+  .card.pricing .actions {margin-top: auto;            /* 確保貼底且不超出邊界 */}
+
+  .card.pricing .btn.primary {border-radius: 0 0 14px 14px;  /* 讓按鈕與卡片底部圓角融合 */height: 46px;font-weight: 600;}
+
+  /* hover 時保持按鈕邊界不變 */
+  .card.pricing:hover .btn.primary {transform: none;}
+  /* ==== END: Fix CTA Button Overflow ==== */
+
 
     /* Testimonials */
     .slider{position:relative;overflow:hidden}
