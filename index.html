@@ -192,13 +192,15 @@
     .reveal.show{opacity:1;transform:none}
 
     /* Header 日間模式顔色 */
-  html:not([data-theme="dark"]) header{background: linear-gradient(180deg, #f6f8fb 0%, #edf2f7 100%);border-bottom-color: #d9e1ee;backdrop-filter: none;}
-  html:not([data-theme="dark"]) header.scrolled{background: linear-gradient(180deg, #eef2f7 0%, #e2e8f0 100%);border-bottom-color: #cdd6e4;}
-  html:not([data-theme="dark"]) .nav a{color: #1f2937;}
-  html:not([data-theme="dark"]) .nav a:hover,
-  html:not([data-theme="dark"]) .nav a.active{background: rgba(17,24,39,.06);color: #0f172a;}
-  html:not([data-theme="dark"]) .btn.ghost{border-color: #d1d9e6;background: rgba(255,255,255,.6);}
-  html:not([data-theme="dark"]) .logo-img{filter:drop-shadow(0 .5px 1px rgba(0,0,0,.18))drop-shadow(0 2px 4px rgba(0,0,0,.08));}
+/* ==== 改良版 header：玻璃 + 漸層 ==== */
+html:not([data-theme="dark"]) header {background: linear-gradient(135deg, rgba(255, 255, 255, 0.68) 0%, rgba(240, 244, 255, 0.55) 100%);backdrop-filter: saturate(180%) blur(16px);-webkit-backdrop-filter: saturate(180%) blur(16px);border-bottom: 1px solid rgba(180, 190, 210, 0.4);box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);transition: background 0.4s ease, backdrop-filter 0.3s ease;}
+
+html:not([data-theme="dark"]) header.scrolled {background: linear-gradient(135deg, rgba(245, 247, 255, 0.92) 0%, rgba(235, 240, 255, 0.88) 100%);backdrop-filter: saturate(200%) blur(20px);-webkit-backdrop-filter: saturate(200%) blur(20px);border-bottom-color: rgba(160, 175, 200, 0.5);box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);}
+
+/* 導覽連結顏色更柔和，hover 有亮感 */
+html:not([data-theme="dark"]) .nav a {color: #374151;transition: color 0.2s ease, background 0.2s ease;}
+html:not([data-theme="dark"]) .nav a:hover,
+html:not([data-theme="dark"]) .nav a.active {color: #0b0c10;background: rgba(255, 255, 255, 0.6);}
 
   </style>
 
