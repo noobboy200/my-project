@@ -35,6 +35,7 @@
   <link rel="preconnect" href="https://dummyimage.com" crossorigin>
 
   <style>
+    html{scroll-behavior: smooth;scroll-padding-top: calc(var(--headerH, 70px) + 10px); /* 10px 略為舒適間距 */}
     /* Light theme (預設) */
     :root{--bg:#f7f8fa; --card:#ffffff; --elev:#f2f4f8;--muted:#55626f;--text:#1f2937;--accent:#336dff;--accent-2:#22c8a3;--accent-3:#ffcc66;--danger:#e65252;--ok:#16a34a;--border:#e5e7eb;--shadow:0 10px 30px rgba(0,0,0,.06);}
 
@@ -270,16 +271,16 @@
       <div class="container" style="margin-top:24px">
         <div class="grid grid-4 clients">
           <a href="https://client-a.com" target="_blank" rel="noopener" class="client-card" aria-label="前往 Client A 官網（新分頁開啟）">
-            <img src="https://dummyimage.com/200x60/0a0a0a/ffffff.png&text=Client+A" alt="Client A Logo" class="client-logo" loading="lazy" decoding="async">
+            <img src="https://dummyimage.com/200x60/0a0a0a/ffffff.png&amp;text=Client+A" alt="Client A Logo" class="client-logo" loading="lazy" decoding="async">
           </a>
           <a href="https://client-b.com" target="_blank" rel="noopener" class="client-card" aria-label="前往 Client B 官網（新分頁開啟）">
-            <img src="https://dummyimage.com/200x60/0a0a0a/ffffff.png&text=Client+B" alt="Client B Logo" class="client-logo" loading="lazy" decoding="async">
+            <img src="https://dummyimage.com/200x60/0a0a0a/ffffff.png&amp;text=Client+B" alt="Client B Logo" class="client-logo" loading="lazy" decoding="async">
           </a>
           <a href="https://client-c.com" target="_blank" rel="noopener" class="client-card" aria-label="前往 Client C 官網（新分頁開啟）">
-            <img src="https://dummyimage.com/200x60/0a0a0a/ffffff.png&text=Client+C" alt="Client C Logo" class="client-logo" loading="lazy" decoding="async">
+            <img src="https://dummyimage.com/200x60/0a0a0a/ffffff.png&amp;text=Client+C" alt="Client C Logo" class="client-logo" loading="lazy" decoding="async">
           </a>
           <a href="https://client-d.com" target="_blank" rel="noopener" class="client-card" aria-label="前往 Client D 官網（新分頁開啟）">
-            <img src="https://dummyimage.com/200x60/0a0a0a/ffffff.png&text=Client+D" alt="Client D Logo" class="client-logo" loading="lazy" decoding="async">
+            <img src="https://dummyimage.com/200x60/0a0a0a/ffffff.png&amp;text=Client+D" alt="Client D Logo" class="client-logo" loading="lazy" decoding="async">
           </a>
         </div>
       </div>
@@ -337,7 +338,7 @@
         <div class="grid grid-3" id="portfolio">
           <a class="work-card card reveal" href="https://example.com/project-a" target="_blank" rel="noopener" aria-label="前往 專案 A 網站（新分頁開啟）">
             <figure class="work-figure">
-              <img src="https://dummyimage.com/800x500/111317/8b94a7.png&amp.text=Project+A" alt="專案 A — 登陸頁設計（RWD）" loading="lazy" decoding="async">
+              <img src="https://dummyimage.com/800x500/111317/8b94a7.png&amp;text=Project+A" alt="專案 A — 登陸頁設計（RWD）" loading="lazy" decoding="async">
             </figure>
             <div class="work-info">
               <strong>專案 A</strong>
@@ -347,7 +348,7 @@
 
           <a class="work-card card reveal" href="https://example.com/project-b" target="_blank" rel="noopener" aria-label="前往 專案 B 網站（新分頁開啟）">
             <figure class="work-figure">
-              <img src="https://dummyimage.com/800x500/111317/8b94a7.png&amp.text=Project+B" alt="專案 B — 商業官網改版" loading="lazy" decoding="async">
+              <img src="https://dummyimage.com/800x500/111317/8b94a7.png&amp;text=Project+B" alt="專案 B — 商業官網改版" loading="lazy" decoding="async">
             </figure>
             <div class="work-info">
               <strong>專案 B</strong>
@@ -357,7 +358,7 @@
 
           <a class="work-card card reveal" href="https://example.com/project-c" target="_blank" rel="noopener" aria-label="前往 專案 C 網站（新分頁開啟）">
             <figure class="work-figure">
-              <img src="https://dummyimage.com/800x500/111317/8b94a7.png&amp.text=Project+C" alt="專案 C — 電商前端" loading="lazy" decoding="async">
+              <img src="https://dummyimage.com/800x500/111317/8b94a7.png&amp;text=Project+C" alt="專案 C — 電商前端" loading="lazy" decoding="async">
             </figure>
             <div class="work-info">
               <strong>專案 C</strong>
@@ -617,29 +618,17 @@
   // ===== Mobile menu =====
   const menuBtn = $('#menu');
   const nav = $('#nav');
-  if (menuBtn && nav) {
-    menuBtn.addEventListener('click', ()=>{
-      const open = !nav.classList.contains('open');
-      nav.classList.toggle('open', open);
-      menuBtn.setAttribute('aria-expanded', String(open));
-    });
-    nav.addEventListener('click', e=>{
-      if(e.target.tagName==='A'){
-        nav.classList.remove('open');
-        menuBtn.setAttribute('aria-expanded','false');
-      }
-    });
-  }
 
-  // ===== Smooth anchor scroll =====
-  $$('#nav a[href^="#"]').forEach(a=>{
-  a.addEventListener('click', e=>{
-    e.preventDefault();
-    const id=a.getAttribute('href').slice(1);
-    const el=$('#'+id);
-    if(!el){return;}
-    const headerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--headerH')) || 70;
-    const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - (headerH + 10));window.scrollTo({top, behavior:'smooth'});});});
+    // ===== Smooth anchor scroll（用原生 API，靠 scroll-padding-top 校正）=====
+    $$('#nav a[href^="#"]').forEach(a=>{a.addEventListener('click', e=>{e.preventDefault();const id = a.getAttribute('href').slice(1);const el = document.getElementById(id);if(!el) return;
+
+    // 若在行動版展開了選單，先關掉再捲動（避免高度瞬變）
+    nav.classList.remove('open');
+    menuBtn?.setAttribute('aria-expanded','false');
+    document.body.style.overflow = '';
+
+    // 原生定位，會自動套用上面的 scroll-padding-top
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });});});
     
   // ===== Slider =====
   const slidesEl = $('#slides'); const dots = $$('.dot'); let idx=0; let timer;
@@ -678,12 +667,19 @@
   // init
   onScroll();
     
-  function setHeaderVar(){
-  const h = header.getBoundingClientRect().height || 64;document.documentElement.style.setProperty('--headerH', h + 'px');}
-  setHeaderVar();
-  window.addEventListener('resize', setHeaderVar, {passive:true});
-  window.addEventListener('scroll', ()=>{ setHeaderVar(); }, {passive:true});
+  // ===== Header 高度 → CSS 變數（更精準） =====
+  const header = document.getElementById('site-header');
+  function setHeaderVar(h){document.documentElement.style.setProperty('--headerH', `${Math.round(h)}px`);}
 
+  // 初始化一次（避免某些瀏覽器在 observer 回調前就先用到）
+  setHeaderVar(header.getBoundingClientRect().height || 64);
+
+  // 觀察 header 實際高度變動（含 scrolled 狀態 padding 變化、字體換語言等）
+  const ro = new ResizeObserver(entries=>{for(const entry of entries){setHeaderVar(entry.target.getBoundingClientRect().height || 64);}});ro.observe(header);
+
+  // ===== 初始載入帶有 #hash 時，補一次定位 =====
+  window.addEventListener('load', ()=>{f(location.hash){const el = document.querySelector(location.hash);el && el.scrollIntoView({ behavior: 'auto', block: 'start' });}});
+    
   /* ===== i18n (ZH/EN) ===== */
   (function(){
     const META = {
