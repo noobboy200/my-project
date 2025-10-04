@@ -202,11 +202,26 @@ html:not([data-theme="dark"]) .nav a {color: #374151;transition: color 0.2s ease
 html:not([data-theme="dark"]) .nav a:hover,
 html:not([data-theme="dark"]) .nav a.active {color: #0b0c10;background: rgba(255, 255, 255, 0.6);}
 
-    /* 手機版：顯示 Menu 按鈕，並將 nav 以抽屜顯示 */
-@media (max-width:880px){
-  .menu{ display: inline-flex; }              /* ← 這行讓按鈕出現 */
-  .nav{ position: fixed;inset: calc(var(--headerH, 64px) + 8px) 12px auto 12px;display: none;flex-direction: column;background: var(--card);border: 1px solid var(--border);border-radius: 16px;padding: 12px;z-index: 1000;                            /* ← 保險：確保蓋在內容之上 */}
-  .nav.open{ display:flex; }}
+/* ===== Mobile menu (beautified) ===== */
+  @media (max-width:880px){
+  .menu{ display:inline-flex; }
+
+  /* 只鎖定 header 裡的導覽，避免和其他 .nav 衝突 */
+  header .nav{position: fixed;inset: calc(var(--headerH, 64px) + 10px) 12px auto 12px;display: none;flex-direction: column;
+    gap: 0;                                /* 由分隔線控制間距 */
+    width: min(92vw, 520px);               /* 手機面板寬度 */
+    margin: 0 auto;padding: 8px;background: color-mix(in oklab, var(--card) 95%, transparent);backdrop-filter: saturate(160%) blur(12px);-webkit-backdrop-filter: saturate(160%) blur(12px);border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);border-radius: 18px;box-shadow: 0 12px 36px rgba(0,0,0,.14);z-index: 1000;animation: menu-pop .16s ease;}
+  header .nav.open{ display:flex; }
+
+  /* 連結樣式 */
+  header .nav a{padding: 14px 12px;border-radius: 12px;text-align: center;font-size: 1.02rem;color: var(--text);background: transparent;}
+  /* 分隔線（最後那顆 CTA 不畫） */
+  header .nav a + a:not(.btn){border-top: 1px solid color-mix(in oklab, var(--border) 88%, transparent);}
+  /* 內部 CTA 置滿版、看起來像主按鈕 */
+  header .nav .btn{margin-top: 8px;width: 100%;justify-content: center;background: linear-gradient(180deg, rgba(255,255,255,.06), transparent);}
+
+  @keyframes menu-pop{
+    from{ transform: translateY(-6px); opacity: 0; }to{ transform: none; opacity: 1; }}}
 
     /* --- Testimonials Slider: mobile-safe --- */
 .slider{ position:relative; overflow:hidden; }
@@ -662,6 +677,16 @@ html:not([data-theme="dark"]) .nav a.active {color: #0b0c10;background: rgba(255
   // ===== Mobile menu =====
   const menuBtn = $('#menu');
   const nav = $('#nav');
+  if (menuBtn && nav) {
+    menuBtn.addEventListener('click', ()=>{const open = !nav.classList.contains('open');nav.classList.toggle('open', open);menuBtn.setAttribute('aria-expanded', String(open));document.body.style.overflow = open ? 'hidden' : '';});
+    nav.addEventListener('click', e=>{if(e.target.tagName==='A'){nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');document.body.style.overflow = '';}});}
+    // 點擊面板外自動關閉（手機 UX 會更好）
+document.addEventListener('click', (e)=>{
+  if (!nav || !menuBtn) return;
+  const isOpen = nav.classList.contains('open');
+  if (!isOpen) return;
+  const inside = nav.contains(e.target) || menuBtn.contains(e.target);
+  if (!inside){nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');document.body.style.overflow = '';}}, { passive:true });
 
     // ===== Smooth anchor scroll（用原生 API，靠 scroll-padding-top 校正）=====
     $$('#nav a[href^="#"]').forEach(a=>{a.addEventListener('click', e=>{e.preventDefault();const id = a.getAttribute('href').slice(1);const el = document.getElementById(id);if(!el) return;
@@ -753,9 +778,6 @@ function normalizeSliderHeight(){
     // 若 IntersectionObserver 可用，漸顯；否則直接顯示
     if('IntersectionObserver' in window){const io = new IntersectionObserver((entries)=>{entries.forEach(({isIntersecting,target})=>{
     if(isIntersecting){target.classList.add('show');target.classList.remove('_pending');io.unobserve(target);}});},{root:null,rootMargin:'0px 0px -10% 0px',threshold:0.1});items.forEach(el=>io.observe(el));}else{items.forEach(el=>{ el.classList.add('show'); el.classList.remove('_pending'); });}}
-
-  if (menuBtn && nav) {menuBtn.addEventListener('click', ()=>{const open = !nav.classList.contains('open');nav.classList.toggle('open', open);menuBtn.setAttribute('aria-expanded', String(open));document.body.style.overflow = open ? 'hidden' : '';});
-  nav.addEventListener('click', e=>{if(e.target.tagName==='A'){nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');document.body.style.overflow = '';}});}
     
   // init
   onScroll();
