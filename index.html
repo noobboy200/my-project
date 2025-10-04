@@ -211,30 +211,29 @@
     .reveal.show{opacity:1;transform:none}
 
     /* Header 日間模式顔色 */
-/* ==== 改良版 header：玻璃 + 漸層 ==== */
-html:not([data-theme="dark"]) header {background: linear-gradient(135deg, rgba(255, 255, 255, 0.68) 0%, rgba(240, 244, 255, 0.55) 100%);backdrop-filter: saturate(180%) blur(16px);-webkit-backdrop-filter: saturate(180%) blur(16px);border-bottom: 1px solid rgba(180, 190, 210, 0.4);box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);transition: background 0.4s ease, backdrop-filter 0.3s ease;}
+  /* ==== 改良版 header：玻璃 + 漸層 ==== */
+  html:not([data-theme="dark"]) header {background: linear-gradient(135deg, rgba(255, 255, 255, 0.68) 0%, rgba(240, 244, 255, 0.55) 100%);backdrop-filter: saturate(180%) blur(16px);-webkit-backdrop-filter: saturate(180%) blur(16px);border-bottom: 1px solid rgba(180, 190, 210, 0.4);box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);transition: background 0.4s ease, backdrop-filter 0.3s ease;}
 
-html:not([data-theme="dark"]) header.scrolled {background: linear-gradient(135deg, rgba(245, 247, 255, 0.92) 0%, rgba(235, 240, 255, 0.88) 100%);backdrop-filter: saturate(200%) blur(20px);-webkit-backdrop-filter: saturate(200%) blur(20px);border-bottom-color: rgba(160, 175, 200, 0.5);box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);}
+  html:not([data-theme="dark"]) header.scrolled {background: linear-gradient(135deg, rgba(245, 247, 255, 0.92) 0%, rgba(235, 240, 255, 0.88) 100%);backdrop-filter: saturate(200%) blur(20px);-webkit-backdrop-filter: saturate(200%) blur(20px);border-bottom-color: rgba(160, 175, 200, 0.5);box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);}
 
-/* 導覽連結顏色更柔和，hover 有亮感 */
-html:not([data-theme="dark"]) .nav a {color: #374151;transition: color 0.2s ease, background 0.2s ease;}
-html:not([data-theme="dark"]) .nav a:hover,
-html:not([data-theme="dark"]) .nav a.active {color: #0b0c10;background: rgba(255, 255, 255, 0.6);}
+  /* 導覽連結顏色更柔和，hover 有亮感 */
+  html:not([data-theme="dark"]) .nav a {color: #374151;transition: color 0.2s ease, background 0.2s ease;}
+  html:not([data-theme="dark"]) .nav a:hover,
+  html:not([data-theme="dark"]) .nav a.active {color: #0b0c10;background: rgba(255, 255, 255, 0.6);}
 
+  /* ==== Mobile right-side mini drawer (REPLACE START) ==== */
   @media (max-width:880px){
-  .menu{ display:inline-flex; }
+  .menu{display:inline-flex}
+  .menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;visibility:hidden;transition:opacity .25s ease,visibility 0s .25s;z-index:999}
+  .menu-overlay.show{opacity:1;visibility:visible;transition:opacity .25s ease}
+  header .nav{position:fixed;top:0;right:0;height:100vh;width:clamp(10ch,28vw,18ch);display:flex;flex-direction:column;gap:8px;padding:16px;background:color-mix(in oklab,var(--card) 98%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-left:1px solid color-mix(in oklab,var(--border) 80%,transparent);box-shadow:-6px 0 18px rgba(0,0,0,.25);transform:translateX(100%);transition:transform .25s ease;z-index:1000}
+  header .nav.open{transform:translateX(0)}
+  header .nav a{padding:12px 8px;text-align:center;border-radius:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  header .nav a + a:not(.btn){border-top:1px solid color-mix(in oklab,var(--border) 88%,transparent)}
+  header .nav .btn{margin-top:12px;width:100%;justify-content:center;box-shadow:0 10px 24px rgba(0,0,0,.22)}
+  }
+  /* ==== Mobile right-side mini drawer (REPLACE END) ==== */
 
-  /* 黑玻璃背景遮罩 */
-  .menu-overlay{position: fixed;inset: 0;background: rgba(0,0,0,.45);opacity: 0;visibility: hidden;transition: opacity .25s ease, visibility 0s .25s;z-index: 999;}
-  .menu-overlay.show{opacity: 1;visibility: visible;transition: opacity .25s ease;}
-
-  /* 導覽抽屜 */
-  header .nav{position: fixed;top: 0;right: 0;height: 100vh;width: clamp(260px, 75vw, 340px);display: flex;flex-direction: column;padding: 16px;background: color-mix(in oklab, var(--card) 98%, transparent);backdrop-filter: blur(16px);-webkit-backdrop-filter: blur(16px);border-left: 1px solid color-mix(in oklab, var(--border) 80%, transparent);box-shadow: -6px 0 18px rgba(0,0,0,.25);transform: translateX(100%);transition: transform .25s ease;z-index: 1000;}
-  header .nav.open{ transform: translateX(0); }
-
-  header .nav a{padding: 14px 10px;text-align: center;border-radius: 12px;color: var(--text);}
-  header .nav a + a:not(.btn){border-top: 1px solid color-mix(in oklab, var(--border) 88%, transparent);}
-  header .nav .btn{margin-top: 12px;width: 100%;justify-content: center;}}
 
   @keyframes menu-pop{
     from{ transform: translateY(-6px); opacity: 0; }to{ transform: none; opacity: 1; }}}
@@ -718,20 +717,16 @@ html:not([data-theme="dark"]) .nav a.active {color: #0b0c10;background: rgba(255
   };
   window.addEventListener('scroll', onScroll, {passive:true});
 
-  // ===== Mobile menu =====
-  const menuBtn = $('#menu');
-  const overlay = $('#menuOverlay');
-  const nav = $('#nav');
-  if (menuBtn && nav) {
-    menuBtn.addEventListener('click', ()=>{const open = !nav.classList.contains('open');nav.classList.toggle('open', open);menuBtn.setAttribute('aria-expanded', String(open));document.body.style.overflow = open ? 'hidden' : '';});
-    nav.addEventListener('click', e=>{if(e.target.tagName==='A'){nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');document.body.style.overflow = '';}});}
-    // 點擊面板外自動關閉（手機 UX 會更好）
-document.addEventListener('click', (e)=>{
-  if (!nav || !menuBtn) return;
-  const isOpen = nav.classList.contains('open');
-  if (!isOpen) return;
-  const inside = nav.contains(e.target) || menuBtn.contains(e.target);
-  if (!inside){nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');document.body.style.overflow = '';}}, { passive:true });
+  // ==== Mobile menu (REPLACE START) ====
+  const menuBtn=$('#menu'),overlay=$('#menuOverlay'),nav=$('#nav');
+  if(menuBtn&&nav){
+  menuBtn.addEventListener('click',()=>{const open=!nav.classList.contains('open');nav.classList.toggle('open',open);menuBtn.setAttribute('aria-expanded',String(open));document.body.style.overflow=open?'hidden':'';overlay&&overlay.classList.toggle('show',open)});
+  nav.addEventListener('click',e=>{if(e.target.tagName==='A'){nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');document.body.style.overflow='';overlay&&overlay.classList.remove('show')}});
+  document.addEventListener('click',e=>{if(!nav.classList.contains('open'))return;const inside=nav.contains(e.target)||menuBtn.contains(e.target);if(!inside){nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');document.body.style.overflow='';overlay&&overlay.classList.remove('show')}},{passive:true});
+  overlay&&overlay.addEventListener('click',()=>{nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');document.body.style.overflow='';overlay.classList.remove('show')});
+  }
+  // ==== Mobile menu (REPLACE END) ====
+
 
     // ===== Smooth anchor scroll（用原生 API，靠 scroll-padding-top 校正）=====
     $$('#nav a[href^="#"]').forEach(a=>{a.addEventListener('click', e=>{e.preventDefault();const id = a.getAttribute('href').slice(1);const el = document.getElementById(id);if(!el) return;
