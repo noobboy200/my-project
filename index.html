@@ -667,18 +667,27 @@
   // init
   onScroll();
     
-  // ===== Header 高度 → CSS 變數（更精準） =====
-  const header = document.getElementById('site-header');
-  function setHeaderVar(h){document.documentElement.style.setProperty('--headerH', `${Math.round(h)}px`);}
+// ===== Header 高度 → CSS 變數（更精準） =====
+function setHeaderVar(h){
+  document.documentElement.style.setProperty('--headerH', `${Math.round(h)}px`);}
+    
+// 先設一次
+setHeaderVar(header.getBoundingClientRect().height || 64);
 
-  // 初始化一次（避免某些瀏覽器在 observer 回調前就先用到）
-  setHeaderVar(header.getBoundingClientRect().height || 64);
-
-  // 觀察 header 實際高度變動（含 scrolled 狀態 padding 變化、字體換語言等）
-  const ro = new ResizeObserver(entries=>{for(const entry of entries){setHeaderVar(entry.target.getBoundingClientRect().height || 64);}});ro.observe(header);
+// 有就用 ResizeObserver
+if ('ResizeObserver' in window) {
+  const ro = new ResizeObserver(entries=>{
+    for (const entry of entries) {setHeaderVar(entry.target.getBoundingClientRect().height || 64);}});
+  ro.observe(header);} 
+  else {
+    
+  // 簡單後備：在 resize/scroll 時更新
+  const update = () => setHeaderVar(header.getBoundingClientRect().height || 64);
+  window.addEventListener('resize', update, { passive:true });
+  window.addEventListener('scroll', update, { passive:true });}
 
   // ===== 初始載入帶有 #hash 時，補一次定位 =====
-  window.addEventListener('load', ()=>{f(location.hash){const el = document.querySelector(location.hash);el && el.scrollIntoView({ behavior: 'auto', block: 'start' });}});
+  window.addEventListener('load', ()=>{if(location.hash){const el = document.querySelector(location.hash);el && el.scrollIntoView({ behavior: 'auto', block: 'start' });}});
     
   /* ===== i18n (ZH/EN) ===== */
   (function(){
